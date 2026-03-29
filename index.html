@@ -1402,9 +1402,9 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
   </div>
 
-  <div class="energy-card" style="background:var(--red-dim);border-color:var(--red-border);">
-    <div class="energy-title" style="color:var(--red);">💡 The "Turning Off Costs More" Myth — Busted</div>
-    <div class="energy-body">Many owners believe turning off ovens and fryers costs more to restart. <strong style="color:var(--ink);">This is a myth for almost all commercial kitchen equipment.</strong> The only partial exception: large walk-in refrigeration units. Everything else — leaving it on overnight is pure waste.</div>
+  <div class="energy-card" style="background:var(--red-dim);border-color:var(--red-border);" id="energy-myth-card">
+    <div class="energy-title" style="color:var(--red);" id="energy-myth-title">💡 The "Turning Off Costs More" Myth — Busted</div>
+    <div class="energy-body" id="energy-myth-body">Many owners believe turning off ovens and fryers costs more to restart. <strong style="color:var(--ink);">This is a myth for almost all commercial kitchen equipment.</strong> The only partial exception: large walk-in refrigeration units. Everything else — leaving it on overnight is pure waste.</div>
   </div>
 
   <div id="energy-equipment"></div>
@@ -1432,8 +1432,9 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 ══════════════════════════════════════════════ -->
 <div id="suppliers" class="section">
   <div class="section-title">Preferred Supplier Network</div>
-  <div class="section-sub">Verified suppliers with better rates for independent restaurant owners</div>
-  <div class="supplier-filter">
+  <div class="section-sub" id="suppliers-sub">Verified suppliers with better rates for independent restaurant owners</div>
+  <!-- Restaurant filter bar -->
+  <div class="supplier-filter" id="supplier-filter-restaurant">
     <button class="sup-filter-btn active" onclick="filterSupplier('all',this)">All</button>
     <button class="sup-filter-btn" onclick="filterSupplier('meat',this)">🥩 Meat</button>
     <button class="sup-filter-btn" onclick="filterSupplier('produce',this)">🥦 Produce</button>
@@ -1441,7 +1442,16 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     <button class="sup-filter-btn" onclick="filterSupplier('dry',this)">🌾 Dry Goods</button>
     <button class="sup-filter-btn" onclick="filterSupplier('drinks',this)">🥤 Drinks</button>
     <button class="sup-filter-btn" onclick="filterSupplier('packaging',this)">📦 Packaging</button>
-    <button class="sup-filter-btn" onclick="filterSupplier('tech',this)">💳 Payments</button>
+    <button class="sup-filter-btn" onclick="filterSupplier('tech',this)">💻 Technology</button>
+  </div>
+  <!-- Retail filter bar -->
+  <div class="supplier-filter" id="supplier-filter-retail" style="display:none;">
+    <button class="sup-filter-btn active" onclick="filterSupplier('all',this)">All</button>
+    <button class="sup-filter-btn" onclick="filterSupplier('wholesale',this)">🏭 Wholesale</button>
+    <button class="sup-filter-btn" onclick="filterSupplier('energy',this)">⚡ Energy</button>
+    <button class="sup-filter-btn" onclick="filterSupplier('waste',this)">♻️ Waste / Surplus</button>
+    <button class="sup-filter-btn" onclick="filterSupplier('compliance',this)">📋 Compliance</button>
+    <button class="sup-filter-btn" onclick="filterSupplier('tech',this)">💻 Technology</button>
   </div>
   <div class="supplier-grid" id="supplier-grid"></div>
 </div>
@@ -1518,7 +1528,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
     <div style="margin-bottom:1rem;">
       <label class="form-label">Anything you'd like us to know? (optional)</label>
-      <textarea id="enq-message" class="form-textarea" rows="3" placeholder="e.g. We are struggling with food costs and delivery platform fees..."></textarea>
+      <textarea id="enq-message" class="form-textarea" rows="3" placeholder="e.g. We are struggling with wastage and buying costs..."></textarea>
     </div>
     <button id="enq-btn" class="form-submit" onclick="submitEnquiry()">Send Request →</button>
     <div id="enq-result" style="display:none;margin-top:0.8rem;font-size:0.8rem;font-weight:600;"></div>
@@ -1526,7 +1536,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 
   <!-- Quick contact buttons -->
   <div class="contact-grid" style="margin-bottom:1.2rem;">
-    <div class="contact-card wa" onclick="openWA('Hi, I would like a free 48-hour profit snapshot for my restaurant')" style="cursor:pointer;">
+    <div class="contact-card wa" id="contact-wa-btn" onclick="openWA('Hi, I would like a free 48-hour profit snapshot for my restaurant')" style="cursor:pointer;">
       <div class="contact-icon">💬</div>
       <div class="contact-title">WhatsApp Us</div>
       <div class="contact-sub">Fastest — usually within 1 hour</div>
@@ -1571,7 +1581,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
       <div class="price-period">No obligation · You keep the report</div>
       <div class="price-features">
         <div class="price-feature">30-minute data collection at your venue</div>
-        <div class="price-feature">Analysis of energy, food cost, rates &amp; delivery</div>
+        <div class="price-feature" id="pricing-stage1-analysis">Analysis of energy, food cost, rates &amp; delivery</div>
         <div class="price-feature">Written report with top 3–5 profit leaks</div>
         <div class="price-feature">Estimated monthly saving calculated</div>
         <div class="price-feature">Delivered within 48 hours</div>
@@ -1585,7 +1595,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
       <div class="price-period">One-off · Based on your business size</div>
       <div class="price-features">
         <div class="price-feature">Full 60+ line item diagnostic across all cost centres</div>
-        <div class="price-feature">Menu engineering (dish-by-dish profitability)</div>
+        <div class="price-feature" id="pricing-stage2-menu">Menu engineering (dish-by-dish profitability)</div>
         <div class="price-feature">Supplier benchmarking with alternative quotes</div>
         <div class="price-feature">Labour efficiency analysis</div>
         <div class="price-feature">Cash flow mapping with pinch-point identification</div>
@@ -1603,7 +1613,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
         <div class="price-feature">Supplier price monitoring</div>
         <div class="price-feature">Energy contract renewal alerts</div>
         <div class="price-feature">Staff cost optimisation</div>
-        <div class="price-feature">Quarterly menu re-engineering</div>
+        <div class="price-feature" id="pricing-stage3-menu">Quarterly menu re-engineering</div>
         <div class="price-feature">Priority WhatsApp support</div>
         <div class="price-feature">Savings typically 3–5x the fee</div>
       </div>
@@ -1611,9 +1621,9 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
   </div>
   <div class="card">
-    <div class="card-title">💰 Why Restaurants Work With Us</div>
+    <div class="card-title" id="pricing-why-title">💰 Why Restaurants Work With Us</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:center;margin-top:1rem;">
-      <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--green);">£1.5–4.5K</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Avg monthly savings per venue</div></div>
+      <div><div id="pricing-stat1-num" style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--green);">£1.5–4.5K</div><div id="pricing-stat1-label" style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Avg monthly savings per venue</div></div>
       <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--gold);">60+</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Cost lines forensically examined</div></div>
       <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--ink);">48hrs</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Data collection to written report</div></div>
     </div>
@@ -4052,7 +4062,7 @@ var retailVenues = {
 };
 
 // ════════════════════════════════════════
-// SUPPLIER DATA
+// SUPPLIER DATA — RESTAURANT SECTOR
 // ════════════════════════════════════════
 var suppliers = [
   {cat:'meat',icon:'🥩',name:'Smithfield Direct',desc:'Direct-from-market pricing on lamb, chicken & beef cuts',saving:'8–15%',detail:'vs wholesaler markup'},
@@ -4064,8 +4074,34 @@ var suppliers = [
   {cat:'dry',icon:'🌾',name:'Brakes Foodservice',desc:'National dry goods supplier with weekly delivery slots',saving:'5–8%',detail:'vs cash & carry'},
   {cat:'drinks',icon:'🥤',name:'LWC Drinks',desc:'Wine, spirits, soft drinks — independent pub/bar specialist',saving:'12–18%',detail:'vs branded wholesalers'},
   {cat:'packaging',icon:'📦',name:'Vegware',desc:'Compostable packaging for delivery — EPR-friendly',saving:'Compliance',detail:'reduces EPR liability'},
-  {cat:'tech',icon:'💳',name:'SumUp Business',desc:'1.69% card processing — no contracts or hidden fees',saving:'0.5–1.5%',detail:'per transaction saving'},
-  {cat:'tech',icon:'💳',name:'Kopi POS',desc:'Restaurant EPOS with delivery integration — monthly rolling',saving:'£50–120/mo',detail:'vs legacy systems'},
+  {cat:'tech',icon:'💳',name:'SumUp Business',desc:'1.69% card processing — no monthly fees, no contracts',saving:'0.5–1.5%',detail:'per transaction saving'},
+  {cat:'tech',icon:'💳',name:'Lightspeed Restaurant',desc:'Restaurant EPOS with table management and delivery integration',saving:'£50–120/mo',detail:'vs legacy systems'},
+  {cat:'tech',icon:'📱',name:'MarketMan',desc:'Restaurant inventory management — tracks food cost in real time',saving:'2–4%',detail:'food cost reduction'},
+  {cat:'tech',icon:'🖥️',name:'Flipdish',desc:'Commission-free online ordering for independent restaurants',saving:'£300–800/mo',detail:'vs Deliveroo commission'},
+  {cat:'tech',icon:'📊',name:'Xero Accounting',desc:'Cloud bookkeeping — connects to EPOS, bank, payroll',saving:'Clarity',detail:'real-time P&L visibility'},
+];
+
+// ════════════════════════════════════════
+// SUPPLIER DATA — FOOD RETAIL SECTOR
+// ════════════════════════════════════════
+var retailSuppliers = [
+  {cat:'wholesale',icon:'🏭',name:'New Covent Garden Market',desc:'Fresh produce wholesale — buy direct from market traders at 4am',saving:'15–25%',detail:'vs delivered wholesale'},
+  {cat:'wholesale',icon:'🏭',name:'Smithfield Market',desc:'Wholesale meat and poultry — halal and conventional, direct pricing',saving:'10–18%',detail:'vs standard wholesaler'},
+  {cat:'wholesale',icon:'🏭',name:'Billingsgate Fish Market',desc:'Fresh fish and seafood direct — UK\'s largest inland fish market',saving:'20–30%',detail:'vs retail fish supplier'},
+  {cat:'wholesale',icon:'🛒',name:'Bestway Cash & Carry',desc:'Dry goods, ambient products, cleaning — buying group rates available',saving:'5–12%',detail:'bulk vs unit price'},
+  {cat:'wholesale',icon:'🛒',name:'Booker Wholesale',desc:'Ambient, chilled, frozen — nationwide with East London depots',saving:'8–15%',detail:'account pricing vs cash'},
+  {cat:'energy',icon:'⚡',name:'Bionic Business Energy',desc:'Refrigeration-heavy retail specialist — energy comparison for shops',saving:'25–45%',detail:'vs deemed/rolled rate'},
+  {cat:'energy',icon:'⚡',name:'Evo Energy',desc:'Commercial energy broker for food retail — fixed and flex contracts',saving:'£1,500–4,500',detail:'annual saving typical'},
+  {cat:'waste',icon:'♻️',name:'Too Good To Go',desc:'Sell near-expiry stock as mystery bags — turns waste into revenue',saving:'£150–400/mo',detail:'recovered wastage value'},
+  {cat:'waste',icon:'♻️',name:'Winnow Solutions',desc:'AI wastage tracking for food retail — pinpoints top waste items',saving:'30–50%',detail:'wastage cost reduction'},
+  {cat:'compliance',icon:'📋',name:'Food Alert',desc:'Food hygiene compliance software — HACCP records, temp logs',saving:'Risk',detail:'avoid enforcement action'},
+  {cat:'compliance',icon:'🏷️',name:'Clarity Labelling',desc:'PPDS allergen label printing — Natasha\'s Law compliant for retail',saving:'Compliance',detail:'avoid Trading Standards fines'},
+  {cat:'tech',icon:'💳',name:'SumUp Business',desc:'1.69% card processing — ideal for market traders and small shops',saving:'0.5–1.5%',detail:'per transaction saving'},
+  {cat:'tech',icon:'🖥️',name:'Lightspeed Retail',desc:'Retail EPOS with stock management and buying history reports',saving:'Visibility',detail:'real-time stock control'},
+  {cat:'tech',icon:'📦',name:'Vencru',desc:'Simple stock and sales tracking designed for independent retailers',saving:'£80–150/mo',detail:'vs accountant fees'},
+  {cat:'tech',icon:'📱',name:'Shopify POS',desc:'In-store and online selling — accept orders via WhatsApp & web',saving:'Revenue',detail:'online + walk-in combined'},
+  {cat:'tech',icon:'📊',name:'Xero Accounting',desc:'Cloud bookkeeping for retailers — connects to EPOS and bank feeds',saving:'Clarity',detail:'weekly P&L in real time'},
+  {cat:'tech',icon:'🌡️',name:'Samsara Cold Chain',desc:'Wireless temperature monitoring for fridges and walk-in chillers',saving:'Compliance',detail:'food safety + energy alerts'},
 ];
 
 // ════════════════════════════════════════
@@ -4141,6 +4177,58 @@ function switchSector(sector, btn) {
   if (diagSub) diagSub.textContent = isRetail
     ? 'Filter by shop type — 113 items covering every profit leak in food retail'
     : 'Filter by venue type — each item tagged to show which business type it applies to';
+
+  // Update suppliers tab — switch filter bars, subtitle, rebuild grid
+  var supFilterRest = document.getElementById('supplier-filter-restaurant');
+  var supFilterRet = document.getElementById('supplier-filter-retail');
+  var supSub = document.getElementById('suppliers-sub');
+  if (supFilterRest) supFilterRest.style.display = isRetail ? 'none' : '';
+  if (supFilterRet) supFilterRet.style.display = isRetail ? '' : 'none';
+  if (supSub) supSub.textContent = isRetail
+    ? 'Verified partners and suppliers for independent food retailers in London'
+    : 'Verified suppliers with better rates for independent restaurant owners';
+  document.querySelectorAll('.sup-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+  var activeBar = isRetail ? supFilterRet : supFilterRest;
+  if (activeBar && activeBar.querySelector('.sup-filter-btn')) activeBar.querySelector('.sup-filter-btn').classList.add('active');
+  buildSuppliers('all');
+
+  // Update energy myth card for retail vs restaurant context
+  var mythTitle = document.getElementById('energy-myth-title');
+  var mythBody = document.getElementById('energy-myth-body');
+  if (mythTitle) mythTitle.textContent = isRetail
+    ? '\ud83d\udca1 The "Leaving It Running Saves Money" Myth \u2014 Busted'
+    : '\ud83d\udca1 The "Turning Off Costs More" Myth \u2014 Busted';
+  if (mythBody) mythBody.innerHTML = isRetail
+    ? 'Many shop owners believe leaving open display fridges and ageing compressors running 24/7 is unavoidable. <strong style="color:var(--ink);">Not true.</strong> Defrost cycle optimisation, overnight setback temperatures, and door strips alone can cut refrigeration energy by 15\u201325%. Regular maintenance on aged compressors extends equipment life and cuts consumption significantly.'
+    : 'Many owners believe turning off ovens and fryers costs more to restart. <strong style="color:var(--ink);">This is a myth for almost all commercial kitchen equipment.</strong> The only partial exception: large walk-in refrigeration units. Everything else \u2014 leaving it on overnight is pure waste.';
+
+  // Update pricing tab for sector
+  var pricingWhyTitle = document.getElementById('pricing-why-title');
+  var pricingStage1Analysis = document.getElementById('pricing-stage1-analysis');
+  var pricingStage2Menu = document.getElementById('pricing-stage2-menu');
+  var pricingStage3Menu = document.getElementById('pricing-stage3-menu');
+  var pricingStat1Num = document.getElementById('pricing-stat1-num');
+  var pricingStat1Label = document.getElementById('pricing-stat1-label');
+  if (pricingWhyTitle) pricingWhyTitle.textContent = isRetail ? '\ud83d\udcb0 Why Food Retailers Work With Us' : '\ud83d\udcb0 Why Restaurants Work With Us';
+  if (pricingStage1Analysis) pricingStage1Analysis.textContent = isRetail
+    ? 'Analysis of energy, stock cost, rates & buying margins'
+    : 'Analysis of energy, food cost, rates & delivery';
+  if (pricingStage2Menu) pricingStage2Menu.textContent = isRetail
+    ? 'Range engineering (product-by-product margin review)'
+    : 'Menu engineering (dish-by-dish profitability)';
+  if (pricingStage3Menu) pricingStage3Menu.textContent = isRetail
+    ? 'Quarterly range & margin review'
+    : 'Quarterly menu re-engineering';
+  if (pricingStat1Num) pricingStat1Num.textContent = isRetail ? '\u00a3280\u2013650' : '\u00a31.5\u20134.5K';
+  if (pricingStat1Label) pricingStat1Label.textContent = isRetail ? 'Avg monthly savings identified' : 'Avg monthly savings per venue';
+
+  // Update contact WhatsApp quick button message
+  var contactWaBtn = document.getElementById('contact-wa-btn');
+  if (contactWaBtn) {
+    contactWaBtn.setAttribute('onclick', isRetail
+      ? 'openWA(\'Hi, I would like a free 48-hour profit snapshot for my food retail shop\')'
+      : 'openWA(\'Hi, I would like a free 48-hour profit snapshot for my restaurant\')');
+  }
 }
 
 function buildVenueChips() {
@@ -4161,65 +4249,73 @@ function selectVenue(key, el) {
 }
 
 function buildDemo(d) {
-  const fc = Math.round(d.foodCost*d.revenue);
-  const fcT = Math.round(d.foodTarget*d.revenue);
-  const lab = Math.round(d.labour*d.revenue);
-  const labT = Math.round(d.labourTarget*d.revenue);
-  const totalCost = fc + lab + d.energy + d.rent + d.delivery + d.rates + d.tech + d.other;
-  const totalOpt = fcT + labT + d.energyTarget + d.rentTarget + d.deliveryTarget + d.ratesTarget + d.techTarget + d.otherTarget;
-  const profit = d.revenue - totalCost;
-  const profitOpt = d.revenue - totalOpt;
-  const margin = ((profit/d.revenue)*100).toFixed(1);
-  const marginOpt = ((profitOpt/d.revenue)*100).toFixed(1);
-  const gap = profitOpt - profit;
+  var isRetail = currentSector === 'retail';
+  var fc = Math.round(d.foodCost*d.revenue);
+  var fcT = Math.round(d.foodTarget*d.revenue);
+  var lab = Math.round(d.labour*d.revenue);
+  var labT = Math.round(d.labourTarget*d.revenue);
+  var totalCost = fc + lab + d.energy + d.rent + d.delivery + d.rates + d.tech + d.other;
+  var totalOpt = fcT + labT + d.energyTarget + d.rentTarget + d.deliveryTarget + d.ratesTarget + d.techTarget + d.otherTarget;
+  var profit = d.revenue - totalCost;
+  var profitOpt = d.revenue - totalOpt;
+  var margin = ((profit/d.revenue)*100).toFixed(1);
+  var marginOpt = ((profitOpt/d.revenue)*100).toFixed(1);
+  var gap = profitOpt - profit;
+
+  // Sector-specific labels
+  var lblRevenue = isRetail ? 'Weekly Turnover' : 'Weekly Revenue';
+  var lblStock = isRetail ? 'Stock / Buying Cost' : 'Food / Ingredient Cost';
+  var lblDelivery = isRetail ? 'Transport & Logistics' : 'Delivery Platform Costs';
+  var lblRent = isRetail ? 'Rent / Pitch Fee' : 'Rent';
+  var chartLabels = isRetail
+    ? ['Stock', 'Labour', 'Energy', 'Rent/Pitch', 'Transport', 'Rates', 'Tech', 'Other', 'PROFIT']
+    : ['Food', 'Labour', 'Energy', 'Rent', 'Delivery', 'Rates', 'Tech', 'Other', 'PROFIT'];
 
   // KPIs
-  document.getElementById('kpi-strip').innerHTML = `
-    <div class="kpi"><div class="kpi-label">Weekly Revenue</div><div class="kpi-val gold">£${d.revenue.toLocaleString()}</div></div>
-    <div class="kpi"><div class="kpi-label">Current Profit</div><div class="kpi-val ${profit>=0?'green':'red'}">£${profit.toLocaleString()}</div><div class="kpi-delta ${profit>=0?'up':'down'}">${margin}% margin</div></div>
-    <div class="kpi"><div class="kpi-label">Optimised Profit</div><div class="kpi-val green">£${profitOpt.toLocaleString()}</div><div class="kpi-delta up">${marginOpt}% margin</div></div>
-    <div class="kpi"><div class="kpi-label">Weekly Gap</div><div class="kpi-val gold">£${gap.toLocaleString()}</div><div class="kpi-delta up">£${(gap*52).toLocaleString()}/yr</div></div>`;
+  document.getElementById('kpi-strip').innerHTML =
+    '<div class="kpi"><div class="kpi-label">' + lblRevenue + '</div><div class="kpi-val gold">\u00a3' + d.revenue.toLocaleString() + '</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Current Profit</div><div class="kpi-val ' + (profit>=0?'green':'red') + '">\u00a3' + profit.toLocaleString() + '</div><div class="kpi-delta ' + (profit>=0?'up':'down') + '">' + margin + '% margin</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Optimised Profit</div><div class="kpi-val green">\u00a3' + profitOpt.toLocaleString() + '</div><div class="kpi-delta up">' + marginOpt + '% margin</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Weekly Gap</div><div class="kpi-val gold">\u00a3' + gap.toLocaleString() + '</div><div class="kpi-delta up">\u00a3' + (gap*52).toLocaleString() + '/yr</div></div>';
 
   // Benchmarks
-  document.getElementById('benchmarks').innerHTML = d.benchmarks.map(b => {
-    const isOver = b.current > b.target;
-    const barWidth = Math.min(b.current / (b.target * 1.8) * 100, 100);
-    const targetPos = Math.min(b.target / (b.target * 1.8) * 100, 100);
-    return `<div style="margin-bottom:1rem;">
-      <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">
-        <span style="font-family:var(--head);font-size:0.78rem;font-weight:700;">${b.label}</span>
-        <span style="font-family:var(--mono);font-size:0.72rem;color:${isOver?'var(--red)':'var(--green)'};">${b.unit==='£'?'£':''}${b.current}${b.unit==='%'?'%':''} → ${b.unit==='£'?'£':''}${b.target}${b.unit==='%'?'%':''}</span>
-      </div>
-      <div style="background:var(--bg3);height:6px;border-radius:3px;position:relative;overflow:visible;">
-        <div style="position:absolute;height:100%;width:${barWidth}%;background:${isOver?'var(--red)':'var(--green)'};border-radius:3px;"></div>
-        <div style="position:absolute;height:14px;width:2px;background:var(--gold);top:-4px;left:${targetPos}%;border-radius:1px;"></div>
-      </div>
-    </div>`;
+  document.getElementById('benchmarks').innerHTML = d.benchmarks.map(function(b) {
+    var isOver = b.current > b.target;
+    var barWidth = Math.min(b.current / (b.target * 1.8) * 100, 100);
+    var targetPos = Math.min(b.target / (b.target * 1.8) * 100, 100);
+    return '<div style="margin-bottom:1rem;">' +
+      '<div style="display:flex;justify-content:space-between;margin-bottom:0.3rem;">' +
+      '<span style="font-family:var(--head);font-size:0.78rem;font-weight:700;">' + b.label + '</span>' +
+      '<span style="font-family:var(--mono);font-size:0.72rem;color:' + (isOver?'var(--red)':'var(--green)') + ';">' + (b.unit==='\u00a3'?'\u00a3':'') + b.current + (b.unit==='%'?'%':'') + ' \u2192 ' + (b.unit==='\u00a3'?'\u00a3':'') + b.target + (b.unit==='%'?'%':'') + '</span>' +
+      '</div><div style="background:var(--bg3);height:6px;border-radius:3px;position:relative;overflow:visible;">' +
+      '<div style="position:absolute;height:100%;width:' + barWidth + '%;background:' + (isOver?'var(--red)':'var(--green)') + ';border-radius:3px;"></div>' +
+      '<div style="position:absolute;height:14px;width:2px;background:var(--gold);top:-4px;left:' + targetPos + '%;border-radius:1px;"></div>' +
+      '</div></div>';
   }).join('');
 
   // P&L
-  const lines = [
+  var lines = [
     {cat: 'Revenue'},
-    {name: 'Weekly Revenue', current: d.revenue, opt: d.revenue, positive: true},
+    {name: lblRevenue, current: d.revenue, opt: d.revenue, positive: true},
     {cat: 'Cost of Sales'},
-    {name: 'Food / Ingredient Cost', current: fc, opt: fcT, flag: fc > fcT},
+    {name: lblStock, current: fc, opt: fcT, flag: fc > fcT},
     {name: 'Labour Cost', current: lab, opt: labT, flag: lab > labT},
     {cat: 'Operating Costs'},
     {name: 'Energy (Gas & Electric)', current: d.energy, opt: d.energyTarget, flag: d.energy > d.energyTarget},
-    {name: 'Rent', current: d.rent, opt: d.rentTarget},
-    {name: 'Delivery Platform Costs', current: d.delivery, opt: d.deliveryTarget, flag: d.delivery > d.deliveryTarget},
+    {name: lblRent, current: d.rent, opt: d.rentTarget},
+    {name: lblDelivery, current: d.delivery, opt: d.deliveryTarget, flag: d.delivery > d.deliveryTarget},
     {name: 'Business Rates', current: d.rates, opt: d.ratesTarget, flag: d.rates > d.ratesTarget},
-    {name: 'Tech / EPOS / Cards', current: d.tech, opt: d.techTarget},
+    {name: 'Tech / Systems / Cards', current: d.tech, opt: d.techTarget},
     {name: 'Other / Misc', current: d.other, opt: d.otherTarget},
     {total: true, name: 'Net Profit', current: profit, opt: profitOpt},
   ];
-  document.getElementById('pl-body').innerHTML = lines.map(l => {
-    if (l.cat) return `<tr class="pl-cat"><td colspan="4">${l.cat}</td></tr>`;
-    if (l.total) return `<tr class="pl-total"><td>${l.name}</td><td>£${l.current.toLocaleString()}</td><td>£${l.opt.toLocaleString()}</td><td>+£${(l.opt-l.current).toLocaleString()}</td></tr>`;
-    const variance = l.opt - l.current;
-    const vClass = l.positive ? '' : (variance > 0 ? 'pl-positive' : variance < 0 ? 'pl-negative' : '');
-    const flag = l.flag ? '<span class="pl-flag leak">LEAK</span>' : '';
-    return `<tr><td>${l.name}${flag}</td><td style="font-family:var(--mono);">£${l.current.toLocaleString()}</td><td style="font-family:var(--mono);">£${l.opt.toLocaleString()}</td><td class="${vClass}">${variance>0?'+':''}£${Math.abs(variance).toLocaleString()}</td></tr>`;
+  document.getElementById('pl-body').innerHTML = lines.map(function(l) {
+    if (l.cat) return '<tr class="pl-cat"><td colspan="4">' + l.cat + '</td></tr>';
+    if (l.total) return '<tr class="pl-total"><td>' + l.name + '</td><td>\u00a3' + l.current.toLocaleString() + '</td><td>\u00a3' + l.opt.toLocaleString() + '</td><td>+\u00a3' + (l.opt-l.current).toLocaleString() + '</td></tr>';
+    var variance = l.opt - l.current;
+    var vClass = l.positive ? '' : (variance > 0 ? 'pl-positive' : variance < 0 ? 'pl-negative' : '');
+    var flag = l.flag ? '<span class="pl-flag leak">LEAK</span>' : '';
+    return '<tr><td>' + l.name + flag + '</td><td style="font-family:var(--mono);">\u00a3' + l.current.toLocaleString() + '</td><td style="font-family:var(--mono);">\u00a3' + l.opt.toLocaleString() + '</td><td class="' + vClass + '">' + (variance>0?'+':'') + '\u00a3' + Math.abs(variance).toLocaleString() + '</td></tr>';
   }).join('');
 
   // Chart
@@ -4227,7 +4323,7 @@ function buildDemo(d) {
   profitChartInstance = new Chart(document.getElementById('profitChart'), {
     type: 'bar',
     data: {
-      labels: ['Food', 'Labour', 'Energy', 'Rent', 'Delivery', 'Rates', 'Tech', 'Other', 'PROFIT'],
+      labels: chartLabels,
       datasets: [
         { label: 'Current', data: [fc, lab, d.energy, d.rent, d.delivery, d.rates, d.tech, d.other, profit], backgroundColor: 'rgba(224,85,69,0.6)', borderColor: 'rgba(224,85,69,0.8)', borderWidth: 1 },
         { label: 'Optimised', data: [fcT, labT, d.energyTarget, d.rentTarget, d.deliveryTarget, d.ratesTarget, d.techTarget, d.otherTarget, profitOpt], backgroundColor: 'rgba(74,222,128,0.6)', borderColor: 'rgba(74,222,128,0.8)', borderWidth: 1 },
@@ -4238,7 +4334,7 @@ function buildDemo(d) {
       plugins: { legend: { labels: { color: '#8a8678', font: { family: 'DM Mono', size: 10 } } } },
       scales: {
         x: { ticks: { color: '#5a5850', font: { family: 'DM Mono', size: 9 } }, grid: { color: 'rgba(255,255,255,0.03)' } },
-        y: { ticks: { color: '#5a5850', font: { family: 'DM Mono', size: 9 }, callback: v => '£'+v }, grid: { color: 'rgba(255,255,255,0.03)' } }
+        y: { ticks: { color: '#5a5850', font: { family: 'DM Mono', size: 9 }, callback: function(v){ return '\u00a3'+v; } }, grid: { color: 'rgba(255,255,255,0.03)' } }
       }
     }
   });
@@ -4251,7 +4347,14 @@ function buildDemo(d) {
 // SLIDERS
 // ════════════════════════════════════════
 function buildSliders(d) {
-  const items = [
+  var isRetail = currentSector === 'retail';
+  var items = isRetail ? [
+    {key:'foodcost', label:'Stock Cost %', sub:'Benchmark: 38–50% depending on category', min:25, max:65, val:Math.round(d.foodCost*100), unit:'%', factor:d.revenue/100},
+    {key:'labourcost', label:'Labour Cost %', sub:'Benchmark: 12–18% for food retail', min:8, max:35, val:Math.round(d.labour*100), unit:'%', factor:d.revenue/100},
+    {key:'energy', label:'Energy £/week', sub:'Check contract — refrigeration is #1 cost', min:20, max:500, val:d.energy, unit:'£', factor:1},
+    {key:'delivery', label:'Transport & Logistics £/week', sub:'Buying runs, delivery, ULEZ', min:0, max:400, val:d.delivery, unit:'£', factor:1},
+    {key:'rates', label:'Business Rates £/week', sub:'Check SBRR eligibility', min:0, max:400, val:d.rates, unit:'£', factor:1},
+  ] : [
     {key:'foodcost', label:'Food Cost %', sub:'Benchmark: 28–32%', min:20, max:55, val:Math.round(d.foodCost*100), unit:'%', factor:d.revenue/100},
     {key:'labourcost', label:'Labour Cost %', sub:'Benchmark: 30–33%', min:20, max:50, val:Math.round(d.labour*100), unit:'%', factor:d.revenue/100},
     {key:'energy', label:'Energy £/week', sub:'Check contract status', min:50, max:800, val:d.energy, unit:'£', factor:1},
@@ -4359,19 +4462,21 @@ function updateEnergySlider(val, baseline) {
 // SUPPLIERS
 // ════════════════════════════════════════
 function buildSuppliers(cat) {
-  const filtered = cat === 'all' ? suppliers : suppliers.filter(s => s.cat === cat);
-  document.getElementById('supplier-grid').innerHTML = filtered.map(s => `
-    <div class="supplier-card">
-      <div class="sup-cat">${s.icon} ${s.cat.toUpperCase()}</div>
-      <div class="sup-name">${s.name}</div>
-      <div class="sup-desc">${s.desc}</div>
-      <div class="sup-saving"><span class="sup-saving-badge">${s.saving}</span><span class="sup-saving-label">${s.detail}</span></div>
-      <button class="sup-btn" onclick="openWA('I am interested in ' + s.name)">Get Introduction →</button>
-    </div>`).join('');
+  var data = currentSector === 'retail' ? retailSuppliers : suppliers;
+  var filtered = cat === 'all' ? data : data.filter(function(s) { return s.cat === cat; });
+  document.getElementById('supplier-grid').innerHTML = filtered.map(function(s) {
+    return '<div class="supplier-card">' +
+      '<div class="sup-cat">' + s.icon + ' ' + s.cat.toUpperCase() + '</div>' +
+      '<div class="sup-name">' + s.name + '</div>' +
+      '<div class="sup-desc">' + s.desc + '</div>' +
+      '<div class="sup-saving"><span class="sup-saving-badge">' + s.saving + '</span><span class="sup-saving-label">' + s.detail + '</span></div>' +
+      '<button class="sup-btn" onclick="openWA(\'I am interested in ' + s.name.replace(/'/g, '') + '\')">Get Introduction \u2192</button>' +
+      '</div>';
+  }).join('');
 }
 
 function filterSupplier(cat, el) {
-  document.querySelectorAll('.sup-filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sup-filter-btn').forEach(function(b) { b.classList.remove('active'); });
   el.classList.add('active');
   buildSuppliers(cat);
 }
