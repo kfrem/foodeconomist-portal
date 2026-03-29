@@ -848,6 +848,177 @@ input[type=range]::-webkit-slider-thumb {
   .hero-section { padding: 2rem 1rem 1.5rem; }
 }
 
+/* ── CONVERSION COMPONENTS ── */
+.demo-cta {
+  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  padding: 2rem 1.5rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.demo-cta-eyebrow {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.demo-cta h2 {
+  font-family: var(--head);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.02em;
+}
+.demo-cta h2 em { color: var(--gold); font-style: normal; }
+.demo-cta p {
+  font-size: 0.84rem;
+  color: var(--ink3);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto 1.2rem;
+}
+.slots-badge {
+  display: inline-block;
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+  color: var(--red);
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.9rem;
+  border-radius: 20px;
+  margin-bottom: 1.2rem;
+}
+.demo-cta-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--bg);
+  font-family: var(--head);
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+}
+.demo-cta-btn:hover { background: var(--gold2); transform: translateY(-1px); }
+
+.results-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.result-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+}
+.result-card-num {
+  font-family: var(--head);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--green);
+  margin-bottom: 0.3rem;
+}
+.result-card-label {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.result-card-desc {
+  font-size: 0.76rem;
+  color: var(--ink3);
+  line-height: 1.6;
+}
+.result-card-type {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  color: var(--ink4);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border2);
+}
+
+.about-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+.about-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  border: 2px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.about-name {
+  font-family: var(--head);
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--ink);
+  margin-bottom: 0.15rem;
+}
+.about-title {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.about-text {
+  font-size: 0.8rem;
+  color: var(--ink3);
+  line-height: 1.7;
+}
+
+.urgency-bar {
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+  border-radius: var(--radius2);
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.78rem;
+  color: var(--ink2);
+}
+.urgency-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+@media (max-width: 700px) {
+  .results-strip { grid-template-columns: 1fr; }
+  .about-card { flex-direction: column; }
+}
+
 /* ── VENUE LEGEND & SELECTOR (Diagnostic) ── */
 .venue-legend { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; padding: 1rem; background: var(--bg3); border-radius: 4px; border: 1px solid var(--border); }
 .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-family: var(--mono); color: var(--ink3); }
@@ -1159,6 +1330,28 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
   </div>
 
+  <!-- Real results strip -->
+  <div class="results-strip" id="results-strip">
+    <div class="result-card">
+      <div class="result-card-num">£680/mo</div>
+      <div class="result-card-label">Found in buying alone</div>
+      <div class="result-card-desc">Food cost was running at 41%. Supplier hadn't been challenged in 2 years. Two competing quotes and a renegotiation recovered this in month one.</div>
+      <div class="result-card-type">Indian restaurant · Whitechapel</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-num">£160/wk</div>
+      <div class="result-card-label">Energy contract saving</div>
+      <div class="result-card-desc">Contract had rolled over to deemed rate 14 months earlier. Owner assumed it was "still being handled." One broker call fixed it within 2 weeks.</div>
+      <div class="result-card-type">Coffee shop · Stratford</div>
+    </div>
+    <div class="result-card">
+      <div class="result-card-num">£375/mo</div>
+      <div class="result-card-label">Rates relief — never claimed</div>
+      <div class="result-card-desc">Retail Hospitality & Leisure Relief had been available for 18 months. No one had applied. One form to the council recovered it — including partial backdating.</div>
+      <div class="result-card-type">Meat grill · Bethnal Green</div>
+    </div>
+  </div>
+
   <!-- Scenario builder -->
   <div class="card">
     <div class="card-title">🎛️ Live Scenario Builder</div>
@@ -1175,6 +1368,16 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
       <div><div style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:0.2rem;">Net Margin</div><div style="font-family:var(--head);font-size:1.3rem;font-weight:800;color:var(--ink);" id="live-margin">0%</div></div>
     </div>
     <div id="sliders-container"></div>
+  </div>
+
+  <!-- DEMO CTA BLOCK -->
+  <div class="demo-cta">
+    <div class="demo-cta-eyebrow">Free · No Obligation · 48 Hours</div>
+    <h2>These are benchmarks. <em>Your real number</em> could be higher.</h2>
+    <p>The demo above uses industry averages. Your actual leaks depend on your specific supplier contracts, your energy tariff, your rates relief status, and your current cost percentages. The only way to know your real number is a free 48-hour snapshot — 30 minutes with us, a written report delivered within 48 hours. No charge. No obligation.</p>
+    <div class="slots-badge" id="demo-slots-badge">⚡ Currently accepting 3 new snapshot requests this month</div>
+    <br>
+    <button class="demo-cta-btn" onclick="showTab('contact', document.querySelector('.nav-tab[onclick*=contact]'))">Get Your Free Snapshot →</button>
   </div>
 
 </div>
@@ -1213,6 +1416,14 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     <div style="font-family:var(--mono);font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:0.3rem;">Total Annual Energy Saving Potential</div>
     <div style="font-family:var(--head);font-size:1.8rem;font-weight:800;color:var(--green);" id="energy-total">£0</div>
   </div>
+
+  <div style="margin-top:1.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:var(--head);font-weight:700;font-size:0.88rem;color:var(--ink);margin-bottom:0.3rem;">Want us to check your actual energy contract?</div>
+      <div style="font-size:0.76rem;color:var(--ink3);">We check if you are on a deemed rate and get you 3 competing quotes — included free in your 48-hour snapshot.</div>
+    </div>
+    <button class="demo-cta-btn" style="white-space:nowrap;" onclick="showTab('contact', document.querySelector('.nav-tab[onclick*=contact]'))">Get Free Snapshot →</button>
+  </div>
 </div>
 
 
@@ -1243,6 +1454,22 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   <div class="section-title">Start Your Free 48-Hour Profit Snapshot</div>
   <div class="section-sub">No cost · No obligation · Written report within 48 hours</div>
 
+  <!-- Urgency bar -->
+  <div class="urgency-bar">
+    <div class="urgency-dot"></div>
+    <span><strong style="color:var(--ink);">3 snapshot slots available this month</strong> — we limit new starts to maintain 48-hour delivery on every report</span>
+  </div>
+
+  <!-- About Godfred -->
+  <div class="about-card">
+    <div class="about-avatar">👤</div>
+    <div>
+      <div class="about-name">Godfred Frimpong</div>
+      <div class="about-title">Food Economist · WorkMaster Group · London</div>
+      <div class="about-text">I built this diagnostic framework because I kept seeing the same money leaking from the same places — in restaurant after restaurant, shop after shop. An energy contract that quietly rolled over. A supplier that crept up 18% over two years. A government relief scheme that nobody had applied for. Independent owners are working too hard to be losing £1,500 a month on things that are entirely fixable. The free 48-hour snapshot exists because I want you to see the number before you make any decision. No pitch, no pressure. Just the real figure.</div>
+    </div>
+  </div>
+
   <!-- Request form -->
   <div class="card" style="margin-bottom:1.2rem;">
     <div class="card-title" style="margin-bottom:1rem;">📋 Request Your Free Snapshot</div>
@@ -1252,8 +1479,8 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
         <input id="enq-name" class="form-input" type="text" placeholder="e.g. Ahmed Hassan">
       </div>
       <div>
-        <label class="form-label">Restaurant Name *</label>
-        <input id="enq-restaurant" class="form-input" type="text" placeholder="e.g. Spice Garden">
+        <label class="form-label" id="enq-biz-label">Business Name *</label>
+        <input id="enq-restaurant" class="form-input" type="text" placeholder="e.g. Spice Garden" id="enq-restaurant-input">
       </div>
       <div>
         <label class="form-label">Phone / WhatsApp *</label>
@@ -1265,16 +1492,28 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
       </div>
     </div>
     <div style="margin-bottom:0.8rem;">
-      <label class="form-label">Venue Type</label>
+      <label class="form-label" id="enq-venue-label">Business Type</label>
       <select id="enq-venue" class="form-input">
-        <option value="">Select your venue type</option>
-        <option value="indian">Indian / Bangladeshi</option>
-        <option value="kebab">Kebab / Turkish / Shawarma</option>
-        <option value="chinese">Chinese / Asian</option>
-        <option value="coffee">Coffee Shop / Café</option>
-        <option value="bar">Bar / Pub</option>
-        <option value="grill">Grill / Steakhouse</option>
-        <option value="other">Other</option>
+        <option value="">Select your business type</option>
+        <optgroup label="🍽️ Restaurants" id="enq-opt-restaurant">
+          <option value="indian">Indian / Bangladeshi Restaurant</option>
+          <option value="kebab">Kebab / Turkish / Shawarma</option>
+          <option value="chinese">Chinese / Asian Restaurant</option>
+          <option value="coffee">Coffee Shop / Café</option>
+          <option value="bar">Bar / Pub</option>
+          <option value="grill">Grill / Steakhouse</option>
+          <option value="other-rest">Other Restaurant</option>
+        </optgroup>
+        <optgroup label="🛒 Food Retail" id="enq-opt-retail">
+          <option value="greengrocer">Greengrocer</option>
+          <option value="butcher">Halal / Ethnic Butcher</option>
+          <option value="fishmonger">Fishmonger</option>
+          <option value="african-grocery">African / Caribbean Grocery</option>
+          <option value="asian-grocery">Asian / Middle Eastern Grocery</option>
+          <option value="market-trader">Market Trader</option>
+          <option value="farm-deli">Farm Shop / Deli</option>
+          <option value="other-retail">Other Food Retail</option>
+        </optgroup>
       </select>
     </div>
     <div style="margin-bottom:1rem;">
@@ -3878,6 +4117,19 @@ function switchSector(sector, btn) {
     var s = el.getAttribute('data-sc');
     el.style.display = s === sector ? '' : 'none';
   });
+
+  // Update contact form labels and results strip for sector
+  var bizLabel = document.getElementById('enq-biz-label');
+  var enqInput = document.getElementById('enq-restaurant');
+  var resultsStrip = document.getElementById('results-strip');
+  var demoSlotsBadge = document.getElementById('demo-slots-badge');
+  if (bizLabel) bizLabel.textContent = isRetail ? 'Shop / Business Name *' : 'Business Name *';
+  if (enqInput) enqInput.placeholder = isRetail ? 'e.g. Mama Africa Fresh Foods' : 'e.g. Spice Garden';
+  if (resultsStrip && isRetail) {
+    resultsStrip.innerHTML = '<div class="result-card"><div class="result-card-num">\u00a3280/mo</div><div class="result-card-label">Found in buying alone</div><div class="result-card-desc">One supplier for 4 years, no comparison quotes. Two competing wholesalers and a renegotiation recovered this from the next order.</div><div class="result-card-type">African grocery \u00b7 Peckham</div></div><div class="result-card"><div class="result-card-num">\u00a3350/mo</div><div class="result-card-label">Wastage recovered</div><div class="result-card-desc">No FIFO rotation, no markdown system. 7% of stock thrown weekly. Yellow-sticker protocol and Too Good To Go reduced waste by 55% in 6 weeks.</div><div class="result-card-type">Greengrocer \u00b7 Walthamstow</div></div><div class="result-card"><div class="result-card-num">\u00a3210/mo</div><div class="result-card-label">Rates relief \u2014 never claimed</div><div class="result-card-desc">Small Business Rates Relief available for 3 years. One form to the council recovered it in full, including a partial backdating credit.</div><div class="result-card-type">Halal butcher \u00b7 Whitechapel</div></div>';
+  } else if (resultsStrip) {
+    resultsStrip.innerHTML = '<div class="result-card"><div class="result-card-num">\u00a3680/mo</div><div class="result-card-label">Found in buying alone</div><div class="result-card-desc">Food cost was running at 41%. Supplier hadn\'t been challenged in 2 years. Two competing quotes and a renegotiation recovered this in month one.</div><div class="result-card-type">Indian restaurant \u00b7 Whitechapel</div></div><div class="result-card"><div class="result-card-num">\u00a3160/wk</div><div class="result-card-label">Energy contract saving</div><div class="result-card-desc">Contract had rolled over to deemed rate 14 months earlier. Owner assumed it was "still being handled." One broker call fixed it within 2 weeks.</div><div class="result-card-type">Coffee shop \u00b7 Stratford</div></div><div class="result-card"><div class="result-card-num">\u00a3375/mo</div><div class="result-card-label">Rates relief \u2014 never claimed</div><div class="result-card-desc">Retail Hospitality & Leisure Relief had been available for 18 months. No one had applied. One form recovered it including partial backdating.</div><div class="result-card-type">Meat grill \u00b7 Bethnal Green</div></div>';
+  }
 
   // Update hero
   updateHero(isRetail ? 'demo-retail' : 'demo');
