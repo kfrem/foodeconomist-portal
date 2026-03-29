@@ -1058,14 +1058,14 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
      HERO SECTION
      ══════════════════════════════════════ -->
 <div class="hero-section">
-  <div class="hero-eyebrow">Food Economist · Restaurant Profit Intelligence · London</div>
-  <h1>Find the <em>Hidden Profit</em> in Your Restaurant</h1>
-  <p class="hero-sub">We forensically analyse every cost line in your operation — food, energy, labour, delivery, rates — and show you exactly where money is leaving. Most owners discover £1,500–£3,800 per month in fixable leaks.</p>
-  <div class="hero-stats">
-    <div class="stat"><div class="stat-num">60+</div><div class="stat-label">Cost items analysed</div></div>
+  <div id="hero-eyebrow" class="hero-eyebrow">Food Economist · Restaurant Profit Intelligence · London</div>
+  <h1 id="hero-title">Find the <em>Hidden Profit</em> in Your Restaurant</h1>
+  <p id="hero-sub" class="hero-sub">We forensically analyse every cost line in your operation — food, drinks, energy, labour, delivery, rates — and show you exactly where money is leaving. Independent restaurants typically recover £3,000–£25,000 per month once they know where to look.</p>
+  <div id="hero-stats" class="hero-stats">
+    <div class="stat"><div class="stat-num">180+</div><div class="stat-label">Cost &amp; revenue items</div></div>
     <div class="stat"><div class="stat-num">48hr</div><div class="stat-label">Free snapshot turnaround</div></div>
-    <div class="stat"><div class="stat-num">£3,800</div><div class="stat-label">Avg monthly leak found</div></div>
-    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Venue types covered</div></div>
+    <div class="stat"><div class="stat-num">£25K</div><div class="stat-label">Max monthly recovery</div></div>
+    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Venue types covered</div></div>
   </div>
 </div>
 
@@ -2568,6 +2568,118 @@ tryUnlock = function() {
 // ════════════════════════════════════════
 // TAB NAVIGATION
 // ════════════════════════════════════════
+var heroContent = {
+  demo: {
+    eyebrow: "Food Economist · Restaurant Profit Intelligence · London",
+    title: "Find the <em>Hidden Profit</em> in Your Restaurant",
+    sub: "We forensically analyse every cost and revenue line in your operation — food, drinks, energy, labour, delivery, rates — and show you exactly where money is leaving. Independent restaurants typically recover £3,000–£25,000 per month once they know where to look.",
+    stats: [["180+","Cost &amp; revenue items"],["48hr","Free snapshot turnaround"],["£25K","Max monthly recovery"],["6","Venue types covered"]]
+  },
+  energy: {
+    eyebrow: "Energy Cost Intelligence · Commercial Kitchens · London",
+    title: "Your Energy Contract Could Be <em>Costing You Double</em>",
+    sub: "40% of UK independent restaurants are on out-of-contract deemed rates — paying 40–70% more than necessary without knowing it. A single call to the right broker can save £2,000–£8,000 per year with zero disruption to your supply.",
+    stats: [["40%","On wrong energy tariff"],["£8K","Max annual saving"],["2–4wks","To switch supplier"],["£0","Broker cost to you"]]
+  },
+  suppliers: {
+    eyebrow: "Preferred Supplier Network · Independently Verified · London",
+    title: "Stop Paying Your Suppliers <em>More Than You Need To</em>",
+    sub: "Your current suppliers know you are unlikely to leave — which is exactly why their prices creep every quarter. Our verified network gives independent operators access to rates normally reserved for large groups. No tie-ins. No switching fees. Just lower costs from your next order.",
+    stats: [["Multi","Category coverage"],["Verified","Better rates"],["No","Tie-in contracts"],["Immediate","Cost reduction"]]
+  },
+  contact: {
+    eyebrow: "Free 48-Hour Profit Snapshot · No Obligation · London",
+    title: "See Exactly <em>What You Are Losing</em> — Free, In 48 Hours",
+    sub: "No consultancy jargon. No vague recommendations. A written document showing your specific leaks, the exact monthly amounts, and precisely how to fix them — delivered within 48 hours of our visit. You owe us nothing unless you choose to go further.",
+    stats: [["48hr","Written report delivered"],["£0","Cost to you"],["No","Obligation"],["Real","£ figures, not estimates"]]
+  },
+  pricing: {
+    eyebrow: "Transparent Pricing · Results-Based Fees · London",
+    title: "You Will Always <em>Save More Than You Pay</em> — Guaranteed",
+    sub: "Every fee is discussed openly before any work begins and calibrated to the size and complexity of your operation. Our commitment is simple: your savings in month one will always exceed our total fee. If we do not find it, we do not charge for it.",
+    stats: [["3","Service tiers"],["Month 1","Saving exceeds fee"],["£0","Hidden costs"],["Flexible","Fee structure"]]
+  },
+  diagnostic: {
+    eyebrow: "Full Diagnostic Framework · 180 Items · 11 Categories",
+    title: "180 Ways Your Restaurant Is Losing Money — <em>Find Them All</em>",
+    sub: "This is the forensic engine behind every profit engagement. 180 clickable diagnostic items across 11 cost and revenue categories — food, drinks, labour, energy, premises, delivery, menu engineering, capacity, cash flow, marketing, and more. Each item carries a financial impact estimate, a step-by-step check, and an actionable fix.",
+    stats: [["180","Diagnostic items"],["11","Cost &amp; revenue categories"],["5","Deep forensic trees"],["Instant","Actionable fixes"]]
+  },
+  flowchart: {
+    eyebrow: "Multi-Venue Profit Map · Owner Intelligence · London",
+    title: "All Your Venues. <em>One Consolidated Picture.</em> The Profit You Never Saw.",
+    sub: "Multi-venue owners lose money at the joins — staff costs miscoded between sites, rates relief unclaimed, energy contracts managed separately when consolidation saves 8–12% more. This map shows what the real combined picture looks like before and after a full diagnostic.",
+    stats: [["Multi","Venue consolidated"],["Cross-site","Leak detection"],["One","Owner view"],["Full","P&amp;L picture"]]
+  },
+  proof: {
+    eyebrow: "Proof of Loss · Walk-In Sales Tool · Print Ready",
+    title: "One Page That Makes a Restaurant Owner <em>Stop and Listen</em>",
+    sub: "Hand this to an owner while they are standing in their kitchen. It shows a real operation, real leak amounts across real cost lines, and real fixes with real timelines. You say nothing while they read it. That silence does the selling. This document converts walk-in cold approaches into paid engagements.",
+    stats: [["Print","Ready to use"],["Real","£ figures shown"],["Walk-in","Conversion tool"],["No","Pitch required"]]
+  },
+  snapshot: {
+    eyebrow: "48-Hour Profit Snapshot · Delivery Process · Step by Step",
+    title: "From <em>First Yes</em> to Written Report in 48 Hours — Every Time",
+    sub: "This is the exact repeatable process — every step, every document, every question to ask — for delivering a Proof of Loss that earns a second meeting. Consistency in this process is what separates a one-off free visit from a recurring paid diagnostic engagement.",
+    stats: [["Step","By step process"],["48hr","Guaranteed delivery"],["Paid","Conversion focused"],["Repeatable","Every client"]]
+  },
+  scripts: {
+    eyebrow: "Sales Scripts · Objection Handling · Field Tested",
+    title: "Every Conversation Covered — <em>Including the Ones That Trip You Up</em>",
+    sub: "Door approaches, phone follow-ups, pricing conversations, and every objection a restaurant owner will throw at you. Every script is built around what owners actually say in the real world — and what actually moves them from hesitation to yes.",
+    stats: [["Door","Approach scripts"],["Follow-up","Call scripts"],["Pricing","Conversation guide"],["12+","Objections handled"]]
+  },
+  acquisition: {
+    eyebrow: "Client Acquisition Strategy · London Independents · No Cold Calling",
+    title: "<em>15 Walk-Ins</em> Gets You 2–3 Clients — Consistently",
+    sub: "No LinkedIn. No cold email lists. No expensive advertising. Three channels that actually reach independent London restaurant owners — including the walk-in approach that converts at 15–20% and costs nothing but your time and a printed one-pager.",
+    stats: [["3","Acquisition channels"],["15–20%","Conversion rate"],["£0","Ad spend needed"],["Proven","Repeatable system"]]
+  },
+  plan: {
+    eyebrow: "4-Week Revenue Plan · Month Target · Week by Week",
+    title: "Week by Week to <em>£5,000</em> — No Guesswork, No Gaps",
+    sub: "Specific targets, specific actions, specific days of the week. This is not a motivational framework — it is an operational plan. Every week has a revenue target, a client activity target, and a delivery milestone. If you execute it exactly, the numbers work.",
+    stats: [["4","Weeks to target"],["Daily","Specific actions"],["£5,000","Monthly goal"],["Built","To execute"]]
+  },
+  intake: {
+    eyebrow: "Client Intake · Visit Record · Data Capture",
+    title: "Capture the Right Numbers <em>From the First Meeting</em>",
+    sub: "The questions you ask and record in the first visit determine the depth and credibility of your diagnostic. This form captures every data point you need — revenue, cost percentages, contract dates, staffing, delivery splits — to produce a Proof of Loss that holds up to scrutiny.",
+    stats: [["15+","Data fields"],["One","Complete form"],["Auto","Saves locally"],["Drives","Report accuracy"]]
+  },
+  pipeline: {
+    eyebrow: "Client Pipeline · CRM · Follow-Up Tracker",
+    title: "Every Prospect Tracked — <em>Nothing Falls Through the Gaps</em>",
+    sub: "From first contact to retained client. Log every follow-up, filter by pipeline status, and export your full list to CSV. The difference between a busy consultant and a successful one is whether the follow-up actually happens — and happens on time.",
+    stats: [["Status","Filtered pipeline"],["Follow-up","Log per client"],["CSV","Export ready"],["Full","Pipeline visibility"]]
+  },
+  tracker: {
+    eyebrow: "Revenue Tracker · Monthly Target · Progress Monitor",
+    title: "Track Every Pound — <em>Watch Your Target Become a Number</em>",
+    sub: "Log every payment received. Watch the progress bar move towards your monthly target. The psychology of tracking revenue in real time is proven to increase performance — seeing the number grow creates momentum that sustains activity through slow weeks.",
+    stats: [["Live","Progress bar"],["Payment","Log with dates"],["Visual","Target tracker"],["Monthly","Goal monitor"]]
+  },
+  templates: {
+    eyebrow: "Message Templates · WhatsApp &amp; Email · Copy &amp; Paste",
+    title: "Copy, Paste, Send — <em>Professional at Every Stage</em>",
+    sub: "Every follow-up message for every stage of the client pipeline. Written in plain, direct English — tested in real conversations — and designed to move the prospect to the next step, not just to sound professional. No template will ever substitute for the right timing, but the right words help.",
+    stats: [["WhatsApp","Ready templates"],["Email","Follow-up drafts"],["Every","Pipeline stage"],["Send","In 30 seconds"]]
+  }
+};
+
+function updateHero(id) {
+  var c = heroContent[id];
+  if (!c) return;
+  document.getElementById('hero-eyebrow').textContent = c.eyebrow.replace(/&amp;/g,'&');
+  document.getElementById('hero-title').innerHTML = c.title;
+  document.getElementById('hero-sub').textContent = c.sub;
+  var statsHtml = '';
+  c.stats.forEach(function(s) {
+    statsHtml += '<div class="stat"><div class="stat-num">' + s[0] + '</div><div class="stat-label">' + s[1] + '</div></div>';
+  });
+  document.getElementById('hero-stats').innerHTML = statsHtml;
+}
+
 function showTab(id, el) {
   // Prevent accessing protected tabs without unlock
   if (!isUnlocked && el && el.dataset && el.dataset.zone === 'protected') {
@@ -2579,6 +2691,9 @@ function showTab(id, el) {
   document.getElementById(id).classList.add('active');
   if (el) el.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Update hero for this tab
+  updateHero(id);
 
   // Trigger builds
   if (id === 'demo') buildDemo(venues[currentVenue]);
