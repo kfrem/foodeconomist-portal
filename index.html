@@ -134,6 +134,44 @@ body {
 }
 .btn-unlock:hover { background: var(--gold); color: var(--bg); }
 
+/* ── SECTOR TOGGLE ── */
+.sector-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 40px;
+  position: sticky;
+  top: 56px;
+  z-index: 295;
+}
+.sector-label {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--ink4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-right: 0.4rem;
+  flex-shrink: 0;
+}
+.sector-btn {
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--ink3);
+  font-family: var(--head);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.sector-btn:hover { border-color: var(--gold-border); color: var(--ink2); }
+.sector-btn.active { background: var(--gold-dim); border-color: var(--gold-border); color: var(--gold); }
+
 /* ── NAVIGATION ── */
 .nav-bar {
   background: var(--bg2);
@@ -142,7 +180,7 @@ body {
   overflow-x: auto;
   scrollbar-width: none;
   position: sticky;
-  top: 56px;
+  top: 96px;
   z-index: 290;
 }
 .nav-bar::-webkit-scrollbar { display: none; }
@@ -1011,6 +1049,15 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 </header>
 
 <!-- ══════════════════════════════════════
+     SECTOR TOGGLE
+     ══════════════════════════════════════ -->
+<div class="sector-bar">
+  <span class="sector-label">Sector:</span>
+  <button class="sector-btn active" id="sector-btn-restaurant" onclick="switchSector('restaurant',this)">🍽️ Restaurants</button>
+  <button class="sector-btn" id="sector-btn-retail" onclick="switchSector('retail',this)">🛒 Food Retail</button>
+</div>
+
+<!-- ══════════════════════════════════════
      NAVIGATION
      ══════════════════════════════════════ -->
 <nav class="nav-bar" id="nav-bar">
@@ -1339,10 +1386,11 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
      TAB: DIAGNOSTIC (PROTECTED)
 ══════════════════════════════════════════════ -->
 <div id="diagnostic" class="section">
-  <div class="section-title">Full Diagnostic Framework</div>
-  <div class="section-sub">Filter by venue type — each item tagged to show which business type it applies to</div>
+  <div class="section-title" id="diag-section-title">Full Diagnostic Framework</div>
+  <div class="section-sub" id="diag-section-sub">Filter by venue type — each item tagged to show which business type it applies to</div>
 
-  <div class="venue-legend">
+  <!-- RESTAURANT LEGEND -->
+  <div class="venue-legend" id="diag-legend-restaurant">
     <div class="legend-item"><div class="legend-dot" style="background:var(--coffee-light)"></div> Coffee Shop</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--kebab-light)"></div> Kebab / Grill</div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--chinese-light)"></div> Chinese / Asian</div>
@@ -1351,7 +1399,19 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> All venues</div>
   </div>
 
-  <div class="venue-selector">
+  <!-- RETAIL LEGEND -->
+  <div class="venue-legend" id="diag-legend-retail" style="display:none;">
+    <div class="legend-item"><div class="legend-dot" style="background:#6abf69"></div> Greengrocer</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e67e22"></div> Butcher</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3498db"></div> Fishmonger</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#9b59b6"></div> African/Caribbean</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e74c3c"></div> Asian/Middle Eastern</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f39c12"></div> Market Trader</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> All retail</div>
+  </div>
+
+  <!-- RESTAURANT VENUE FILTER -->
+  <div class="venue-selector" id="diag-filter-restaurant">
     <button class="venue-btn active" data-venue="all" onclick="filterVenue('all', this)">All Venues</button>
     <button class="venue-btn" data-venue="coffee" onclick="filterVenue('coffee', this)">☕ Coffee Shop</button>
     <button class="venue-btn" data-venue="kebab" onclick="filterVenue('kebab', this)">🔥 Kebab / Grill</button>
@@ -1360,10 +1420,21 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     <button class="venue-btn" data-venue="meat" onclick="filterVenue('meat', this)">🥩 Meat Restaurant</button>
   </div>
 
+  <!-- RETAIL VENUE FILTER -->
+  <div class="venue-selector" id="diag-filter-retail" style="display:none;">
+    <button class="venue-btn active" data-venue="all" onclick="filterVenueRetail('all', this)">All Retail</button>
+    <button class="venue-btn" data-venue="greengrocer" onclick="filterVenueRetail('greengrocer', this)">🥬 Greengrocer</button>
+    <button class="venue-btn" data-venue="butcher" onclick="filterVenueRetail('butcher', this)">🥩 Butcher</button>
+    <button class="venue-btn" data-venue="fishmonger" onclick="filterVenueRetail('fishmonger', this)">🐟 Fishmonger</button>
+    <button class="venue-btn" data-venue="african" onclick="filterVenueRetail('african', this)">🌍 African/Caribbean</button>
+    <button class="venue-btn" data-venue="asian" onclick="filterVenueRetail('asian', this)">🌏 Asian/ME Grocery</button>
+    <button class="venue-btn" data-venue="market" onclick="filterVenueRetail('market', this)">⛺ Market Trader</button>
+  </div>
+
   <div class="diag-grid" id="diagGrid">
 
     <!-- FOOD COSTS -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 01 — Cost Centre · All Venues</div><div class="diag-title">Food & Ingredient Costs</div></div>
         <div class="diag-toggle">+</div>
@@ -1401,7 +1472,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- LABOUR -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 02 — Cost Centre · All Venues</div><div class="diag-title">Labour & Staffing</div></div>
         <div class="diag-toggle">+</div>
@@ -1432,7 +1503,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- ENERGY -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 03 — Cost Centre · All Venues</div><div class="diag-title">Energy & Utilities</div></div>
         <div class="diag-toggle">+</div>
@@ -1465,7 +1536,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- PREMISES -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 04 — Cost Centre · All Venues</div><div class="diag-title">Premises, Rates & Occupancy</div></div>
         <div class="diag-toggle">+</div>
@@ -1495,7 +1566,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- DELIVERY & TECH -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 05 — Cost Centre · Mostly Food Venues</div><div class="diag-title">Delivery Platforms & Technology</div></div>
         <div class="diag-toggle">+</div>
@@ -1525,7 +1596,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- FINANCE & TAX -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 06 — Cost Centre · All Venues</div><div class="diag-title">Finance, Tax & Compliance</div></div>
         <div class="diag-toggle">+</div>
@@ -1554,7 +1625,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- MENU ENGINEERING -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 07 — Revenue Centre · All Venues</div><div class="diag-title">Menu Engineering & Pricing</div></div>
         <div class="diag-toggle">+</div>
@@ -1586,7 +1657,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- REVENUE & CAPACITY -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 08 — Revenue Centre · All Venues</div><div class="diag-title">Capacity, Footfall & Revenue Optimisation</div></div>
         <div class="diag-toggle">+</div>
@@ -1617,7 +1688,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- CASH FLOW -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 09 — Cash Flow · All Venues</div><div class="diag-title">Cash Flow & Working Capital</div></div>
         <div class="diag-toggle">+</div>
@@ -1644,7 +1715,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- MARKETING & RETENTION -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 10 — Revenue Centre · All Venues</div><div class="diag-title">Marketing, Retention & Digital Presence</div></div>
         <div class="diag-toggle">+</div>
@@ -1673,7 +1744,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
 
     <!-- DRINKS -->
-    <div class="diag-card" data-venues="all">
+    <div class="diag-card" data-venues="all" data-sector="restaurant">
       <div class="diag-header" onclick="toggleDiag(this)">
         <div><div class="diag-cat">Category 11 — Revenue &amp; Cost Centre · All Venues</div><div class="diag-title">Drinks Revenue &amp; Cost</div></div>
         <div class="diag-toggle">+</div>
@@ -1700,6 +1771,267 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
           <div class="diag-item" onclick="drillClick(this,197)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Water revenue — tap vs premium bottled, charged or given free?</div>
         </div>
         <div class="diag-note">Drinks are the highest-margin category in every venue that sells them. A flat white costs £0.44 to make and sells for £3.50. A can of Coke costs £0.38 and sells for £2.80. A premium bottled water costs £0.75 and sells for £5.50. Yet most owners spend 90% of their cost-control effort on food and almost none on drinks. A 5% improvement in drinks revenue delivers more net profit than a 10% improvement in food cost.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         FOOD RETAIL DIAGNOSTIC CATEGORIES
+         (hidden until retail sector selected)
+    ═══════════════════════════════════════ -->
+
+    <!-- RETAIL CAT 01: STOCK BUYING & PURCHASE MARGIN -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 01 — Cost Centre · All Venues</div><div class="diag-title">Stock Buying &amp; Purchase Margin</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,200)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Gross margin % — are you hitting 35–55% depending on category?</div>
+          <div class="diag-item" onclick="drillClick(this,201)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Wholesale vs market buying — are you getting the cheapest landed cost?</div>
+          <div class="diag-item" onclick="drillClick(this,202)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Case buy vs loose — case price per unit vs loose unit price comparison</div>
+          <div class="diag-item" onclick="drillClick(this,203)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Minimum order quantities — are you meeting MOQs to access best tier?</div>
+          <div class="diag-item" onclick="drillClick(this,204)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Supplier payment terms — 30-day credit vs cash on delivery — cash flow impact?</div>
+          <div class="diag-item" onclick="drillClick(this,205)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Number of active suppliers — too many means no loyalty discounts</div>
+          <div class="diag-item" onclick="drillClick(this,206)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Buying group membership — are you accessing collective buying power?</div>
+          <div class="diag-item" onclick="drillClick(this,207)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Seasonal buying strategy — stocking up when cheap, not when needed</div>
+          <div class="diag-item" onclick="drillClick(this,208)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Price comparison discipline — same product across 3+ suppliers regularly?</div>
+          <div class="diag-item" onclick="drillClick(this,209)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Transport and delivery cost — included in landed cost calculation?</div>
+          <div class="diag-item" onclick="drillClick(this,210)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>High-margin premium lines — specialty, ethnic, organic tracked separately?</div>
+          <div class="diag-item" onclick="drillClick(this,211)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Branded vs own-label mix — margin comparison and customer preference data</div>
+          <div class="diag-item" onclick="drillClick(this,212)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Invoice checking — over-charges, short deliveries, substitutions caught?</div>
+          <div class="diag-item" onclick="drillClick(this,213)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Returns and credits — spoiled or wrong delivery credits actually received?</div>
+          <div class="diag-item" onclick="drillClick(this,214)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Shrinkage at buying — weight loss between purchase and sale (produce)</div>
+          <div class="diag-item" onclick="drillClick(this,215)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Cash-and-carry vs delivered — cost per unit comparison per category</div>
+        </div>
+        <div class="diag-note">The buying margin is where food retailers make or lose their business. A greengrocer buying tomatoes at £0.45/kg and selling at £0.85/kg has a 47% margin — but only if shrinkage, delivery cost, and time cost are excluded. Include them and the real margin may be 22%. Most owners have never calculated their true landed cost per SKU. This is where the money is made.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 02: WASTAGE & SPOILAGE -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 02 — Cost Centre · All Venues</div><div class="diag-title">Wastage &amp; Spoilage</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,216)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Wastage % of turnover — tracked weekly? Industry average 4–8% for produce</div>
+          <div class="diag-item" onclick="drillClick(this,217)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Daily waste log — items thrown each day, quantity, cost, reason recorded?</div>
+          <div class="diag-item" onclick="drillClick(this,218)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Ordering accuracy — over-ordering the #1 cause of produce waste</div>
+          <div class="diag-item" onclick="drillClick(this,219)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>FIFO discipline — oldest stock to front, new stock to back, every delivery</div>
+          <div class="diag-item" onclick="drillClick(this,220)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Refrigeration temperature — correct zones for each product category?</div>
+          <div class="diag-item" onclick="drillClick(this,221)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Yellow-sticker markdowns — triggered at right time to save margin vs waste?</div>
+          <div class="diag-item" onclick="drillClick(this,222)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Imperfect produce strategy — sold at discount vs discarded vs donated?</div>
+          <div class="diag-item" onclick="drillClick(this,223)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Seasonal demand forecasting — buying less of slow lines before bank holidays</div>
+          <div class="diag-item" onclick="drillClick(this,224)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Storage conditions — correct humidity, light, ethylene separation for produce</div>
+          <div class="diag-item" onclick="drillClick(this,225)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Meat wastage — trim loss, ageing loss, unsold cuts — calculated per cut?</div>
+          <div class="diag-item" onclick="drillClick(this,226)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Fish wastage — ice consumption, display life, end-of-day protocols</div>
+          <div class="diag-item" onclick="drillClick(this,227)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Prepared food wastage — deli counter, pre-packed, ready meals end-of-day</div>
+          <div class="diag-item" onclick="drillClick(this,228)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Packaging waste — bags, labels, trays — are you being overcharged?</div>
+          <div class="diag-item" onclick="drillClick(this,229)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Charity/community donation scheme — Fare Share, local foodbanks, tax relief</div>
+          <div class="diag-item" onclick="drillClick(this,230)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Too Good To Go or similar — selling near-expiry as a mystery bag for revenue</div>
+        </div>
+        <div class="diag-note">For a food retailer turning over £5,000/week, a 6% wastage rate means £300/week = £15,600/year thrown in the bin. The top 3 causes are over-ordering, poor FIFO rotation, and no markdown trigger system. A structured wastage protocol typically cuts this by half within 8 weeks — saving £7,000–£10,000 per year in a typical independent shop.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 03: PRICING & MARGIN PER LINE -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 03 — Revenue Centre · All Venues</div><div class="diag-title">Pricing &amp; Margin Per Line</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,231)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Price per unit calculated from cost — or just matching competitors?</div>
+          <div class="diag-item" onclick="drillClick(this,232)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Margin by category — do you know which categories make you money?</div>
+          <div class="diag-item" onclick="drillClick(this,233)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Premium pricing on specialist/ethnic lines — are you underpricing unique stock?</div>
+          <div class="diag-item" onclick="drillClick(this,234)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Loose vs pre-packed pricing — which delivers better margin for each product?</div>
+          <div class="diag-item" onclick="drillClick(this,235)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Price review frequency — checking competitor and supplier prices monthly?</div>
+          <div class="diag-item" onclick="drillClick(this,236)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Bundle / meal deal pricing — family packs, recipe bundles adding margin?</div>
+          <div class="diag-item" onclick="drillClick(this,237)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Staple vs premium mix — are commodity items subsidising premium at wrong margins?</div>
+          <div class="diag-item" onclick="drillClick(this,238)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Value-added products — prepared veg, marinated meat, ready-to-cook margin?</div>
+          <div class="diag-item" onclick="drillClick(this,239)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Seasonal price adjustments — raising prices when supply is tight?</div>
+          <div class="diag-item" onclick="drillClick(this,240)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Promotion pricing — deals actually driving footfall or just margin erosion?</div>
+          <div class="diag-item" onclick="drillClick(this,241)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Weight-based vs unit pricing — are all scales calibrated and priced correctly?</div>
+          <div class="diag-item" onclick="drillClick(this,242)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Loyalty pricing — regular customer discounts eroding overall margin?</div>
+        </div>
+        <div class="diag-note">Most independent food retailers price by looking at what the competitor charges and matching or going 5% lower. This is margin suicide. Your costs are not the same as the supermarket's. A specialist Caribbean grocery selling scotch bonnets at £2/100g is not competing with Tesco — it is the only source. Premium specialist lines are routinely underpriced by 20–40% because owners are afraid to charge what the product is worth.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 04: LABOUR & STAFFING -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 04 — Cost Centre · All Venues</div><div class="diag-title">Labour &amp; Staffing Efficiency</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,243)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Labour % of turnover — target 12–18% for food retail</div>
+          <div class="diag-item" onclick="drillClick(this,244)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Sales per labour hour — tracked? Should be £40–£80 for a healthy retail operation</div>
+          <div class="diag-item" onclick="drillClick(this,245)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Peak hours staffing — matched to actual footfall data or guesswork?</div>
+          <div class="diag-item" onclick="drillClick(this,246)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Owner hours on floor — your time has a cost, even if unpaid</div>
+          <div class="diag-item" onclick="drillClick(this,247)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>NLW compliance — minimum wage uplifts costing more each April?</div>
+          <div class="diag-item" onclick="drillClick(this,248)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Family labour — family members working unpaid, hidden cost to business</div>
+          <div class="diag-item" onclick="drillClick(this,249)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Staff tasks outside selling — cleaning, deliveries, prep — costed per hour?</div>
+          <div class="diag-item" onclick="drillClick(this,250)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>NI contributions — employer NI threshold changes since April 2025 impact?</div>
+          <div class="diag-item" onclick="drillClick(this,251)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Rota planning tool — or ad-hoc calls costing unnecessary overtime?</div>
+          <div class="diag-item" onclick="drillClick(this,252)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Zero-hours vs part-time contracts — flexibility vs reliability trade-off costed?</div>
+        </div>
+        <div class="diag-note">A market trader turning over £3,000/week with the owner working 60 hours plus one part-time helper at 20 hours has a true labour cost of £520–£680/week including all on-costs. That is 17–23% of turnover. When labour crosses 20% in food retail, the model is broken. The fix is almost never sacking people — it is restructuring tasks and matching hours to trading patterns.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 05: PREMISES & OVERHEADS -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 05 — Cost Centre · All Venues</div><div class="diag-title">Premises &amp; Overhead Costs</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,253)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Rent as % of turnover — should be under 10% for viable retail</div>
+          <div class="diag-item" onclick="drillClick(this,254)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Business rates — are you claiming Small Business Rates Relief (SBRR)?</div>
+          <div class="diag-item" onclick="drillClick(this,255)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Rates Valuation — has your premises been challenged on the Rating List?</div>
+          <div class="diag-item" onclick="drillClick(this,256)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Market pitch fees — compared across different markets/pitches for ROI?</div>
+          <div class="diag-item" onclick="drillClick(this,257)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Storage and cold storage cost — separate unit costs included in overheads?</div>
+          <div class="diag-item" onclick="drillClick(this,258)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Equipment maintenance — refrigeration servicing, scales, display units?</div>
+          <div class="diag-item" onclick="drillClick(this,259)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Insurance — public liability, stock, employer liability reviewed this year?</div>
+          <div class="diag-item" onclick="drillClick(this,260)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Council/market licences — renewed on time? Late renewals cause disruption</div>
+          <div class="diag-item" onclick="drillClick(this,261)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Waste collection charges — frequency vs volume matched?</div>
+        </div>
+        <div class="diag-note">For market traders, pitch fees vary enormously across East London markets — from £80/day at a quieter location to £280/day at a prime pitch. The question is never just the pitch cost but the revenue per pitch per day. A trader paying £160/day needs £1,100 in sales just to break even. Know your break-even sales number before you book any pitch.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 06: ENERGY & REFRIGERATION -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 06 — Cost Centre · All Venues</div><div class="diag-title">Energy &amp; Refrigeration</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,262)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Energy contract type — fixed, variable, or deemed rate? Deemed = overpaying</div>
+          <div class="diag-item" onclick="drillClick(this,263)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Open display refrigeration — biggest energy cost in most retail shops</div>
+          <div class="diag-item" onclick="drillClick(this,264)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Fridge door discipline — open display vs closed door cabinets, energy delta</div>
+          <div class="diag-item" onclick="drillClick(this,265)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Refrigeration age and efficiency — units older than 10 years typically 40% inefficient</div>
+          <div class="diag-item" onclick="drillClick(this,266)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Freezer temperature — set correctly at -18°C? Every extra degree costs 2–5%</div>
+          <div class="diag-item" onclick="drillClick(this,267)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Lighting — LED conversion done? Halogen shop lights use 3–5× the energy</div>
+          <div class="diag-item" onclick="drillClick(this,268)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Heating — shop heating vs storage heating — separated and controlled?</div>
+          <div class="diag-item" onclick="drillClick(this,269)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Smart meter — installed? Half-hourly data shows exactly when energy spikes</div>
+          <div class="diag-item" onclick="drillClick(this,270)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Energy broker comparison — last compared when? Fixed contracts available now?</div>
+        </div>
+        <div class="diag-note">A small grocery shop with open display refrigeration, halogen spotlights, and a deemed energy contract can easily spend £600–£900/month on energy. Switch to fixed contract, close-door cabinets, and LED lighting and the same shop can reduce this to £320–£450/month. That is £3,000–£5,500 saved annually with no impact on revenue.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 07: CASH FLOW & FINANCIAL CONTROL -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 07 — Finance · All Venues</div><div class="diag-title">Cash Flow &amp; Financial Control</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,271)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Daily cash reconciliation — till vs sales recorded vs cash banked</div>
+          <div class="diag-item" onclick="drillClick(this,272)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Cash shrinkage — unexplained till discrepancies tracked weekly?</div>
+          <div class="diag-item" onclick="drillClick(this,273)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Weekly profit and loss — do you know last week's net profit?</div>
+          <div class="diag-item" onclick="drillClick(this,274)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Bank charges — business account fees, card transaction rates reviewed?</div>
+          <div class="diag-item" onclick="drillClick(this,275)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Card payment rates — are you paying more than 1.5% on card transactions?</div>
+          <div class="diag-item" onclick="drillClick(this,276)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Loan or overdraft costs — monthly interest eating into margin?</div>
+          <div class="diag-item" onclick="drillClick(this,277)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Tax provisions — putting aside VAT and income tax monthly?</div>
+          <div class="diag-item" onclick="drillClick(this,278)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>VAT registration threshold — approaching £90K turnover? Registered already?</div>
+          <div class="diag-item" onclick="drillClick(this,279)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Stock valuation — formal monthly count or estimated guess?</div>
+          <div class="diag-item" onclick="drillClick(this,280)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Bookkeeping — updated weekly? Late accounts mean late decisions</div>
+        </div>
+        <div class="diag-note">Many independent food retailers do not know if they made a profit last week until the accountant tells them at year-end. By then, every bad decision from 12 months ago is a permanent loss. A simple weekly P&L taking 20 minutes — sales, purchases, labour, energy, rent — is the difference between trading into disaster and catching problems before they kill the business.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 08: COMPLIANCE & FOOD SAFETY -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 08 — Compliance · All Venues</div><div class="diag-title">Compliance &amp; Food Safety</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,281)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Food hygiene rating — current rating and last inspection date</div>
+          <div class="diag-item" onclick="drillClick(this,282)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>HACCP records — temperature logs, cleaning schedules, delivery checks</div>
+          <div class="diag-item" onclick="drillClick(this,283)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Allergen labelling — pre-packed for direct sale (PPDS) Natasha's Law compliance</div>
+          <div class="diag-item" onclick="drillClick(this,284)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Use-by date management — staff trained on date rotation and display rules</div>
+          <div class="diag-item" onclick="drillClick(this,285)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Halal certification — correct certification displayed if trading as halal?</div>
+          <div class="diag-item" onclick="drillClick(this,286)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Trading Standards compliance — weights and measures, country of origin labelling</div>
+          <div class="diag-item" onclick="drillClick(this,287)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Staff food hygiene certificates — Level 2 in place for all food-handling staff?</div>
+          <div class="diag-item" onclick="drillClick(this,288)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Public liability insurance — adequate cover for customer injury from product?</div>
+        </div>
+        <div class="diag-note">A single Trading Standards visit resulting in a closure notice can cost a market trader £3,000–£8,000 in lost revenue, fines, and re-certification costs. PPDS labelling failures under Natasha's Law carry fines of up to £5,000 per item. Compliance is not a cost — it is risk management that protects the entire business from a single catastrophic event.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 09: MARKETING & CUSTOMER ACQUISITION -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 09 — Revenue · All Venues</div><div class="diag-title">Marketing &amp; Customer Acquisition</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,289)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Google Business Profile — claimed, complete, and posting weekly?</div>
+          <div class="diag-item" onclick="drillClick(this,290)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>WhatsApp broadcast list — regular customers on a list for deals and new stock?</div>
+          <div class="diag-item" onclick="drillClick(this,291)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Social media — Instagram and Facebook showing product and pricing?</div>
+          <div class="diag-item" onclick="drillClick(this,292)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Community presence — local Facebook groups, Nextdoor, religious community groups?</div>
+          <div class="diag-item" onclick="drillClick(this,293)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Regular customer retention — do you know your top 20 customers by name?</div>
+          <div class="diag-item" onclick="drillClick(this,294)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>New product announcements — letting customers know when specialist lines arrive</div>
+          <div class="diag-item" onclick="drillClick(this,295)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Catering and bulk orders — restaurants, caterers, community events as B2B revenue?</div>
+          <div class="diag-item" onclick="drillClick(this,296)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Online ordering — any platform or WhatsApp order system for delivery/collection?</div>
+        </div>
+        <div class="diag-note">The most powerful marketing tool for a specialist food retailer costs nothing: a WhatsApp broadcast list. Customers who have bought from you before will buy again if you tell them about new stock, seasonal specials, or weekend deals. A list of 200 regular customers contacted once per week with a short WhatsApp message can recover £300–£800/week in repeat footfall that would otherwise go to a supermarket.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 10: DELIVERY & LOGISTICS -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 10 — Operations · All Venues</div><div class="diag-title">Delivery &amp; Logistics</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,297)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Buying run costs — fuel, time, parking for cash-and-carry or market trips</div>
+          <div class="diag-item" onclick="drillClick(this,298)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Van ownership vs hired van — total annual cost comparison</div>
+          <div class="diag-item" onclick="drillClick(this,299)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Delivery to customers — is a local delivery service generating enough revenue to cover cost?</div>
+          <div class="diag-item" onclick="drillClick(this,300)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Route planning for buying runs — minimising fuel and time cost per trip</div>
+          <div class="diag-item" onclick="drillClick(this,301)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>ULEZ and congestion charges — factored into buying run cost for central London?</div>
+          <div class="diag-item" onclick="drillClick(this,302)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Collaborative buying — sharing a delivery or buying run with another trader?</div>
+          <div class="diag-item" onclick="drillClick(this,303)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Market set-up time — equipment, display, travel included in pitch ROI calculation?</div>
+        </div>
+        <div class="diag-note">For a market trader driving to New Covent Garden at 4am twice a week, the true cost of each buying run includes fuel (£15–£25), parking (£8–£15), ULEZ if applicable (£12.50/day), and 4–5 hours of personal time. Two runs per week = £70–£100 in direct costs plus 8–10 hours of labour. The question is whether delivered wholesale pricing (factoring in delivery charge) would actually be cheaper once all buying-run costs are included.</div>
+      </div>
+    </div>
+
+    <!-- RETAIL CAT 11: DIVERSIFICATION & ADDED-VALUE -->
+    <div class="diag-card" data-venues="all" data-sector="retail" style="display:none;">
+      <div class="diag-header" onclick="toggleDiag(this)">
+        <div><div class="diag-cat">Retail Cat 11 — Revenue · All Venues</div><div class="diag-title">Diversification &amp; Added-Value Revenue</div></div>
+        <div class="diag-toggle">+</div>
+      </div>
+      <div class="diag-body">
+        <div class="diag-items">
+          <div class="diag-item" onclick="drillClick(this,304)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Value-added processing — cutting, marinating, preparing on-site for higher margin</div>
+          <div class="diag-item" onclick="drillClick(this,305)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Complementary product lines — selling what customers buy alongside main product</div>
+          <div class="diag-item" onclick="drillClick(this,306)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Catering and event supply — weddings, community events, church catering orders</div>
+          <div class="diag-item" onclick="drillClick(this,307)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Wholesale to local restaurants — selling specialist produce to nearby restaurants</div>
+          <div class="diag-item" onclick="drillClick(this,308)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Recipe kits and bundles — grouping products for a specific dish at a premium</div>
+          <div class="diag-item" onclick="drillClick(this,309)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Subscription boxes — weekly ethnic/specialty produce box for regular income</div>
+          <div class="diag-item" onclick="drillClick(this,310)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Party and celebration packages — whole animals, platters, celebration hampers</div>
+          <div class="diag-item" onclick="drillClick(this,311)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Money transfer / mobile top-up — complementary service driving footfall</div>
+          <div class="diag-item" onclick="drillClick(this,312)" style="cursor:pointer"><span class="venue-dot" style="background:var(--gold)"></span>Online marketplace listings — eBay, Amazon Fresh, or ethnic food platforms?</div>
+        </div>
+        <div class="diag-note">A halal butcher that starts offering marinated chicken portions, ready-to-grill kebab skewers, and celebration whole lamb orders can add 20–30% to gross turnover with the same shop, the same staff, and the same supplier relationships. The margin on value-added products is typically 55–70% vs 28–35% on raw cuts. One £400 catering order for a community celebration event pays more net profit than three days of counter sales.</div>
       </div>
     </div>
 
@@ -2769,6 +3101,25 @@ var heroContent = {
     title: "Copy, Paste, Send — <em>Professional at Every Stage</em>",
     sub: "Every follow-up message for every stage of the client pipeline. Written in plain, direct English — tested in real conversations — and designed to move the prospect to the next step, not just to sound professional. No template will ever substitute for the right timing, but the right words help.",
     stats: [["WhatsApp","Ready templates"],["Email","Follow-up drafts"],["Every","Pipeline stage"],["Send","In 30 seconds"]]
+  },
+  // ─── FOOD RETAIL SECTOR HERO CONTENT ───
+  "demo-retail": {
+    eyebrow: "Food Economist · Independent Food Retail Intelligence · London",
+    title: "Find the <em>Hidden Profit</em> in Your Food Shop",
+    sub: "We forensically analyse every cost and margin line in your retail operation — stock buying, spoilage, pricing, labour, energy, premises, and cash flow — and show you exactly where profit is leaking. Independent food retailers typically recover £1,500–£12,000 per month once they know where to look.",
+    stats: [["113+","Retail diagnostic items"],["7","Shop types covered"],["48hr","Free snapshot turnaround"],["£12K","Max monthly recovery"]]
+  },
+  "energy-retail": {
+    eyebrow: "Energy Cost Intelligence · Food Retail · Refrigeration Specialists",
+    title: "Your Refrigeration Could Be <em>Doubling Your Energy Bill</em>",
+    sub: "Open display refrigeration, ageing compressors, and deemed energy contracts are the triple threat for food retailers. A shop with three open display units, halogen lighting, and a variable energy tariff can cut its energy bill by 40–55% without touching its product range.",
+    stats: [["40–55%","Typical energy saving"],["£5.5K","Max annual saving"],["Refrigeration","#1 cost driver"],["LED + Fixed","Fastest wins"]]
+  },
+  "diagnostic-retail": {
+    eyebrow: "Food Retail Diagnostic · 113 Items · 11 Categories",
+    title: "113 Ways Your Shop Is Losing Money — <em>Find Them All</em>",
+    sub: "The complete forensic framework for independent food retail. 113 diagnostic items across 11 categories covering stock buying, wastage, pricing, labour, premises, energy, cash flow, compliance, marketing, logistics, and diversification. Every item has a financial impact estimate and an actionable fix.",
+    stats: [["113","Retail diagnostic items"],["11","Profit categories"],["7","Shop types"],["Instant","Actionable fixes"]]
   }
 };
 
@@ -2797,12 +3148,19 @@ function showTab(id, el) {
   if (el) el.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Update hero for this tab
-  updateHero(id);
+  // Update hero for this tab (retail-aware)
+  var heroKey = id;
+  if (currentSector === 'retail') {
+    if (id === 'demo') heroKey = 'demo-retail';
+    else if (id === 'energy') heroKey = 'energy-retail';
+    else if (id === 'diagnostic') heroKey = 'diagnostic-retail';
+  }
+  updateHero(heroKey);
 
   // Trigger builds
-  if (id === 'demo') buildDemo(venues[currentVenue]);
-  if (id === 'energy') buildEnergyTab(venues[currentVenue]);
+  var venueData = currentSector === 'retail' ? retailVenues[currentVenue] : venues[currentVenue];
+  if (id === 'demo') buildDemo(venueData);
+  if (id === 'energy') buildEnergyTab(venueData);
   if (id === 'pipeline') renderVisits();
 }
 
@@ -2939,8 +3297,162 @@ var venues = {
 };
 
 var currentVenue = 'indian';
+var currentSector = 'restaurant';
 var sliderValues = {};
 var profitChartInstance = null;
+
+// ════════════════════════════════════════
+// FOOD RETAIL VENUE DATA
+// ════════════════════════════════════════
+var retailVenues = {
+  greengrocer: {
+    name: "Greengrocer",
+    icon: "🥬",
+    desc: "Market / Shop · Est. weekly revenue £4,500",
+    revenue: 4500,
+    foodCost: 0.52, foodTarget: 0.40,
+    labour: 0.20, labourTarget: 0.15,
+    energy: 180, energyTarget: 110,
+    rent: 320, rentTarget: 320,
+    delivery: 120, deliveryTarget: 60,
+    rates: 180, ratesTarget: 45,
+    tech: 40, techTarget: 25,
+    other: 90, otherTarget: 65,
+    energyItems: ["Open display fridge running 24hrs","No night blinds on refrigeration","Halogen spotlights throughout shop","Back room heating on overnight"],
+    benchmarks: [
+      {label:"Stock Cost %", current:52, target:40, unit:"%"},
+      {label:"Labour Cost %", current:20, target:15, unit:"%"},
+      {label:"Wastage/wk", current:280, target:130, unit:"£"},
+      {label:"Net Margin", current:3, target:8, unit:"%"}
+    ]
+  },
+  butcher: {
+    name: "Halal/Ethnic Butcher",
+    icon: "🥩",
+    desc: "Counter Shop · Est. weekly revenue £6,000",
+    revenue: 6000,
+    foodCost: 0.55, foodTarget: 0.42,
+    labour: 0.18, labourTarget: 0.14,
+    energy: 320, energyTarget: 200,
+    rent: 480, rentTarget: 480,
+    delivery: 90, deliveryTarget: 45,
+    rates: 260, ratesTarget: 65,
+    tech: 55, techTarget: 35,
+    other: 110, otherTarget: 80,
+    energyItems: ["Walk-in chiller door left open","Display fridge compressor overworking","Lighting left on after close","Bone saw running between customers"],
+    benchmarks: [
+      {label:"Stock Cost %", current:55, target:42, unit:"%"},
+      {label:"Labour Cost %", current:18, target:14, unit:"%"},
+      {label:"Trim Wastage/wk", current:240, target:110, unit:"£"},
+      {label:"Net Margin", current:2, target:8, unit:"%"}
+    ]
+  },
+  fishmonger: {
+    name: "Fishmonger",
+    icon: "🐟",
+    desc: "Counter / Market · Est. weekly revenue £3,500",
+    revenue: 3500,
+    foodCost: 0.50, foodTarget: 0.38,
+    labour: 0.22, labourTarget: 0.17,
+    energy: 240, energyTarget: 150,
+    rent: 280, rentTarget: 280,
+    delivery: 70, deliveryTarget: 35,
+    rates: 150, ratesTarget: 38,
+    tech: 35, techTarget: 20,
+    other: 80, otherTarget: 55,
+    energyItems: ["Ice machine running inefficiently","Display counter too cold wasting ice","Water and drainage heating cost","Refrigerated van idling time"],
+    benchmarks: [
+      {label:"Stock Cost %", current:50, target:38, unit:"%"},
+      {label:"Labour Cost %", current:22, target:17, unit:"%"},
+      {label:"Fish Wastage/wk", current:320, target:140, unit:"£"},
+      {label:"Net Margin", current:1, target:7, unit:"%"}
+    ]
+  },
+  african: {
+    name: "African/Caribbean Grocery",
+    icon: "🌍",
+    desc: "Convenience Store · Est. weekly revenue £5,500",
+    revenue: 5500,
+    foodCost: 0.48, foodTarget: 0.37,
+    labour: 0.19, labourTarget: 0.14,
+    energy: 280, energyTarget: 170,
+    rent: 420, rentTarget: 420,
+    delivery: 150, deliveryTarget: 75,
+    rates: 220, ratesTarget: 55,
+    tech: 60, techTarget: 40,
+    other: 100, otherTarget: 75,
+    energyItems: ["Open door refrigeration units","Import lines stored in wrong conditions","Shop heating on during trading hours","CCTV and security systems energy drain"],
+    benchmarks: [
+      {label:"Stock Cost %", current:48, target:37, unit:"%"},
+      {label:"Labour Cost %", current:19, target:14, unit:"%"},
+      {label:"Spoilage/wk", current:260, target:110, unit:"£"},
+      {label:"Net Margin", current:4, target:10, unit:"%"}
+    ]
+  },
+  asian: {
+    name: "Asian/Middle Eastern Grocery",
+    icon: "🌏",
+    desc: "Grocery & Deli · Est. weekly revenue £7,000",
+    revenue: 7000,
+    foodCost: 0.46, foodTarget: 0.35,
+    labour: 0.18, labourTarget: 0.13,
+    energy: 340, energyTarget: 210,
+    rent: 580, rentTarget: 580,
+    delivery: 180, deliveryTarget: 90,
+    rates: 300, ratesTarget: 75,
+    tech: 75, techTarget: 50,
+    other: 130, otherTarget: 95,
+    energyItems: ["Spice and dry goods in wrong storage","Imported produce not temperature-tracked","Multiple small fridges vs fewer efficient units","Air conditioning running all day"],
+    benchmarks: [
+      {label:"Stock Cost %", current:46, target:35, unit:"%"},
+      {label:"Labour Cost %", current:18, target:13, unit:"%"},
+      {label:"Wastage/wk", current:200, target:80, unit:"£"},
+      {label:"Net Margin", current:6, target:12, unit:"%"}
+    ]
+  },
+  market: {
+    name: "Market Trader",
+    icon: "⛺",
+    desc: "Street Market · Est. weekly revenue £3,000",
+    revenue: 3000,
+    foodCost: 0.50, foodTarget: 0.38,
+    labour: 0.24, labourTarget: 0.18,
+    energy: 40, energyTarget: 25,
+    rent: 320, rentTarget: 320,
+    delivery: 180, deliveryTarget: 90,
+    rates: 0, ratesTarget: 0,
+    tech: 25, techTarget: 15,
+    other: 70, otherTarget: 50,
+    energyItems: ["Generator fuel cost per trading day","Portable fridge running all day","Extension lead power waste","Lighting rig left on full brightness"],
+    benchmarks: [
+      {label:"Stock Cost %", current:50, target:38, unit:"%"},
+      {label:"Labour Cost %", current:24, target:18, unit:"%"},
+      {label:"Pitch + Transport/wk", current:500, target:320, unit:"£"},
+      {label:"Net Margin", current:2, target:7, unit:"%"}
+    ]
+  },
+  farmdeli: {
+    name: "Farm Shop / Deli",
+    icon: "🌾",
+    desc: "Artisan Retail · Est. weekly revenue £8,000",
+    revenue: 8000,
+    foodCost: 0.44, foodTarget: 0.33,
+    labour: 0.21, labourTarget: 0.16,
+    energy: 420, energyTarget: 260,
+    rent: 650, rentTarget: 650,
+    delivery: 100, deliveryTarget: 50,
+    rates: 340, ratesTarget: 85,
+    tech: 90, techTarget: 60,
+    other: 150, otherTarget: 110,
+    energyItems: ["Cheese and charcuterie storage temperature","Multiple display chillers running 24/7","Kitchen prep area separate energy meter","Outdoor signage and car park lighting"],
+    benchmarks: [
+      {label:"Stock Cost %", current:44, target:33, unit:"%"},
+      {label:"Labour Cost %", current:21, target:16, unit:"%"},
+      {label:"Wastage/wk", current:350, target:150, unit:"£"},
+      {label:"Net Margin", current:4, target:11, unit:"%"}
+    ]
+  }
+};
 
 // ════════════════════════════════════════
 // SUPPLIER DATA
@@ -2962,19 +3474,74 @@ var suppliers = [
 // ════════════════════════════════════════
 // BUILD DEMO TAB
 // ════════════════════════════════════════
+// ════════════════════════════════════════
+// SECTOR SWITCHING
+// ════════════════════════════════════════
+function switchSector(sector, btn) {
+  currentSector = sector;
+  // Toggle sector buttons
+  document.querySelectorAll('.sector-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  var isRetail = sector === 'retail';
+
+  // Update demo heading
+  var secTitle = document.querySelector('#demo .section-title');
+  var secSub = document.querySelector('#demo .section-sub');
+  if (secTitle) secTitle.textContent = isRetail ? 'See What We Find in Food Retail' : 'See What We Find';
+  if (secSub) secSub.textContent = isRetail
+    ? 'Select your shop type — real-world benchmarks from London independent food retailers'
+    : 'Select your venue type — these are real-world benchmarks from London independents';
+
+  // Switch venue chips
+  currentVenue = isRetail ? 'greengrocer' : 'indian';
+  buildVenueChips();
+  buildDemo(isRetail ? retailVenues[currentVenue] : venues[currentVenue]);
+
+  // Switch diagnostic legends and filters
+  var diagLegRest = document.getElementById('diag-legend-restaurant');
+  var diagLegRet = document.getElementById('diag-legend-retail');
+  var diagFiltRest = document.getElementById('diag-filter-restaurant');
+  var diagFiltRet = document.getElementById('diag-filter-retail');
+  if (diagLegRest) diagLegRest.style.display = isRetail ? 'none' : '';
+  if (diagLegRet) diagLegRet.style.display = isRetail ? '' : 'none';
+  if (diagFiltRest) diagFiltRest.style.display = isRetail ? 'none' : '';
+  if (diagFiltRet) diagFiltRet.style.display = isRetail ? '' : 'none';
+
+  // Show/hide diag cards by sector
+  document.querySelectorAll('.diag-card').forEach(function(card) {
+    var s = card.getAttribute('data-sector');
+    if (s === 'restaurant') card.style.display = isRetail ? 'none' : '';
+    else if (s === 'retail') card.style.display = isRetail ? '' : 'none';
+  });
+
+  // Update hero
+  updateHero(isRetail ? 'demo-retail' : 'demo');
+
+  // Update diagnostic title
+  var diagTitle = document.getElementById('diag-section-title');
+  var diagSub = document.getElementById('diag-section-sub');
+  if (diagTitle) diagTitle.textContent = isRetail ? 'Food Retail Diagnostic Framework' : 'Full Diagnostic Framework';
+  if (diagSub) diagSub.textContent = isRetail
+    ? 'Filter by shop type — 113 items covering every profit leak in food retail'
+    : 'Filter by venue type — each item tagged to show which business type it applies to';
+}
+
 function buildVenueChips() {
-  const container = document.getElementById('venue-chips');
-  container.innerHTML = Object.keys(venues).map(k => {
-    const v = venues[k];
-    return `<div class="venue-chip ${k===currentVenue?'active':''}" onclick="selectVenue('${k}',this)">${v.icon} ${v.name}</div>`;
+  var container = document.getElementById('venue-chips');
+  var data = currentSector === 'retail' ? retailVenues : venues;
+  container.innerHTML = Object.keys(data).map(function(k) {
+    var v = data[k];
+    return '<div class="venue-chip ' + (k===currentVenue?'active':'') + '" onclick="selectVenue(\'' + k + '\',this)">' + v.icon + ' ' + v.name + '</div>';
   }).join('');
 }
 
 function selectVenue(key, el) {
   currentVenue = key;
-  document.querySelectorAll('.venue-chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.venue-chip').forEach(function(c) { c.classList.remove('active'); });
   if (el) el.classList.add('active');
-  buildDemo(venues[key]);
+  var data = currentSector === 'retail' ? retailVenues : venues;
+  buildDemo(data[key]);
 }
 
 function buildDemo(d) {
@@ -3350,16 +3917,32 @@ function toggleDiag(header) {
 }
 
 function filterVenue(venue, btn) {
-  document.querySelectorAll('.venue-btn').forEach(b => b.classList.remove('active'));
+  var filterEl = document.getElementById('diag-filter-restaurant');
+  if (filterEl) filterEl.querySelectorAll('.venue-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  const vn={all:'All Venues',coffee:'Coffee Shop',kebab:'Kebab / Grill',chinese:'Chinese / Asian',bar:'Bar / Pub',meat:'Meat / Grill Restaurant'};
-  document.querySelectorAll('.diag-card').forEach(card => {
+  var vn={all:'All Venues',coffee:'Coffee Shop',kebab:'Kebab / Grill',chinese:'Chinese / Asian',bar:'Bar / Pub',meat:'Meat / Grill Restaurant'};
+  document.querySelectorAll('.diag-card[data-sector="restaurant"]').forEach(function(card) {
     if (venue === 'all') { card.classList.remove('hidden'); }
-    else { const v = card.getAttribute('data-venues'); card.classList.toggle('hidden', v !== 'all' && v !== venue); }
+    else { var v = card.getAttribute('data-venues'); card.classList.toggle('hidden', v !== 'all' && v !== venue); }
   });
-  document.querySelectorAll('.diag-cat').forEach(cat => {
-    const base = cat.textContent.split('\u00b7')[0].trim();
+  document.querySelectorAll('.diag-card[data-sector="restaurant"] .diag-cat').forEach(function(cat) {
+    var base = cat.textContent.split('\u00b7')[0].trim();
     cat.textContent = base + ' \u00b7 ' + (vn[venue] || 'All Venues');
+  });
+}
+
+function filterVenueRetail(venue, btn) {
+  var filterEl = document.getElementById('diag-filter-retail');
+  if (filterEl) filterEl.querySelectorAll('.venue-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  var vn={all:'All Retail',greengrocer:'Greengrocer',butcher:'Halal/Ethnic Butcher',fishmonger:'Fishmonger',african:'African/Caribbean Grocery',asian:'Asian/Middle Eastern Grocery',market:'Market Trader',farmdeli:'Farm Shop / Deli'};
+  document.querySelectorAll('.diag-card[data-sector="retail"]').forEach(function(card) {
+    if (venue === 'all') { card.classList.remove('hidden'); }
+    else { var v = card.getAttribute('data-venues'); card.classList.toggle('hidden', v !== 'all' && v !== venue); }
+  });
+  document.querySelectorAll('.diag-card[data-sector="retail"] .diag-cat').forEach(function(cat) {
+    var base = cat.textContent.split('\u00b7')[0].trim();
+    cat.textContent = base + ' \u00b7 ' + (vn[venue] || 'All Retail');
   });
 }
 
@@ -4152,6 +4735,83 @@ var deepTrees = {"Labour cost % of revenue (benchmark: 30\u201335%)": {overview:
     }
   ],
   aggregation: { title: "Drinks Revenue & Margin Optimisation Statement", outputs: ["Current drinks revenue as % of total sales vs venue-type benchmark", "Gap to benchmark expressed as monthly and annual \u00a3 revenue opportunity", "Total identified cost leaks: over-pour + cellar loss + uncosted mixers + underpricing", "Premium water and soft drink uplift potential from proactive upselling", "Priority actions: EPOS setup (day 1), staff briefing (day 1), optics (week 1), pricing review (week 1)"] }
+},
+
+// ─── RETAIL DEEP FORENSIC TREES ───
+"Wastage % of turnover \u2014 tracked weekly? Industry average 4\u20138% for produce": {
+  overview: "Wastage is the silent profit killer of food retail. Most owners estimate their waste \u2014 they do not measure it. A 6% waste rate on a \u00a35,000/week turnover is \u00a3300/week = \u00a315,600/year in stock bought but never sold. Three root causes account for 85% of all retail food waste: over-ordering, poor rotation discipline, and no markdown trigger system.",
+  branches: [
+    { id: "A", title: "Over-Ordering (Root Cause #1)", desc: "The most common cause of food retail waste. Owners order by habit or 'what feels right' rather than sales data. When supply arrives, there is still unsold stock from the previous order \u2014 and the cycle accelerates.",
+      nodes: [
+        { title: "Demand Forecasting vs. Habit Ordering",
+          detail: "Ordering should be driven by recent sales velocity, not last week's invoice total or gut feel.",
+          subs: ["Track units sold per SKU per week for 4 weeks \u2014 this is your true demand baseline", "Order 10\u201315% above demand baseline for high-turnover lines, less for slow-movers", "Review slow-moving lines quarterly \u2014 if a product sells fewer than 10 units/week, question stocking it", "Seasonal adjustment: Bank holidays, Eid, Christmas, carnival \u2014 all require specific order changes, not standard replenishment"] },
+        { title: "Order Frequency vs. Delivery MOQ",
+          detail: "Accepting large minimum order quantities to qualify for better pricing often creates more waste than the discount saves.",
+          subs: ["Calculate: extra stock ordered to meet MOQ \u00d7 wastage rate \u00d7 cost price = real cost of the MOQ deal", "Compare: MOQ discount saving vs wastage cost \u2014 which is larger?", "For highly perishable lines (fish, leafy veg): smaller, more frequent orders always beat one large cheap delivery", "Negotiate MOQs down with suppliers, especially if you've been a loyal customer for 12+ months"] },
+        { title: "Display Quantity Discipline",
+          detail: "Filling a display unit to maximum looks abundant but drives waste on low-turnover items.",
+          subs: ["Rule: never display more than 2-day's worth of stock for slow-moving perishable lines", "Refill from storage rather than stacking the display \u2014 FIFO is only possible if display quantities are controlled", "Fresh meat and fish: display only what will sell today. Rest stays chilled in storage", "Produce: wax paper or damp cloth at night prevents moisture loss and slows wilting"] }
+      ]
+    },
+    { id: "B", title: "Poor FIFO Rotation (Root Cause #2)", desc: "New stock placed in front of old stock is the #1 complaint of every council food safety inspector and the most consistent cause of use-by breaches and spoilage in independent food retail.",
+      nodes: [
+        { title: "FIFO System Implementation",
+          detail: "First In First Out means the oldest stock is always at the front of the display or shelf. Non-negotiable for any perishable product.",
+          subs: ["At every delivery: move existing stock forward before putting new stock behind", "Mark delivery dates on boxes with a marker pen \u2014 visible at a glance", "In walk-in chillers: label shelves with zones, oldest always at front", "Produce bins: remove all stock, put new delivery at bottom, old stock on top"] },
+        { title: "Delivery Checking & Acceptance Protocol",
+          detail: "Accepting a delivery without checking condition and dates is accepting whatever waste comes with it.",
+          subs: ["Check use-by/best-before dates on all chilled, meat, and fish deliveries before signing", "Reject any items with less than 3 days remaining on use-by date for short-shelf-life products", "Check for damage: bruised produce, damaged packaging \u2014 note on delivery note and claim credit", "Temperature check on chilled deliveries: should arrive below 8\u00b0C, ideally 1\u20135\u00b0C"] },
+        { title: "Stock Location & Labelling",
+          detail: "Staff cannot rotate what they cannot identify or cannot find. Unlabelled stock creates waste.",
+          subs: ["Consistent shelf/fridge positions for every product \u2014 staff know exactly where each item lives", "Open packs labelled with date opened and use-within deadline", "Butchery/fishmonger: all prepared products labelled with portion date and use-by", "Use coloured sticker system: green (2+ days), amber (use today or tomorrow), red (for markdown now)"] }
+      ]
+    },
+    { id: "C", title: "No Markdown System (Root Cause #3)", desc: "Throwing away food that could have been sold at a reduced price is double waste \u2014 you lose the cost price AND the potential revenue. A markdown system converts impending waste into actual revenue.",
+      nodes: [
+        { title: "Markdown Trigger Points",
+          detail: "The right time to markdown is before the product becomes unsaleable \u2014 not after.",
+          subs: ["Produce: mark down when first signs of softening, yellowing, or blemishing appear \u2014 not when rotten", "Meat and fish: markdown at 24 hours before use-by, not at use-by", "Chilled deli: mark down same-day prepared items after 4pm for same-day sale", "Rule: half price on same day is always better than full skip tomorrow"] },
+        { title: "Yellow-Sticker Psychology & Placement",
+          detail: "Marked-down products should be prominently positioned, not hidden in a corner.",
+          subs: ["Create a dedicated 'Today's Deals' section \u2014 visible from the counter", "Regulars learn to check it \u2014 creates loyalty and anticipation", "Post on WhatsApp broadcast: 'Fresh lamb mince, 500g for \u00a32.50 today only \u2014 limited'", "Too Good To Go app: create a mystery bag at \u00a33.99 containing \u00a38\u201312 of near-expiry stock"] },
+        { title: "Recovery Revenue Tracking",
+          detail: "Track what you sell at markdown vs what you discard \u2014 this reveals the true cost of your waste protocol.",
+          subs: ["Weekly waste log: item, quantity, cost price, reason for waste (unsold / damaged / expired)", "Monthly: total waste cost vs total markdown revenue recovered", "Target: markdown recovery should cover at least 30\u201340% of total waste cost", "Annual view: if waste cost exceeds 5% of turnover, the system needs structural change, not more yellow stickers"] }
+      ]
+    }
+  ],
+  aggregation: { title: "Wastage Reduction Statement", outputs: ["Current wastage cost per week (estimated vs measured)", "Percentage of waste attributable to over-ordering / poor rotation / no markdown system", "Projected weekly saving from structured waste protocol (typically 40\u201360% reduction)", "Annual monetary value of waste reduction at current turnover", "3-week implementation plan: ordering system (week 1), FIFO audit (week 1), markdown system (week 2), Too Good To Go setup (week 3)"] }
+},
+
+"Gross margin % \u2014 are you hitting 35\u201355% depending on category?": {
+  overview: "Gross margin in food retail is the difference between what you pay for stock and what you sell it for, expressed as a percentage of selling price. A greengrocer buying at 52% cost has a 48% margin \u2014 before any other expenses. The target varies by category: 35\u201345% on commodity staples, 45\u201360% on specialist and premium lines. Most independents have never calculated their actual blended margin.",
+  branches: [
+    { id: "A", title: "Landed Cost vs Invoice Price", desc: "The price on the supplier invoice is not your true cost. Every buying trip adds costs that most retailers never include in their margin calculation \u2014 making margins look better than they are.",
+      nodes: [
+        { title: "True Landed Cost Calculation",
+          detail: "Landed cost = invoice price + transport cost + your time + any wastage at the point of purchase.",
+          subs: ["Fuel: calculate cost per mile \u00d7 distance to cash-and-carry/market \u00d7 frequency", "ULEZ: \u00a312.50/day if you drive a non-compliant vehicle into the ULEZ zone", "Parking: \u00a38\u201325 per trip depending on location", "Your time: 4-hour buying run at your true hourly value = \u00a360\u2013120 of time cost per trip", "All of these divide across the total purchased on that trip \u2014 add to invoice cost per \u00a3100 of stock"] },
+        { title: "Shrinkage Between Purchase and Sale",
+          detail: "For fresh produce especially, the weight or quantity you buy is not what you sell. Trim loss, moisture loss, and breakage reduce the sellable quantity.",
+          subs: ["Leafy veg: 5\u201312% moisture/trim loss. Herbs: 10\u201320%. Root veg: 3\u20138%", "Meat: trim loss on whole carcasses 15\u201335% depending on cut. Fish: 30\u201345% on whole round fish", "Calculate: if you pay \u00a31.20/kg for whole chicken and yield is 72%, your effective cost per kg of sellable meat is \u00a31.67", "Price must cover this yield loss \u2014 not just the invoice cost per kg"] },
+        { title: "Minimum Viable Margin Per Category",
+          detail: "Not all categories need the same margin \u2014 but all need enough to cover their share of overheads.",
+          subs: ["Commodity staples (onions, potatoes, rice, basic veg): 35\u201340% minimum", "Specialist produce (plantain, bitter leaf, pak choi, scotch bonnet): 45\u201360%", "Fresh meat and fish: 40\u201355% depending on cut and demand", "Value-added (pre-cut, marinated, deli counter): 55\u201370%", "Benchmark quarterly: if a category is below minimum margin, either reprice or reduce range"] }
+      ]
+    },
+    { id: "B", title: "Underpricing of Specialist Lines", desc: "The single biggest margin opportunity for most ethnic and specialist food retailers. Premium, specialist, or hard-to-find products are routinely priced by matching a competitor who may have different costs.",
+      nodes: [
+        { title: "Competitor Pricing vs Cost-Based Pricing",
+          detail: "A Caribbean grocery matching Asda on plantain is comparing its buying cost (fresh from specialist importer, small volumes) with Asda's cost (direct from exporter, container volumes). The margins are completely different.",
+          subs: ["Asda plantain cost: ~20\u201325p/unit (container volume). Your cost: 35\u201350p/unit. Same selling price = half the margin", "Solution: price from your cost up, not from their price down", "Premium positioning: if you are the only stock of fresh bitter leaf, yam, or taro root in the area, you are not competing \u2014 you are the only option", "Customer price sensitivity: ethnic community shoppers travel to specialist retailers specifically because they can't get the product elsewhere \u2014 they are not price-shopping against Tesco"] },
+        { title: "Identifying Under-Priced Lines",
+          detail: "A systematic audit of your top 20 selling lines often reveals 4\u20138 items that are significantly under-priced relative to their true cost and market position.",
+          subs: ["List your top 20 products by units sold per week", "For each: calculate true landed cost (invoice + transport allocation + shrinkage)", "Calculate current selling margin %", "Identify any items below 40% margin \u2014 these are under-priced", "For specialist/ethnic items: research what the nearest online competitor charges, not the supermarket"] }
+      ]
+    }
+  ],
+  aggregation: { title: "Gross Margin Improvement Statement", outputs: ["Current blended gross margin % (calculated from last 4-week purchase and sales data)", "Gap to minimum viable margin by category", "Under-priced specialist lines identified and repricing opportunity in \u00a3/week", "True landed cost adjustment (transport, shrinkage, time) impact on stated margins", "Priority repricing actions: which 3 lines to address first for fastest margin recovery"] }
 }
 };
 
