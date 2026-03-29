@@ -6,6 +6,7 @@
 <title>FoodEconomist — Restaurant Profit Intelligence</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ══════════════════════════════════════
    DESIGN SYSTEM — LUXURY DARK EDITORIAL
@@ -1195,16 +1196,59 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   <div class="section-title">Start Your Free 48-Hour Profit Snapshot</div>
   <div class="section-sub">No cost · No obligation · Written report within 48 hours</div>
 
-  <div class="contact-grid">
-    <a href="https://wa.me/447700000000?text=Hi,%20I%20would%20like%20a%20free%2048-hour%20profit%20snapshot" class="contact-card wa" target="_blank">
+  <!-- Request form -->
+  <div class="card" style="margin-bottom:1.2rem;">
+    <div class="card-title" style="margin-bottom:1rem;">📋 Request Your Free Snapshot</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem;">
+      <div>
+        <label class="form-label">Your Name *</label>
+        <input id="enq-name" class="form-input" type="text" placeholder="e.g. Ahmed Hassan">
+      </div>
+      <div>
+        <label class="form-label">Restaurant Name *</label>
+        <input id="enq-restaurant" class="form-input" type="text" placeholder="e.g. Spice Garden">
+      </div>
+      <div>
+        <label class="form-label">Phone / WhatsApp *</label>
+        <input id="enq-phone" class="form-input" type="tel" placeholder="e.g. 07700 900000">
+      </div>
+      <div>
+        <label class="form-label">Email (optional)</label>
+        <input id="enq-email" class="form-input" type="email" placeholder="your@email.com">
+      </div>
+    </div>
+    <div style="margin-bottom:0.8rem;">
+      <label class="form-label">Venue Type</label>
+      <select id="enq-venue" class="form-input">
+        <option value="">Select your venue type</option>
+        <option value="indian">Indian / Bangladeshi</option>
+        <option value="kebab">Kebab / Turkish / Shawarma</option>
+        <option value="chinese">Chinese / Asian</option>
+        <option value="coffee">Coffee Shop / Café</option>
+        <option value="bar">Bar / Pub</option>
+        <option value="grill">Grill / Steakhouse</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label class="form-label">Anything you'd like us to know? (optional)</label>
+      <textarea id="enq-message" class="form-textarea" rows="3" placeholder="e.g. We are struggling with food costs and delivery platform fees..."></textarea>
+    </div>
+    <button id="enq-btn" class="form-submit" onclick="submitEnquiry()">Send Request →</button>
+    <div id="enq-result" style="display:none;margin-top:0.8rem;font-size:0.8rem;font-weight:600;"></div>
+  </div>
+
+  <!-- Quick contact buttons -->
+  <div class="contact-grid" style="margin-bottom:1.2rem;">
+    <div class="contact-card wa" onclick="openWA('Hi, I would like a free 48-hour profit snapshot for my restaurant')" style="cursor:pointer;">
       <div class="contact-icon">💬</div>
       <div class="contact-title">WhatsApp Us</div>
       <div class="contact-sub">Fastest — usually within 1 hour</div>
-    </a>
+    </div>
     <a href="https://t.me/foodeconomist" class="contact-card tg" target="_blank">
       <div class="contact-icon">✈️</div>
       <div class="contact-title">Telegram</div>
-      <div class="contact-sub">Restaurant owners group</div>
+      <div class="contact-sub">Message us on Telegram</div>
     </a>
   </div>
 
@@ -1247,7 +1291,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
         <div class="price-feature">Delivered within 48 hours</div>
         <div class="price-feature">You keep the report regardless</div>
       </div>
-      <a href="https://wa.me/447700000000?text=I%20would%20like%20a%20free%2048-hour%20profit%20snapshot" class="price-cta" target="_blank">Get Your Free Snapshot →</a>
+      <a href="#" onclick="openWA('I would like a free 48-hour profit snapshot');return false;" class="price-cta">Get Your Free Snapshot →</a>
     </div>
     <div class="price-card featured">
       <div class="price-name">Stage 2 — Full Forensic Profit Scan</div>
@@ -1262,7 +1306,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
         <div class="price-feature">Implementation roadmap</div>
         <div class="price-feature">Fee always less than first month's savings</div>
       </div>
-      <a href="https://wa.me/447700000000?text=Discuss%20a%20full%20profit%20scan" class="price-cta" target="_blank">Discuss Your Scan →</a>
+      <a href="#" onclick="openWA('I would like to discuss a full profit scan');return false;" class="price-cta">Discuss Your Scan →</a>
     </div>
     <div class="price-card">
       <div class="price-name">Stage 3 — Monthly Monitoring</div>
@@ -1277,7 +1321,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
         <div class="price-feature">Priority WhatsApp support</div>
         <div class="price-feature">Savings typically 3–5x the fee</div>
       </div>
-      <a href="https://wa.me/447700000000?text=Tell%20me%20about%20monthly%20monitoring" class="price-cta outline" target="_blank">Learn More →</a>
+      <a href="#" onclick="openWA('I would like to know more about monthly monitoring');return false;" class="price-cta outline">Learn More →</a>
     </div>
   </div>
   <div class="card">
@@ -2491,6 +2535,67 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 
 <script>
 // ════════════════════════════════════════
+// SUPABASE CLIENT
+// ════════════════════════════════════════
+var _sb = window.supabase.createClient(
+  'https://fxkudktemkkevmjibyjp.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4a3Vka3RlbWtrZXZtamlieWpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2MzI5NjMsImV4cCI6MjA5MDIwODk2M30.8qPynbWKufSWUNFYJBZzWaGtPhxwIhVRgQsp3mrruE4'
+);
+
+// ════════════════════════════════════════
+// WHATSAPP — number never shown on page
+// ════════════════════════════════════════
+function openWA(msg) {
+  var n = '4479' + '3982' + '3988';
+  window.open('https://wa.me/' + n + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ════════════════════════════════════════
+// CONTACT FORM — submit to Supabase
+// ════════════════════════════════════════
+async function submitEnquiry() {
+  var name = document.getElementById('enq-name').value.trim();
+  var restaurant = document.getElementById('enq-restaurant').value.trim();
+  var phone = document.getElementById('enq-phone').value.trim();
+  var email = document.getElementById('enq-email').value.trim();
+  var venue = document.getElementById('enq-venue').value;
+  var message = document.getElementById('enq-message').value.trim();
+  var btn = document.getElementById('enq-btn');
+  var result = document.getElementById('enq-result');
+
+  if (!name || !restaurant || !phone) {
+    result.style.display = 'block';
+    result.style.color = 'var(--red)';
+    result.textContent = 'Please enter your name, restaurant name and phone number.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  var rec = { name: name, restaurant_name: restaurant, phone: phone, email: email, venue_type: venue, message: message };
+  var resp = await _sb.from('contact_enquiries').insert([rec]);
+
+  if (resp.error) {
+    result.style.display = 'block';
+    result.style.color = 'var(--red)';
+    result.textContent = 'Something went wrong — please WhatsApp us directly instead.';
+    btn.disabled = false;
+    btn.textContent = 'Send Request →';
+  } else {
+    result.style.display = 'block';
+    result.style.color = 'var(--green)';
+    result.textContent = '✅ Request received — we will contact you within a few hours.';
+    document.getElementById('enq-name').value = '';
+    document.getElementById('enq-restaurant').value = '';
+    document.getElementById('enq-phone').value = '';
+    document.getElementById('enq-email').value = '';
+    document.getElementById('enq-message').value = '';
+    btn.textContent = 'Sent ✓';
+  }
+}
+
+// ════════════════════════════════════════
 // ACCESS CONTROL
 // ════════════════════════════════════════
 var ACCESS_CODE = 'fe2025';
@@ -3078,7 +3183,7 @@ function buildSuppliers(cat) {
       <div class="sup-name">${s.name}</div>
       <div class="sup-desc">${s.desc}</div>
       <div class="sup-saving"><span class="sup-saving-badge">${s.saving}</span><span class="sup-saving-label">${s.detail}</span></div>
-      <button class="sup-btn" onclick="window.open('https://wa.me/447700000000?text=I%20am%20interested%20in%20${encodeURIComponent(s.name)}','_blank')">Get Introduction →</button>
+      <button class="sup-btn" onclick="openWA('I am interested in ' + s.name)">Get Introduction →</button>
     </div>`).join('');
 }
 
@@ -3128,6 +3233,11 @@ async function submitIntake() {
 
   visits.push(record);
   localStorage.setItem('fe_visits', JSON.stringify(visits));
+
+  // Mirror to Supabase
+  _sb.from('client_intake').insert([record]).then(function(r) {
+    if (r.error) console.warn('Supabase intake save:', r.error.message);
+  });
 
   const resultDiv = document.getElementById('submit-result');
   resultDiv.style.display = 'block';
@@ -4177,6 +4287,12 @@ function logPayment() {
   
   payments.push({ client, amount, type, date });
   localStorage.setItem('fe_payments', JSON.stringify(payments));
+
+  // Mirror to Supabase
+  _sb.from('revenue_entries').insert([{ client, amount, type, date }]).then(function(r) {
+    if (r.error) console.warn('Supabase payment save:', r.error.message);
+  });
+
   renderTracker();
   
   // Clear form
