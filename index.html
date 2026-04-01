@@ -3788,7 +3788,12 @@ var venues = {
     rates: 375, ratesTarget: 95,
     tech: 120, techTarget: 90,
     other: 180, otherTarget: 140,
-    energyItems: ["Tandoor oven — left on 4hrs after service","Rice cookers on standby overnight","Walk-in fridge door seal worn","Extraction fan on when kitchen closed"],
+    energyItems: [
+      {problem:"Tandoor oven left on 4+ hours after last order", type:"off", action:"Turn off 45 minutes before last order — residual heat handles the final covers. Simple closing checklist item. Many owners leave it on 3–4 hours unnecessarily.", saving:"£18–25/wk"},
+      {problem:"Rice cookers on standby overnight", type:"off", action:"Unplug at the wall after service — not just the on/off button. Standby draws 40–60W continuously. One minute of habit saves the whole cost.", saving:"£3–6/wk"},
+      {problem:"Walk-in fridge door seal worn or damaged", type:"optimise", action:"Cannot switch off. Replace the door seal — a worn seal forces the compressor to run 30–40% harder. Seal kit: £40–80. Pays back within 2 weeks of fitting.", saving:"£20–35/wk"},
+      {problem:"Extraction fan running when kitchen is closed", type:"off", action:"Switch off at close. Add to physical closing walkthrough. If no accessible switch, fit a timer isolator (£30–50). No cooking = no extraction needed.", saving:"£12–18/wk"}
+    ],
     benchmarks: [
       {label:"Food Cost %", current:41, target:30, unit:"%"},
       {label:"Labour Cost %", current:38, target:33, unit:"%"},
@@ -3809,7 +3814,12 @@ var venues = {
     rates: 190, ratesTarget: 48,
     tech: 85, techTarget: 60,
     other: 110, otherTarget: 80,
-    energyItems: ["Espresso machine warming 2hrs early","Display fridge door left open","HVAC at full blast — no schedule","Lighting on after close"],
+    energyItems: [
+      {problem:"Espresso machine warming up 2 hours before first customer", type:"schedule", action:"Modern commercial machines reach working temperature in 20–30 minutes. Set a timer to switch on 30 minutes before opening, not when staff arrive. Most machines have a built-in timer.", saving:"£8–14/wk"},
+      {problem:"Display fridge door left open or poorly sealed", type:"optimise", action:"Cannot switch off. Fit self-closing hinges or a door strip curtain. An open display fridge works 3–4x harder. Also check the door seal — replace if it fails the paper test.", saving:"£10–18/wk"},
+      {problem:"HVAC running at full output with no schedule", type:"schedule", action:"Programme to trading hours only. Set a 30-minute pre-cool before opening. Setback to 18°C overnight. Most HVAC units have a built-in programmer most owners never configure.", saving:"£15–25/wk"},
+      {problem:"All lighting left on after close", type:"off", action:"Switch off at close. If security lighting is needed after hours, fit a motion-sensor light over the entrance — not full-shop lighting running all night.", saving:"£5–10/wk"}
+    ],
     benchmarks: [
       {label:"Food Cost %", current:34, target:27, unit:"%"},
       {label:"Labour Cost %", current:40, target:32, unit:"%"},
@@ -3830,7 +3840,12 @@ var venues = {
     rates: 290, ratesTarget: 73,
     tech: 90, techTarget: 65,
     other: 150, otherTarget: 110,
-    energyItems: ["Charcoal grill lit 3hrs early","Doner machine on with no orders","Fryers not off between service","Extraction on overnight"],
+    energyItems: [
+      {problem:"Charcoal grill or char-broiler lit 3 hours before service", type:"schedule", action:"Commercial char-grills reach cooking temperature in 45–60 minutes. Start 1 hour before first order — not when the first member of staff arrives. Saves fuel and ignition electricity.", saving:"£20–35/wk"},
+      {problem:"Doner machine running during quiet periods with no orders", type:"off", action:"Switch off between slow periods — typically 3pm–6pm for most takeaways. The machine reheats in 15 minutes. Add 'doner off' to the quiet-period checklist.", saving:"£12–20/wk"},
+      {problem:"Fryers staying at full temperature between service", type:"schedule", action:"Drop to standby temperature (120°C vs 180°C) during quiet periods. Full recovery to cooking temp takes 5–8 minutes. This alone saves 35–50% of fryer energy cost.", saving:"£25–40/wk"},
+      {problem:"Extraction fan left on overnight after close", type:"off", action:"Switch off at close — this is pure waste with zero benefit. Add to closing checklist. If the switch is inaccessible, fit a timer isolator. No cooking fumes = no extraction needed.", saving:"£15–22/wk"}
+    ],
     benchmarks: [
       {label:"Food Cost %", current:38, target:29, unit:"%"},
       {label:"Labour Cost %", current:35, target:30, unit:"%"},
@@ -3851,7 +3866,12 @@ var venues = {
     rates: 340, ratesTarget: 85,
     tech: 110, techTarget: 75,
     other: 160, otherTarget: 120,
-    energyItems: ["Wok burners on before service","Walk-in fridge at wrong temp","Extraction fan running 24/7","Hot water heater at max"],
+    energyItems: [
+      {problem:"Wok burners switched on well before service starts", type:"schedule", action:"Wok burners heat in under 2 minutes — no pre-heating needed. Switch on when the first ticket comes in, not when kitchen staff arrive. Time the start with first order.", saving:"£18–28/wk"},
+      {problem:"Walk-in fridge running colder than required", type:"optimise", action:"Cannot switch off. Calibrate to the correct temperature: 1–4°C for fresh produce and meat. Many walk-ins run 3–5°C colder than needed, forcing the compressor to overwork constantly.", saving:"£15–25/wk"},
+      {problem:"Extraction fan running continuously including overnight", type:"off", action:"Switch off when kitchen closes. If no accessible isolator switch, fit a timer (£30–50). 24/7 extraction with no cooking is one of the most common and most avoidable energy leaks.", saving:"£20–30/wk"},
+      {problem:"Commercial hot water heater set above required temperature", type:"optimise", action:"Set to 60°C — the minimum required for legionella control. Running at 75–85°C provides no hygiene benefit and significantly increases standing heat loss from the tank and pipework.", saving:"£8–15/wk"}
+    ],
     benchmarks: [
       {label:"Food Cost %", current:36, target:28, unit:"%"},
       {label:"Labour Cost %", current:37, target:32, unit:"%"},
@@ -3872,7 +3892,12 @@ var venues = {
     rates: 420, ratesTarget: 105,
     tech: 140, techTarget: 100,
     other: 220, otherTarget: 160,
-    energyItems: ["Cellar cooling inefficient","Glasswasher cycle too frequent","Outdoor lighting on all night","Beer line cooler on when closed"],
+    energyItems: [
+      {problem:"Cellar cooling unit running inefficiently", type:"optimise", action:"Cannot switch off. Service annually and clear the condenser fins of dust and debris — blocked condensers add 20–30% to running cost. Ensure 30cm airflow clearance around the unit at all times.", saving:"£15–25/wk"},
+      {problem:"Glasswasher running with half-empty racks", type:"schedule", action:"Run full loads only. Many venues run 80+ short cycles per day. Batch washing cuts energy and water use by 30–40%. A simple 'wait for full rack' rule costs nothing to implement.", saving:"£10–18/wk"},
+      {problem:"Outdoor and signage lighting on all night", type:"off", action:"Fit a timer or photocell sensor. External lighting after midnight with no customers outside is pure waste. LED upgrade also cuts consumption by 60–70% on the same schedule.", saving:"£8–14/wk"},
+      {problem:"Beer line cooler running at full cold when pub is closed", type:"optimise", action:"Cannot switch off completely. Raise the temperature setpoint by 2–3°C overnight — lines stay stable and no quality impact. Reset to full chill 1 hour before opening.", saving:"£12–20/wk"}
+    ],
     benchmarks: [
       {label:"Drink Cost %", current:32, target:26, unit:"%"},
       {label:"Labour Cost %", current:36, target:30, unit:"%"},
@@ -3893,7 +3918,12 @@ var venues = {
     rates: 380, ratesTarget: 95,
     tech: 130, techTarget: 90,
     other: 200, otherTarget: 150,
-    energyItems: ["Grill/oven preheat started too early","Meat ageing fridge at wrong temp","Extraction on maximum 24/7","Walk-in compressor overworking"],
+    energyItems: [
+      {problem:"Grill and oven preheat started 1.5–2 hours too early", type:"schedule", action:"Commercial char-grills reach temperature in 20–30 minutes. Convection ovens in 15 minutes. Reduce preheat by 1 to 1.5 hours — savings are immediate with zero impact on service.", saving:"£22–35/wk"},
+      {problem:"Meat ageing fridge running at wrong temperature", type:"optimise", action:"Cannot switch off. Calibrate to exact ageing range: 1–3°C. Overcooling forces the compressor to overwork and can disrupt the ageing process. A £20 digital min/max thermometer confirms accuracy.", saving:"£10–18/wk"},
+      {problem:"Extraction fans running at maximum speed 24/7", type:"optimise", action:"Install a Variable Speed Drive (VSD) on extraction fans — runs at 30–40% during quiet periods and 100% during service. ROI is typically 12–18 months. Also switch off completely outside trading hours.", saving:"£25–40/wk"},
+      {problem:"Walk-in compressor overworking due to poor maintenance", type:"optimise", action:"Cannot switch off. Strip condenser coils of dust and debris, check refrigerant levels, and ensure 30cm clearance around the unit. Annual service cost: £120–200. Typically saves 15–25% of compressor energy.", saving:"£18–30/wk"}
+    ],
     benchmarks: [
       {label:"Food Cost %", current:39, target:31, unit:"%"},
       {label:"Labour Cost %", current:35, target:30, unit:"%"},
@@ -3925,7 +3955,12 @@ var retailVenues = {
     rates: 180, ratesTarget: 45,
     tech: 40, techTarget: 25,
     other: 90, otherTarget: 65,
-    energyItems: ["Open display fridge running 24hrs","No night blinds on refrigeration","Halogen spotlights throughout shop","Back room heating on overnight"],
+    energyItems: [
+      {problem:"Open display fridge running at full output overnight", type:"optimise", action:"Cannot switch off — but programme a setback thermostat to allow temperature to rise to 8°C overnight (safe for most produce). The compressor runs 40% less. Setback controller: £60–90.", saving:"£15–25/wk"},
+      {problem:"No night blinds on open display refrigeration", type:"optimise", action:"Fit insulating roller night blinds on all open display units. Independently tested to reduce refrigeration energy by 30–40%. Cost: £60–120 per unit — payback in under 6 weeks.", saving:"£12–20/wk"},
+      {problem:"Halogen or fluorescent spotlights throughout the shop", type:"optimise", action:"Replace with LED immediately. LED uses 80% less electricity and generates less heat — which also reduces the refrigeration load as a secondary saving. Cost: £15–30 per fitting.", saving:"£20–35/wk"},
+      {problem:"Back room and prep area heating left on overnight", type:"off", action:"Switch off all back room heating after close. Fit a timer. Staff preparation areas do not need to be heated when no one is present.", saving:"£8–15/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:52, target:40, unit:"%"},
       {label:"Labour Cost %", current:20, target:15, unit:"%"},
@@ -3946,7 +3981,12 @@ var retailVenues = {
     rates: 260, ratesTarget: 65,
     tech: 55, techTarget: 35,
     other: 110, otherTarget: 80,
-    energyItems: ["Walk-in chiller door left open","Display fridge compressor overworking","Lighting left on after close","Bone saw running between customers"],
+    energyItems: [
+      {problem:"Walk-in chiller door left open or without a curtain", type:"optimise", action:"Cannot switch off. Fit a PVC strip curtain or an automatic door closer. An open chiller door loses 30–50% of its cold air in under 2 minutes, forcing the compressor to run almost continuously. Strip curtain: £80–150.", saving:"£20–35/wk"},
+      {problem:"Display fridge compressor overworking due to dirty condenser", type:"optimise", action:"Cannot switch off. Clean condenser coils monthly — vacuum dust from the back and underside of each unit. Dirty condensers add 15–25% to running cost. Takes 10 minutes per unit.", saving:"£12–20/wk"},
+      {problem:"All shop lighting left on after close", type:"off", action:"Switch off all display and shop lighting at close. If security is a concern, one motion-sensor light above the entrance is sufficient — full shop lighting running all night is not.", saving:"£8–14/wk"},
+      {problem:"Bone saw left running or idling between customers", type:"off", action:"Switch off between cuts — do not leave idling. A commercial bone saw draws 1.5–2kW when running. The habit of leaving it running between orders across a full day adds significant cost.", saving:"£5–10/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:55, target:42, unit:"%"},
       {label:"Labour Cost %", current:18, target:14, unit:"%"},
@@ -3967,7 +4007,12 @@ var retailVenues = {
     rates: 150, ratesTarget: 38,
     tech: 35, techTarget: 20,
     other: 80, otherTarget: 55,
-    energyItems: ["Ice machine running inefficiently","Display counter too cold wasting ice","Water and drainage heating cost","Refrigerated van idling time"],
+    energyItems: [
+      {problem:"Ice machine running at random times including peak-rate hours", type:"schedule", action:"Cannot switch off — but programme to produce ice during off-peak hours (11pm–7am) using a time-of-use tariff. Also check incoming water temperature — warm water forces the machine to work harder and produce less.", saving:"£10–18/wk"},
+      {problem:"Display counter set colder than required, burning through ice", type:"optimise", action:"Calibrate to 0–2°C for fish display. Running 2°C colder than necessary increases ice consumption and machine cycles significantly. A £20 digital thermometer confirms the actual counter temperature.", saving:"£8–14/wk"},
+      {problem:"Drain trace heating running continuously", type:"schedule", action:"Check if trace heating on drainage pipes is on a 24/7 run. Fit a timer to limit it to trading hours only. This single change typically cuts trace heating cost by 60–70%.", saving:"£6–12/wk"},
+      {problem:"Refrigerated van running or idling outside the market", type:"off", action:"Switch off van refrigeration when the van is stationary and goods are inside a chilled shop or storage environment. Idling the van refrigeration unit where there is already ambient chill is pure waste.", saving:"£12–20/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:50, target:38, unit:"%"},
       {label:"Labour Cost %", current:22, target:17, unit:"%"},
@@ -3988,7 +4033,12 @@ var retailVenues = {
     rates: 220, ratesTarget: 55,
     tech: 60, techTarget: 40,
     other: 100, otherTarget: 75,
-    energyItems: ["Open door refrigeration units","Import lines stored in wrong conditions","Shop heating on during trading hours","CCTV and security systems energy drain"],
+    energyItems: [
+      {problem:"Open-door refrigeration units with no night blinds", type:"optimise", action:"Cannot switch off. Fit strip curtains during the day and insulating night blinds after close. Combine with an overnight setback thermostat (+4°C at night). Compressor cycles reduce by 30–40%.", saving:"£18–28/wk"},
+      {problem:"Imported ambient lines unnecessarily refrigerated", type:"optimise", action:"Audit which imported lines actually require chilling. Many dry and ambient products — plantain, yam, some spices and sealed goods — are refrigerated out of habit. Moving them frees up cold load and reduces compressor work.", saving:"£10–18/wk"},
+      {problem:"Shop heating running at full output while front door is open", type:"optimise", action:"Heating with the door open is money going straight outside. Fit a door sensor that cuts the heating when the door opens, or replace with a warm air curtain above the entrance which retains heat effectively.", saving:"£12–20/wk"},
+      {problem:"CCTV and DVR security system drawing continuous high power", type:"optimise", action:"Upgrade to PoE (Power over Ethernet) cameras with LED infrared — cuts CCTV energy by 50–70%. DVR units running 24/7 draw 30–80W constantly. An NVR with PoE cameras is significantly more efficient.", saving:"£5–10/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:48, target:37, unit:"%"},
       {label:"Labour Cost %", current:19, target:14, unit:"%"},
@@ -4009,7 +4059,12 @@ var retailVenues = {
     rates: 300, ratesTarget: 75,
     tech: 75, techTarget: 50,
     other: 130, otherTarget: 95,
-    energyItems: ["Spice and dry goods in wrong storage","Imported produce not temperature-tracked","Multiple small fridges vs fewer efficient units","Air conditioning running all day"],
+    energyItems: [
+      {problem:"Multiple small domestic fridges instead of fewer efficient units", type:"optimise", action:"Cannot switch off existing units without losing stock. But plan consolidation at next replacement — two large commercial units use 35–50% less energy than four or five small domestic fridges running simultaneously.", saving:"£18–30/wk"},
+      {problem:"Spices, dry goods and ambient lines stored in refrigeration", type:"optimise", action:"Move all ambient dry goods out of the fridge. Sealed spices, rice, lentils, canned goods and most dried lines do not need chilling. Freeing fridge space reduces cold load and extends compressor life.", saving:"£8–15/wk"},
+      {problem:"Refrigeration units running without temperature monitoring", type:"optimise", action:"Cannot switch off. Fit a £20 digital min/max thermometer in each unit. Overcooling is as expensive as undercooling — and causes more stock loss. Target: 1–4°C for produce, 4–8°C for deli lines.", saving:"£10–18/wk"},
+      {problem:"Air conditioning running at full output all trading day", type:"schedule", action:"Programme to trading hours with a 30-minute pre-cool before opening. Set night setback to 20°C. Most units have a built-in timer most owners never configure — this single step saves 30–40% of AC energy.", saving:"£15–25/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:46, target:35, unit:"%"},
       {label:"Labour Cost %", current:18, target:13, unit:"%"},
@@ -4030,7 +4085,12 @@ var retailVenues = {
     rates: 0, ratesTarget: 0,
     tech: 25, techTarget: 15,
     other: 70, otherTarget: 50,
-    energyItems: ["Generator fuel cost per trading day","Portable fridge running all day","Extension lead power waste","Lighting rig left on full brightness"],
+    energyItems: [
+      {problem:"Generator oversized for actual load — burning excess fuel", type:"optimise", action:"Most market traders run a 5kVA generator for 1–2kW of actual equipment. A correctly sized 2kVA inverter generator uses 40–60% less fuel for the same load. Upgrade cost typically pays back in 8–12 weeks.", saving:"£15–30/wk"},
+      {problem:"Portable fridge pulling down from warm during trading hours", type:"schedule", action:"Pre-cool the portable fridge at home or at a plug point before the market. A well-insulated pre-cooled unit draws minimal power to maintain temperature versus pulling down from ambient — a fraction of the generator load.", saving:"£8–15/wk"},
+      {problem:"Multiple devices on standby via extension lead", type:"off", action:"Switch off at the extension lead, not just the device button. Devices on standby via a generator still burn fuel. A single switched extension lead makes this a one-action habit at close of trade.", saving:"£3–8/wk"},
+      {problem:"Halogen or incandescent market stall lighting rig", type:"optimise", action:"Replace with 12V LED battery-powered strip lighting. Cuts lighting draw by 80% and removes the dependency on the generator for illumination entirely. Battery LED strips run a full trading day on one charge.", saving:"£5–12/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:50, target:38, unit:"%"},
       {label:"Labour Cost %", current:24, target:18, unit:"%"},
@@ -4051,7 +4111,12 @@ var retailVenues = {
     rates: 340, ratesTarget: 85,
     tech: 90, techTarget: 60,
     other: 150, otherTarget: 110,
-    energyItems: ["Cheese and charcuterie storage temperature","Multiple display chillers running 24/7","Kitchen prep area separate energy meter","Outdoor signage and car park lighting"],
+    energyItems: [
+      {problem:"Cheese and charcuterie storage running at the wrong temperature", type:"optimise", action:"Cannot switch off. Calibrate precisely — soft cheese: 4–8°C, hard cheese: 8–12°C, charcuterie: 4–8°C. Running 2°C colder than the product requires adds 15–20% to compressor energy for no quality benefit.", saving:"£12–20/wk"},
+      {problem:"Multiple open display chillers running at full output overnight", type:"optimise", action:"Cannot switch off. Fit insulating night blinds on all open display units and programme overnight setback (+4°C after close). Also consolidate products after trading hours to allow partial displays to be switched off.", saving:"£20–35/wk"},
+      {problem:"Kitchen prep area energy unmonitored — no sub-meter", type:"schedule", action:"Install a smart sub-meter on the prep kitchen circuit (£80–150). Unmonitored prep kitchens regularly show 20–30% waste from equipment left on between sessions. You cannot manage what you cannot measure.", saving:"£10–20/wk"},
+      {problem:"Outdoor signage and car park lighting on all night", type:"off", action:"Fit a timer or photocell sensor. Car park and signage lighting after midnight serves no commercial purpose for most farm shops. LED upgrade combined with a timer reduces this cost by 70–80%.", saving:"£8–15/wk"}
+    ],
     benchmarks: [
       {label:"Stock Cost %", current:44, target:33, unit:"%"},
       {label:"Labour Cost %", current:21, target:16, unit:"%"},
@@ -4427,35 +4492,51 @@ function setScenario(s, el) {
 // ENERGY TAB
 // ════════════════════════════════════════
 function buildEnergyTab(d) {
-  document.getElementById('e-contract').textContent = '£' + d.energy.toLocaleString() + '/wk';
-  document.getElementById('e-fixed').textContent = '£' + d.energyTarget.toLocaleString() + '/wk';
-  document.getElementById('e-saving').textContent = '£' + (d.energy - d.energyTarget).toLocaleString() + '/wk';
-  document.getElementById('energy-total').textContent = '£' + Math.round((d.energy - d.energyTarget) * 52).toLocaleString();
+  document.getElementById('e-contract').textContent = '\u00a3' + d.energy.toLocaleString() + '/wk';
+  document.getElementById('e-fixed').textContent = '\u00a3' + d.energyTarget.toLocaleString() + '/wk';
+  document.getElementById('e-saving').textContent = '\u00a3' + (d.energy - d.energyTarget).toLocaleString() + '/wk';
+  document.getElementById('energy-total').textContent = '\u00a3' + Math.round((d.energy - d.energyTarget) * 52).toLocaleString();
 
-  document.getElementById('energy-equipment').innerHTML = `<div class="card" style="margin-top:1rem;">
-    <div class="card-title">⚠️ Common Energy Drains — ${d.name}</div>
-    ${d.energyItems.map(item => `<div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--radius2);padding:0.8rem 1rem;margin-top:0.6rem;font-size:0.82rem;color:var(--ink2);">⚡ ${item}</div>`).join('')}
-  </div>`;
+  var typeMeta = {
+    'off':      {label:'SWITCH OFF', bg:'var(--green-dim)',  border:'var(--green-border)',          color:'var(--green)'},
+    'optimise': {label:'OPTIMISE',   bg:'var(--gold-dim)',   border:'var(--gold-border)',            color:'var(--gold)'},
+    'schedule': {label:'SCHEDULE',   bg:'var(--blue-dim)',   border:'rgba(96,165,250,0.15)',         color:'var(--blue)'}
+  };
 
-  document.getElementById('energy-sliders').innerHTML = `
-    <div class="slider-group">
-      <div class="slider-header"><div><div class="slider-label">Weekly Energy Bill £</div><div class="slider-sublabel">Move to see annual saving</div></div><div class="slider-value" id="esv-bill">£${d.energy}</div></div>
-      <input type="range" min="${Math.round(d.energyTarget*0.8)}" max="${Math.round(d.energy*1.5)}" value="${d.energy}" step="5" oninput="updateEnergySlider(this.value,${d.energy})">
-      <div id="energy-impact"></div>
-    </div>`;
+  document.getElementById('energy-equipment').innerHTML = '<div class="card" style="margin-top:1rem;">' +
+    '<div class="card-title">\u26a0\ufe0f Common Energy Drains \u2014 ' + d.name + '</div>' +
+    d.energyItems.map(function(item) {
+      var m = typeMeta[item.type] || typeMeta['optimise'];
+      return '<div style="background:' + m.bg + ';border:1px solid ' + m.border + ';border-radius:var(--radius2);padding:0.9rem 1rem;margin-top:0.8rem;">' +
+        '<div style="display:flex;align-items:flex-start;gap:0.6rem;margin-bottom:0.5rem;">' +
+          '<span style="flex-shrink:0;font-family:var(--mono);font-size:0.57rem;font-weight:700;letter-spacing:0.07em;background:' + m.color + ';color:var(--bg);padding:0.2rem 0.45rem;border-radius:3px;margin-top:0.1rem;">' + m.label + '</span>' +
+          '<span style="font-size:0.83rem;font-weight:600;color:var(--ink);">' + item.problem + '</span>' +
+        '</div>' +
+        '<div style="font-size:0.78rem;color:var(--ink2);line-height:1.65;margin-bottom:0.45rem;padding-left:0.1rem;">' + item.action + '</div>' +
+        '<div style="font-size:0.72rem;color:' + m.color + ';font-weight:700;">Saving potential: ' + item.saving + '</div>' +
+        '</div>';
+    }).join('') +
+    '</div>';
+
+  document.getElementById('energy-sliders').innerHTML =
+    '<div class="slider-group">' +
+    '<div class="slider-header"><div><div class="slider-label">Weekly Energy Bill \u00a3</div><div class="slider-sublabel">Move to see annual saving</div></div><div class="slider-value" id="esv-bill">\u00a3' + d.energy + '</div></div>' +
+    '<input type="range" min="' + Math.round(d.energyTarget * 0.8) + '" max="' + Math.round(d.energy * 1.5) + '" value="' + d.energy + '" step="5" oninput="updateEnergySlider(this.value,' + d.energy + ')">' +
+    '<div id="energy-impact"></div>' +
+    '</div>';
   updateEnergySlider(d.energy, d.energy);
 }
 
 function updateEnergySlider(val, baseline) {
-  document.getElementById('esv-bill').textContent = '£' + parseInt(val);
-  const weekly = baseline - parseInt(val);
-  const annual = weekly * 52;
-  const sign = weekly >= 0 ? '+' : '';
-  document.getElementById('energy-impact').innerHTML = `
-    <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.5rem;">
-      <div class="impact-badge ${weekly>=0?'green':'red'}">${sign}£${Math.abs(weekly)}/week</div>
-      <div class="impact-badge ${annual>=0?'green':'red'}">${sign}£${Math.abs(annual).toLocaleString()}/year</div>
-    </div>`;
+  document.getElementById('esv-bill').textContent = '\u00a3' + parseInt(val);
+  var weekly = baseline - parseInt(val);
+  var annual = weekly * 52;
+  var sign = weekly >= 0 ? '+' : '';
+  document.getElementById('energy-impact').innerHTML =
+    '<div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.5rem;">' +
+    '<div class="impact-badge ' + (weekly >= 0 ? 'green' : 'red') + '">' + sign + '\u00a3' + Math.abs(weekly) + '/week</div>' +
+    '<div class="impact-badge ' + (annual >= 0 ? 'green' : 'red') + '">' + sign + '\u00a3' + Math.abs(annual).toLocaleString() + '/year</div>' +
+    '</div>';
 }
 
 // ════════════════════════════════════════
