@@ -1201,6 +1201,39 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   .pricing-grid { grid-template-columns: 1fr; }
 }
 
+/* ── SITE FOOTER ── */
+.site-footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 2rem 1.5rem 1.5rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+.footer-brand {
+  font-family: var(--head);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 0.03em;
+  margin-bottom: 0.35rem;
+}
+.footer-address {
+  font-size: 0.78rem;
+  color: var(--ink3);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.footer-legal {
+  font-size: 0.6rem;
+  color: var(--ink3);
+  opacity: 0.45;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
 </style>
 </head>
 <body>
@@ -5820,5 +5853,16 @@ buildDemo(venues[currentVenue]);
 buildSuppliers('all');
 renderTracker();
 </script>
+
+<footer class="site-footer">
+  <div class="footer-brand">The Food Economist</div>
+  <div class="footer-address">
+    5 Brayford Square, London, E1 0SG &nbsp;&middot;&nbsp; Godfred@thefoodeconomist.co.uk
+  </div>
+  <div class="footer-legal">
+    The Food Economist is a trading name of KAFS LIMITED &nbsp;&middot;&nbsp; Registered in England &amp; Wales &nbsp;&middot;&nbsp; Company No. 06762730 &nbsp;&middot;&nbsp; Registered office: 5 Brayford Square, London, England, E1 0SG &nbsp;&middot;&nbsp; &copy; 2025 KAFS LIMITED. All rights reserved.
+  </div>
+</footer>
+
 </body>
 </html>
