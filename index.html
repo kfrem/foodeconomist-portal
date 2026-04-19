@@ -1258,8 +1258,6 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     Food<em>Economist</em>
   </div>
   <div class="masthead-right">
-    <span class="access-indicator public" id="access-badge">PUBLIC VIEW</span>
-    <button class="btn-unlock" id="btn-unlock" onclick="showGate()">🔑 Unlock</button>
   </div>
 </header>
 
@@ -1282,12 +1280,12 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   <button class="nav-tab" onclick="showTab('suppliers',this)" data-zone="public">Suppliers</button>
   <button class="nav-tab" onclick="showTab('contact',this)" data-zone="public">Contact</button>
   <button class="nav-tab" onclick="showTab('pricing',this)" data-zone="public">Pricing</button>
+  <button class="nav-tab" onclick="showTab('diagnostic',this)" data-zone="public">Full Diagnostic</button>
+  <button class="nav-tab" onclick="showTab('flowchart',this)" data-zone="public">Process Map</button>
 
   <div class="nav-divider" id="nav-divider" style="display:none;"></div>
 
-  <!-- PROTECTED TABS (hidden until unlocked) -->
-  <button class="nav-tab protected" onclick="showTab('diagnostic',this)" data-zone="protected">Full Diagnostic</button>
-  <button class="nav-tab protected" onclick="showTab('flowchart',this)" data-zone="protected">Process Map</button>
+  <!-- OWNER-ONLY TABS (hidden until unlocked) -->
   <button class="nav-tab protected" onclick="showTab('proof',this)" data-zone="protected">Proof of Loss</button>
   <button class="nav-tab protected" onclick="showTab('snapshot',this)" data-zone="protected">48hr Snapshot</button>
   <button class="nav-tab protected" onclick="showTab('scripts',this)" data-zone="protected">Scripts</button>
@@ -1308,8 +1306,8 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 <div class="gate-overlay" id="gate-overlay">
   <div class="gate-box">
     <div style="font-size:1.8rem;margin-bottom:0.8rem;">🔐</div>
-    <h2>Advisor Access</h2>
-    <p>Enter your access code to unlock the full toolkit — marketing, diagnostics, CRM, and sales operations.</p>
+    <h2>Owner Access</h2>
+    <p>Owner access only.</p>
     <input type="password" class="gate-input" id="gate-code" placeholder="ACCESS CODE" onkeydown="if(event.key==='Enter')tryUnlock()">
     <button class="gate-btn" onclick="tryUnlock()">Unlock Full Portal</button>
     <div class="gate-error" id="gate-error">Incorrect code. Try again.</div>
@@ -3565,57 +3563,37 @@ function hideGate() {
 }
 
 function tryUnlock() {
-  const code = document.getElementById('gate-code').value.trim().toLowerCase();
+  var code = document.getElementById('gate-code').value.trim().toLowerCase();
   if (code === ACCESS_CODE) {
     isUnlocked = true;
     hideGate();
-    // Show protected tabs
-    document.querySelectorAll('.nav-tab.protected, .nav-divider.protected').forEach(el => {
+    // Show owner-only tabs
+    document.querySelectorAll('.nav-tab.protected, .nav-divider.protected').forEach(function(el) {
       el.classList.add('visible');
       el.style.display = '';
     });
     document.getElementById('nav-divider').style.display = '';
-    // Update badge
-    const badge = document.getElementById('access-badge');
-    badge.textContent = 'FULL ACCESS';
-    badge.className = 'access-indicator unlocked';
-    // Update unlock button
-    const btn = document.getElementById('btn-unlock');
-    btn.textContent = '🔓 Unlocked';
-    btn.style.background = 'var(--gold-dim)';
-    btn.style.color = 'var(--gold)';
-    btn.onclick = null;
-    btn.style.cursor = 'default';
   } else {
     document.getElementById('gate-error').style.display = 'block';
     document.getElementById('gate-code').value = '';
-    setTimeout(() => document.getElementById('gate-error').style.display = 'none', 2500);
+    setTimeout(function() { document.getElementById('gate-error').style.display = 'none'; }, 2500);
   }
 }
 
 // Check localStorage for persistent unlock
 if (localStorage.getItem('fe_unlocked') === 'true') {
   isUnlocked = true;
-  document.querySelectorAll('.nav-tab.protected, .nav-divider.protected').forEach(el => {
+  document.querySelectorAll('.nav-tab.protected, .nav-divider.protected').forEach(function(el) {
     el.classList.add('visible');
     el.style.display = '';
   });
   document.getElementById('nav-divider').style.display = '';
-  const badge = document.getElementById('access-badge');
-  badge.textContent = 'FULL ACCESS';
-  badge.className = 'access-indicator unlocked';
-  const btn = document.getElementById('btn-unlock');
-  btn.textContent = '🔓 Unlocked';
-  btn.style.background = 'var(--gold-dim)';
-  btn.style.color = 'var(--gold)';
-  btn.onclick = null;
-  btn.style.cursor = 'default';
 }
 
 // Save unlock state
-const origTryUnlock = tryUnlock;
+var origTryUnlock = tryUnlock;
 tryUnlock = function() {
-  const code = document.getElementById('gate-code').value.trim().toLowerCase();
+  var code = document.getElementById('gate-code').value.trim().toLowerCase();
   if (code === ACCESS_CODE) {
     localStorage.setItem('fe_unlocked', 'true');
   }
@@ -5855,6 +5833,21 @@ function copyText(text) {
   });
 }
 
+
+// ════════════════════════════════════════
+// OWNER SECRET TRIGGER — logo x5 clicks
+// ════════════════════════════════════════
+var logoClickCount = 0;
+var logoClickTimer = null;
+document.querySelector('.logo').addEventListener('click', function() {
+  logoClickCount++;
+  if (logoClickTimer) clearTimeout(logoClickTimer);
+  logoClickTimer = setTimeout(function() { logoClickCount = 0; }, 3000);
+  if (logoClickCount >= 5) {
+    logoClickCount = 0;
+    showGate();
+  }
+});
 
 // ════════════════════════════════════════
 // INIT — RUNS AFTER ALL DEFINITIONS
