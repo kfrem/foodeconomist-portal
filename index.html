@@ -1245,6 +1245,51 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   letter-spacing: 0.005em;
 }
 
+/* ── HERO CTA ── */
+.hero-cta-wrap { display:flex; flex-direction:column; align-items:center; gap:0.5rem; margin-top:1.75rem; }
+.hero-cta-btn { background:var(--gold); color:var(--bg); border:none; border-radius:6px; padding:0.9rem 2.2rem; font-family:var(--head); font-weight:800; font-size:1rem; cursor:pointer; letter-spacing:-0.01em; transition:all 0.2s; }
+.hero-cta-btn:hover { background:var(--gold2); transform:translateY(-1px); }
+.hero-cta-note { color:var(--ink3); font-size:0.72rem; }
+
+/* ── MID-PAGE CTA (Demo) ── */
+.mid-cta-block { background:var(--gold-dim); border:1px solid var(--gold-border); border-radius:var(--radius); padding:1.4rem 1.5rem; margin:1.5rem 0; text-align:center; }
+.mid-cta-hook { color:var(--ink2); font-size:0.9rem; margin-bottom:0.9rem; }
+
+/* ── DIAGNOSTIC BOTTOM CTA ── */
+.diag-bottom-cta { background:var(--bg3); border:1px solid var(--gold-border); border-radius:var(--radius); padding:2rem 1.5rem; margin-top:2rem; text-align:center; }
+.diag-bottom-cta h3 { font-family:var(--head); font-size:1.1rem; font-weight:700; color:var(--ink); margin-bottom:0.6rem; }
+.diag-bottom-cta p { color:var(--ink2); font-size:0.84rem; line-height:1.7; margin-bottom:1.1rem; max-width:520px; margin-left:auto; margin-right:auto; }
+
+/* ── DIAGNOSTIC ENGAGED PROMPT ── */
+.diag-engage-prompt { background:var(--gold-dim); border:1px solid var(--gold-border); border-radius:var(--radius); padding:1rem 1.25rem; margin-top:1.25rem; display:none; text-align:center; }
+.diag-engage-prompt p { color:var(--ink2); font-size:0.83rem; margin-bottom:0.75rem; }
+
+/* ── PROCESS MAP CTA ── */
+.process-cta { background:var(--bg3); border:1px solid var(--gold-border); border-radius:var(--radius); padding:2rem 1.5rem; margin-top:2rem; text-align:center; }
+.process-cta-eyebrow { color:var(--gold); font-size:0.68rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.6rem; }
+.process-cta h3 { font-family:var(--head); font-size:1.15rem; font-weight:800; color:var(--ink); margin-bottom:0.6rem; }
+.process-cta p { color:var(--ink2); font-size:0.84rem; line-height:1.7; max-width:480px; margin:0 auto 1.25rem; }
+.process-cta-btns { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; }
+.demo-cta-btn-outline { background:none; border:1px solid var(--gold-border); color:var(--gold); border-radius:6px; padding:0.72rem 1.5rem; font-family:var(--head); font-weight:700; font-size:0.82rem; cursor:pointer; transition:all 0.2s; }
+.demo-cta-btn-outline:hover { background:var(--gold-dim); }
+
+/* ── SUPPLIER CTA CARD ── */
+.supplier-cta-card { background:var(--gold-dim); border:1px solid var(--gold-border); border-radius:var(--radius); padding:1.25rem; display:flex; flex-direction:column; gap:0.6rem; }
+.supplier-cta-card .sup-cta-head { font-family:var(--head); font-weight:700; font-size:0.88rem; color:var(--gold); }
+.supplier-cta-card p { color:var(--ink3); font-size:0.78rem; line-height:1.65; }
+.supplier-cta-card button { background:var(--gold); color:var(--bg); border:none; border-radius:4px; padding:0.5rem 1rem; font-family:var(--head); font-weight:700; font-size:0.78rem; cursor:pointer; align-self:flex-start; transition:all 0.2s; }
+.supplier-cta-card button:hover { background:var(--gold2); }
+
+/* ── STICKY BOTTOM CTA BAR ── */
+.sticky-cta-bar { position:fixed; bottom:0; left:0; right:0; background:var(--bg2); border-top:1px solid var(--gold-border); padding:0.65rem 1.5rem; display:flex; align-items:center; gap:0.75rem; z-index:500; flex-wrap:wrap; box-shadow:0 -4px 20px rgba(0,0,0,0.4); }
+.sticky-cta-label { color:var(--ink3); font-size:0.76rem; flex:1; min-width:140px; }
+.sticky-btn-wa { background:#25D366; color:#fff; border:none; border-radius:4px; padding:0.45rem 1rem; font-family:var(--head); font-weight:700; font-size:0.76rem; cursor:pointer; white-space:nowrap; }
+.sticky-btn-wa:hover { background:#1ebe5a; }
+.sticky-btn-book { background:var(--gold); color:var(--bg); border:none; border-radius:4px; padding:0.45rem 1rem; font-family:var(--head); font-weight:700; font-size:0.76rem; cursor:pointer; white-space:nowrap; }
+.sticky-btn-book:hover { background:var(--gold2); }
+.sticky-cta-close { background:none; border:none; color:var(--ink4); font-size:1.1rem; cursor:pointer; padding:0 0.25rem; line-height:1; }
+@media(max-width:520px) { .sticky-cta-label { display:none; } }
+
 </style>
 </head>
 <body>
@@ -1328,6 +1373,10 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     <div class="stat"><div class="stat-num">£25K</div><div class="stat-label">Max monthly recovery</div></div>
     <div class="stat"><div class="stat-num">6</div><div class="stat-label">Venue types covered</div></div>
   </div>
+  <div class="hero-cta-wrap">
+    <button class="hero-cta-btn" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Get Your Free 48-Hour Profit Snapshot &rarr;</button>
+    <span class="hero-cta-note">No cost &middot; No obligation &middot; Written report delivered within 48 hours</span>
+  </div>
 </div>
 
 
@@ -1390,8 +1439,15 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
       <div class="result-card-num">£375/mo</div>
       <div class="result-card-label">Rates relief — never claimed</div>
       <div class="result-card-desc">Retail Hospitality & Leisure Relief had been available for 18 months. No one had applied. One form to the council recovered it — including partial backdating.</div>
-      <div class="result-card-type">Meat grill · Bethnal Green</div>
+      <div class="result-card-type">Meat grill &middot; Bethnal Green</div>
     </div>
+  </div>
+
+  <!-- Mid-page CTA -->
+  <div class="mid-cta-block">
+    <p class="mid-cta-hook">These are other owners&rsquo; venues. <em>Your number could be higher.</em></p>
+    <p style="color:var(--ink3);font-size:0.78rem;margin-bottom:1rem;">The owners above acted on a free snapshot. Average recovery across our clients: <strong style="color:var(--gold);">&pound;3,800 per month</strong>. No commitment needed to find out yours.</p>
+    <button class="demo-cta-btn" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Find Out What We&rsquo;d Find in Yours &rarr;</button>
   </div>
 
   <!-- Scenario builder -->
@@ -1414,9 +1470,9 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 
   <!-- DEMO CTA BLOCK -->
   <div class="demo-cta">
-    <div class="demo-cta-eyebrow">Free · No Obligation · 48 Hours</div>
+    <div class="demo-cta-eyebrow">Free &middot; No Obligation &middot; 48 Hours</div>
     <h2>These are benchmarks. <em>Your real number</em> could be higher.</h2>
-    <p>The demo above uses industry averages. Your actual leaks depend on your specific supplier contracts, your energy tariff, your rates relief status, and your current cost percentages. The only way to know your real number is a free 48-hour snapshot — 30 minutes with us, a written report delivered within 48 hours. No charge. No obligation.</p>
+    <p>The demo above uses industry averages. Your actual leaks depend on your specific supplier contracts, your energy tariff, your rates relief status, and your current cost percentages. The only way to know your real number is a free 48-hour snapshot &mdash; 30 minutes with us, a written report delivered within 48 hours. <strong style="color:var(--gold);">We have never charged a client more than the savings we found.</strong> No charge. No obligation.</p>
     <div class="slots-badge" id="demo-slots-badge">⚡ Currently accepting 3 new snapshot requests this month</div>
     <br>
     <button class="demo-cta-btn" onclick="showTab('contact', document.querySelector('.nav-tab[onclick*=contact]'))">Get Your Free Snapshot →</button>
@@ -1671,6 +1727,11 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     </div>
   </div>
   <div class="diag-note" style="margin-top:1.5rem;"><strong style="color:var(--gold);">Our commitment:</strong> We never charge more than the savings we identify. Every fee is discussed openly and tailored to the size and complexity of your business.</div>
+  <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.4rem 1.5rem;margin-top:1.5rem;text-align:center;">
+    <div style="font-family:var(--head);font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:0.4rem;">Ready to start?</div>
+    <p style="color:var(--ink2);font-size:0.84rem;margin-bottom:1rem;">Stage 1 is completely free. No sales pitch. You receive a written report and keep it regardless of what you decide next.</p>
+    <button class="demo-cta-btn" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Book Your Free Snapshot &rarr;</button>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════
@@ -2328,6 +2389,19 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 
   </div>
 
+  <!-- Engaged visitor prompt (shown after 3 drill clicks) -->
+  <div class="diag-engage-prompt" id="diag-engage-prompt">
+    <p><strong style="color:var(--gold);">You&rsquo;ve identified several issues.</strong> Want us to calculate exactly what they&rsquo;re costing you &mdash; in writing, within 48 hours, at no charge?</p>
+    <button class="sticky-btn-wa" onclick="openWA('Hi, I\u0027ve been going through the diagnostic and I\u0027d like a free profit snapshot')">&#x1F4AC; WhatsApp Us Now</button>
+  </div>
+
+  <!-- Diagnostic bottom CTA -->
+  <div class="diag-bottom-cta">
+    <h3>Seen something that rings true?</h3>
+    <p>Most owners identify 8&ndash;15 issues on first pass through this framework. We work through every single one, calculate the exact pound value of each leak, and deliver a written report within 48 hours. The first snapshot is completely free.</p>
+    <button class="demo-cta-btn" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Start Your Free Diagnostic Snapshot &rarr;</button>
+  </div>
+
 </div>
 
 
@@ -2439,7 +2513,18 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
       </div>
     </div>
     <div class="diag-note" style="margin-top:1rem;font-size:0.82rem;line-height:1.8;">
-      <strong style="color:var(--gold);">Why this works on a multi-venue owner:</strong> Nobody has ever shown them their four businesses on one page before. They operate in silos, putting out daily fires. This document is the first time they see the whole picture. That is an emotional moment — and it is when they hire you.
+      <strong style="color:var(--gold);">Why this works on a multi-venue owner:</strong> Nobody has ever shown them their four businesses on one page before. They operate in silos, putting out daily fires. This document is the first time they see the whole picture. That is an emotional moment &mdash; and it is when they hire you.
+    </div>
+
+    <!-- Process Map CTA -->
+    <div class="process-cta">
+      <div class="process-cta-eyebrow">Multi-venue owner? This is your report.</div>
+      <h3>We&rsquo;ll do this for your venues. Free.</h3>
+      <p>One consolidated picture of every venue you own &mdash; costs, leaks, and recoverable profit &mdash; delivered in writing within 48 hours. No cost. No obligation. You keep the report.</p>
+      <div class="process-cta-btns">
+        <button class="demo-cta-btn" onclick="openWA('Hi, I own multiple venues and I\u0027d like a consolidated profit review')">&#x1F4AC; WhatsApp to Book &mdash; Fastest</button>
+        <button class="demo-cta-btn-outline" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Fill in the Contact Form &rarr;</button>
+      </div>
     </div>
   </div>
 
@@ -3791,6 +3876,12 @@ function showTab(id, el) {
   if (id === 'demo') buildDemo(venueData);
   if (id === 'energy') buildEnergyTab(venueData);
   if (id === 'pipeline') renderVisits();
+
+  // Hide sticky bar when on contact tab (visitor is already converting)
+  var stickyBar = document.getElementById('sticky-cta-bar');
+  if (stickyBar && stickyBar.dataset.dismissed !== 'true') {
+    stickyBar.style.display = (id === 'contact') ? 'none' : 'flex';
+  }
 }
 
 // ════════════════════════════════════════
@@ -4567,6 +4658,11 @@ function updateEnergySlider(val, baseline) {
 function buildSuppliers(cat) {
   var data = currentSector === 'retail' ? retailSuppliers : suppliers;
   var filtered = cat === 'all' ? data : data.filter(function(s) { return s.cat === cat; });
+  var ctaCard = '<div class="supplier-cta-card">' +
+    '<div class="sup-cta-head">Not sure which suppliers are right for you?</div>' +
+    '<p>We benchmark your current suppliers against our network and negotiate better rates on your behalf \u2014 included as part of your free snapshot.</p>' +
+    '<button onclick="showTab(\'contact\',document.querySelector(\'.nav-tab[onclick*=contact]\'))">Get a Free Supplier Review \u2192</button>' +
+    '</div>';
   document.getElementById('supplier-grid').innerHTML = filtered.map(function(s) {
     return '<div class="supplier-card">' +
       '<div class="sup-cat">' + s.icon + ' ' + s.cat.toUpperCase() + '</div>' +
@@ -4575,7 +4671,7 @@ function buildSuppliers(cat) {
       '<div class="sup-saving"><span class="sup-saving-badge">' + s.saving + '</span><span class="sup-saving-label">' + s.detail + '</span></div>' +
       '<button class="sup-btn" onclick="openWA(\'I am interested in ' + s.name.replace(/'/g, '') + '\')">Get Introduction \u2192</button>' +
       '</div>';
-  }).join('');
+  }).join('') + ctaCard;
 }
 
 function filterSupplier(cat, el) {
@@ -5642,7 +5738,18 @@ var deepTrees = {"Labour cost % of revenue (benchmark: 30\u201335%)": {overview:
 // ════════════════════════════════════════
 // DRILL-DOWN CLICK HANDLER + RENDERERS
 // ════════════════════════════════════════
+var diagClickCount = 0;
+var diagPromptShown = false;
+
 function drillClick(el, idx) {
+  // Track engagement — show prompt after 3 clicks
+  diagClickCount++;
+  if (!diagPromptShown && diagClickCount >= 3) {
+    diagPromptShown = true;
+    var prompt = document.getElementById('diag-engage-prompt');
+    if (prompt) prompt.style.display = 'block';
+  }
+
   // Toggle if already open
   var ns = el.nextSibling;
   while (ns) {
@@ -5867,6 +5974,14 @@ renderTracker();
     The Food Economist is a trading name of KAFS LIMITED &nbsp;&middot;&nbsp; Registered in England &amp; Wales &nbsp;&middot;&nbsp; Company No. 06762730 &nbsp;&middot;&nbsp; Registered office: 5 Brayford Square, London, England, E1 0SG &nbsp;&middot;&nbsp; &copy; 2025 KAFS LIMITED. All rights reserved.
   </div>
 </footer>
+
+<!-- ══ STICKY BOTTOM CTA BAR ══ -->
+<div class="sticky-cta-bar" id="sticky-cta-bar">
+  <span class="sticky-cta-label">Ready to find your hidden profit?</span>
+  <button class="sticky-btn-wa" onclick="openWA('Hi, I\u0027d like a free 48-hour profit snapshot for my business')">&#x1F4AC; WhatsApp Us</button>
+  <button class="sticky-btn-book" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Book Free Snapshot &rarr;</button>
+  <button class="sticky-cta-close" onclick="this.parentNode.style.display='none';this.parentNode.dataset.dismissed='true';" title="Close">&times;</button>
+</div>
 
 </body>
 </html>
