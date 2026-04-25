@@ -6378,17 +6378,18 @@ function runForecast() {
   if (totalEnergy > 0 && energyGap > 50) gaps.push({ label: 'Energy', gap: energyGap, desc: 'Your energy spend is above the ' + b.energy + '% revenue benchmark for your sector. Equipment efficiency and tariff optimisation typically recovers ' + fcFmt(energyGap) + '/month.' });
   if (totalPremises > 0 && premisesGap > 100) gaps.push({ label: 'Premises & Rates', gap: premisesGap, desc: 'Your occupancy cost is ' + (totalPremises / rev * 100).toFixed(1) + '% vs the ' + b.rent + '% benchmark. Rates relief applications, lease renegotiation, or subletting may reduce this cost.' });
   if (gaps.length === 0) {
-    gapBody.innerHTML = '<div style="color:var(--green);font-size:0.84rem;line-height:1.7;">Your cost ratios are broadly in line with sector benchmarks — well managed. The Full Diagnostic will identify the smaller leaks across 180 cost lines that add up to meaningful profit recovery.</div>';
+    gapBody.innerHTML = '<div style="color:var(--green);font-size:0.84rem;line-height:1.7;">Your entered cost ratios are broadly in line with sector benchmarks. The Full Diagnostic will identify the smaller leaks across 180 cost lines that add up to meaningful profit recovery.</div>';
   } else {
-    var html = '';
+    var ghtml = '';
     gaps.forEach(function(g) {
-      html += '<div style="display:flex;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border2);align-items:flex-start;">' +
+      ghtml += '<div style="display:flex;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border2);align-items:flex-start;">' +
         '<div style="min-width:80px;font-family:var(--mono);font-size:1rem;font-weight:500;color:var(--red);">' + fcFmt(g.gap) + '</div>' +
-        '<div><div style="font-family:var(--head);font-size:0.8rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;">' + g.label + '</div><div style="font-size:0.76rem;color:var(--ink3);line-height:1.65;">' + g.desc + '</div></div></div>';
+        '<div><div style="font-family:var(--head);font-size:0.8rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;">' + g.label + '</div>' +
+        '<div style="font-size:0.76rem;color:var(--ink3);line-height:1.65;">' + g.desc + '</div></div></div>';
     });
     var totalGap = gaps.reduce(function(s, g) { return s + g.gap; }, 0);
-    html += '<div style="padding-top:0.8rem;font-family:var(--head);font-size:0.92rem;font-weight:800;color:var(--gold);">Total identifiable gap: ' + fcFmt(totalGap) + ' / month &nbsp;·&nbsp; ' + fcFmt(totalGap * 12) + ' / year</div>';
-    gapBody.innerHTML = html;
+    ghtml += '<div style="padding-top:0.8rem;font-family:var(--head);font-size:0.92rem;font-weight:800;color:var(--gold);">Total identifiable gap: ' + fcFmt(totalGap) + ' / month &nbsp;&middot;&nbsp; ' + fcFmt(totalGap * 12) + ' / year</div>';
+    gapBody.innerHTML = ghtml;
   }
 
   // ── Verdict banner
