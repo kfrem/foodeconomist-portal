@@ -1325,6 +1325,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   <button class="nav-tab" onclick="showTab('suppliers',this)" data-zone="public">Suppliers</button>
   <button class="nav-tab" onclick="showTab('contact',this)" data-zone="public">Contact</button>
   <button class="nav-tab" onclick="showTab('pricing',this)" data-zone="public">Pricing</button>
+  <button class="nav-tab" onclick="showTab('forecast',this)" data-zone="public" style="color:var(--gold);border-bottom-color:transparent;">&#9654; Profit Forecast</button>
   <button class="nav-tab" onclick="showTab('diagnostic',this)" data-zone="public">Full Diagnostic</button>
   <button class="nav-tab" onclick="showTab('flowchart',this)" data-zone="public">Process Map</button>
 
@@ -1364,17 +1365,17 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
      HERO SECTION
      ══════════════════════════════════════ -->
 <div class="hero-section">
-  <div id="hero-eyebrow" class="hero-eyebrow">Food Economist · Restaurant Profit Intelligence · London</div>
-  <h1 id="hero-title">Find the <em>Hidden Profit</em> in Your Restaurant</h1>
-  <p id="hero-sub" class="hero-sub">We forensically analyse every cost line in your operation — food, drinks, energy, labour, delivery, rates — and show you exactly where money is leaving. Independent restaurants typically recover £3,000–£25,000 per month once they know where to look.</p>
+  <div id="hero-eyebrow" class="hero-eyebrow">Godfred Frimpong MSc (Food Economics &amp; Marketing), FCCA &nbsp;·&nbsp; Forward Profit Intelligence for Food Businesses</div>
+  <h1 id="hero-title">Know Your Profit <em>Before the Month Starts</em></h1>
+  <p id="hero-sub" class="hero-sub">Most food businesses find out their profit at the end of the month — when it is too late to change anything. The Food Economist gives you your forward profit forecast before you spend a penny, benchmarked against what the best operators in your sector actually achieve.</p>
   <div id="hero-stats" class="hero-stats">
-    <div class="stat"><div class="stat-num">180+</div><div class="stat-label">Cost &amp; revenue items</div></div>
-    <div class="stat"><div class="stat-num">48hr</div><div class="stat-label">Free snapshot turnaround</div></div>
-    <div class="stat"><div class="stat-num">£25K</div><div class="stat-label">Max monthly recovery</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">Venue types covered</div></div>
+    <div class="stat"><div class="stat-num">Forward</div><div class="stat-label">Profit before month starts</div></div>
+    <div class="stat"><div class="stat-num">180+</div><div class="stat-label">Cost lines forensically examined</div></div>
+    <div class="stat"><div class="stat-num">£79</div><div class="stat-label">Full diagnostic report</div></div>
+    <div class="stat"><div class="stat-num">48hr</div><div class="stat-label">Report delivery turnaround</div></div>
   </div>
   <div class="hero-cta-wrap">
-    <button class="hero-cta-btn" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Get Your Free 48-Hour Profit Snapshot &rarr;</button>
+    <button class="hero-cta-btn" onclick="showTab('forecast',document.querySelector('.nav-tab[onclick*=forecast]'))">Calculate My Profit Forecast — Free &rarr;</button>
     <span class="hero-cta-note">No cost &middot; No obligation &middot; Written report delivered within 48 hours</span>
   </div>
 </div>
@@ -1670,67 +1671,183 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
      TAB: PRICING (PUBLIC)
 ══════════════════════════════════════════════ -->
 <div id="pricing" class="section">
-  <div class="section-title">How We Work</div>
-  <div class="section-sub">Three stages — start free, scale based on what we find</div>
+  <div class="section-title">Clear Pricing — No Surprises</div>
+  <div class="section-sub">Start free. Pay only when you want to go deeper. Every price is fixed — no percentage fees, no hidden charges.</div>
+
+  <!-- Free forecast CTA banner -->
+  <div style="background:var(--bg3);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+    <div>
+      <div style="font-family:var(--mono);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;">Start Here — Always Free</div>
+      <div style="font-family:var(--head);font-weight:800;font-size:0.95rem;color:var(--ink);">Profit Forecast Tool</div>
+      <div style="font-size:0.78rem;color:var(--ink3);margin-top:0.2rem;">Enter your numbers. See your forward profit and your gap vs sector best — before the month begins.</div>
+    </div>
+    <button onclick="showTab('forecast',document.querySelector('.nav-tab[onclick*=forecast]'))" style="background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.82rem;padding:0.65rem 1.5rem;border:none;border-radius:4px;cursor:pointer;white-space:nowrap;">Run Free Forecast &rarr;</button>
+  </div>
+
   <div class="pricing-grid">
     <div class="price-card">
-      <div class="price-name">Stage 1 — Free Profit Snapshot</div>
-      <div class="price-amount" style="font-size:1.6rem;">No Cost</div>
-      <div class="price-period">No obligation · You keep the report</div>
+      <div class="price-name">Full Diagnostic Report</div>
+      <div class="price-amount">£79</div>
+      <div class="price-period">One-off &nbsp;·&nbsp; Delivered within 48 hours &nbsp;·&nbsp; Yours to keep</div>
       <div class="price-features">
-        <div class="price-feature">30-minute data collection at your venue</div>
-        <div class="price-feature" id="pricing-stage1-analysis">Analysis of energy, food cost, rates &amp; delivery</div>
-        <div class="price-feature">Written report with top 3–5 profit leaks</div>
-        <div class="price-feature">Estimated monthly saving calculated</div>
-        <div class="price-feature">Delivered within 48 hours</div>
-        <div class="price-feature">You keep the report regardless</div>
+        <div class="price-feature">180-point forensic cost analysis</div>
+        <div class="price-feature" id="pricing-stage2-menu">Food cost, labour, energy, delivery, menu engineering</div>
+        <div class="price-feature">Benchmarked against sector best performers</div>
+        <div class="price-feature">Written action plan — prioritised by impact</div>
+        <div class="price-feature">Estimated monthly saving calculated per line</div>
+        <div class="price-feature">You keep the full report — implement yourself or with us</div>
       </div>
-      <a href="#" onclick="openWA('I would like a free 48-hour profit snapshot');return false;" class="price-cta">Get Your Free Snapshot →</a>
+      <a href="#" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'));return false;" class="price-cta" id="pricing-stage1-analysis">Get Your Diagnostic Report — £79 →</a>
     </div>
     <div class="price-card featured">
-      <div class="price-name">Stage 2 — Full Forensic Profit Scan</div>
-      <div class="price-amount" style="font-size:1.6rem;">Tailored</div>
-      <div class="price-period">One-off · Based on your business size</div>
+      <div class="price-name">Profit Coaching Session</div>
+      <div class="price-amount">£197</div>
+      <div class="price-period">90 minutes &nbsp;·&nbsp; Online &nbsp;·&nbsp; Book after your report</div>
       <div class="price-features">
-        <div class="price-feature">Full 60+ line item diagnostic across all cost centres</div>
-        <div class="price-feature" id="pricing-stage2-menu">Menu engineering (dish-by-dish profitability)</div>
-        <div class="price-feature">Supplier benchmarking with alternative quotes</div>
-        <div class="price-feature">Labour efficiency analysis</div>
-        <div class="price-feature">Cash flow mapping with pinch-point identification</div>
-        <div class="price-feature">Implementation roadmap</div>
-        <div class="price-feature">Fee = 20% of total value created &mdash; cash savings + intelligence &amp; reporting you now own permanently</div>
+        <div class="price-feature">90-minute deep-dive into your diagnostic findings</div>
+        <div class="price-feature">Priority action plan — what to fix first and how</div>
+        <div class="price-feature">Supplier negotiation scripts tailored to your costs</div>
+        <div class="price-feature">Menu pricing recalculation for your top 10 dishes</div>
+        <div class="price-feature">Labour scheduling optimisation walkthrough</div>
+        <div class="price-feature">Written session notes delivered same day</div>
+        <div class="price-feature">Includes your £79 diagnostic report if not already purchased</div>
       </div>
-      <a href="#" onclick="openWA('I would like to discuss a full profit scan');return false;" class="price-cta">Discuss Your Scan →</a>
+      <a href="#" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'));return false;" class="price-cta">Book Coaching Session — £197 →</a>
     </div>
     <div class="price-card">
-      <div class="price-name">Stage 3 — Monthly Monitoring</div>
-      <div class="price-amount" style="font-size:1.6rem;">Ongoing</div>
-      <div class="price-period">Monthly · Cancel anytime · Scaled to you</div>
+      <div class="price-name">Monthly Intelligence</div>
+      <div class="price-amount">£59<span style="font-size:0.9rem;font-weight:400;">/mo</span></div>
+      <div class="price-period">Cancel anytime &nbsp;·&nbsp; No contract &nbsp;·&nbsp; Pause anytime</div>
       <div class="price-features">
-        <div class="price-feature">Monthly review of all key metrics</div>
-        <div class="price-feature">Supplier price monitoring</div>
-        <div class="price-feature">Energy contract renewal alerts</div>
-        <div class="price-feature">Staff cost optimisation</div>
-        <div class="price-feature" id="pricing-stage3-menu">Quarterly menu re-engineering</div>
-        <div class="price-feature">Priority WhatsApp support</div>
-        <div class="price-feature">Savings typically 3–5x the fee</div>
+        <div class="price-feature">Updated profit forecast every month</div>
+        <div class="price-feature">Margin trend alerts — before problems compound</div>
+        <div class="price-feature" id="pricing-stage3-menu">Seasonal menu profitability review (quarterly)</div>
+        <div class="price-feature">Energy contract renewal reminders</div>
+        <div class="price-feature">Supplier price movement tracking</div>
+        <div class="price-feature">Priority WhatsApp access to Godfred</div>
+        <div class="price-feature">Savings typically 5–10× the monthly fee</div>
       </div>
-      <a href="#" onclick="openWA('I would like to know more about monthly monitoring');return false;" class="price-cta outline">Learn More →</a>
+      <a href="#" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'));return false;" class="price-cta outline" id="pricing-stage1-analysis2">Start Monthly Intelligence — £59 →</a>
     </div>
   </div>
-  <div class="card">
-    <div class="card-title" id="pricing-why-title">💰 Why Restaurants Work With Us</div>
+
+  <div class="card" style="margin-top:1.5rem;">
+    <div class="card-title" id="pricing-why-title">Why Food Businesses Work With The Food Economist</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;text-align:center;margin-top:1rem;">
-      <div><div id="pricing-stat1-num" style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--green);">£1.5–4.5K</div><div id="pricing-stat1-label" style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Avg monthly savings per venue</div></div>
-      <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--gold);">60+</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Cost lines forensically examined</div></div>
-      <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--ink);">48hrs</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Data collection to written report</div></div>
+      <div><div id="pricing-stat1-num" style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--green);">£1.5–4.5K</div><div id="pricing-stat1-label" style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Avg monthly profit recovered</div></div>
+      <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--gold);">180+</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Cost lines forensically examined</div></div>
+      <div><div style="font-family:var(--head);font-size:2rem;font-weight:800;color:var(--ink);">MSc + FCCA</div><div style="font-size:0.76rem;color:var(--ink3);margin-top:0.3rem;">Food Economics &amp; Accounting rigour</div></div>
     </div>
   </div>
-  <div class="diag-note" style="margin-top:1.5rem;line-height:1.85;"><strong style="color:var(--gold);">Our guarantee:</strong> Most clients recover between &pound;3,000 and &pound;20,000 a year in hard savings. But the real value is the intelligence &mdash; the reporting, the benchmarks, the clarity over every cost line &mdash; that they simply never had before. You receive all of this in writing, free, and you keep it regardless of what you decide next. You can implement it yourself. No signature. No obligation. Where you choose to have us surgically implement every recommendation for you, our fee is 20% of the total value we create &mdash; cash savings <em>plus</em> the reporting and decision-making intelligence we put in place permanently. In most cases that means recovering five pounds for every one you spend with us. And if we do not find value that exceeds our fee, you pay nothing.</div>
+
+  <div class="diag-note" style="margin-top:1.5rem;line-height:1.85;">
+    <strong style="color:var(--gold);">Who produces this work:</strong> Godfred Frimpong MSc (Food Economics &amp; Marketing), FCCA — food economist and former DEFRA stakeholder. This is forward-looking financial intelligence: economic analysis and profit modelling applied to your business. It is not accounting, tax, or audit advice. It is the same economic rigour used by food industry analysts — applied directly to your P&amp;L.
+  </div>
+
   <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.4rem 1.5rem;margin-top:1.5rem;text-align:center;">
-    <div style="font-family:var(--head);font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:0.4rem;">Ready to start?</div>
-    <p style="color:var(--ink2);font-size:0.84rem;margin-bottom:1rem;">Stage 1 is completely free. No sales pitch. You receive a written report and keep it regardless of what you decide next.</p>
-    <button class="demo-cta-btn" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Book Your Free Snapshot &rarr;</button>
+    <div style="font-family:var(--head);font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:0.4rem;">Not sure where to start?</div>
+    <p style="color:var(--ink2);font-size:0.84rem;margin-bottom:1rem;">Run the free forecast first — it takes 2 minutes and shows you your profit gap immediately. Then decide.</p>
+    <button class="demo-cta-btn" onclick="showTab('forecast',document.querySelector('.nav-tab[onclick*=forecast]'))">Run Free Profit Forecast &rarr;</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TAB: PROFIT FORECAST (PUBLIC — KEY DIFFERENTIATOR)
+══════════════════════════════════════════════ -->
+<div id="forecast" class="section">
+  <div class="section-title">Your Profit Forecast — <em style="color:var(--gold);">Next Month</em></div>
+  <div class="section-sub">Enter your expected numbers. See your estimated profit before the month begins — and the gap between where you are and where you should be.</div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <div class="card-title">Step 1 — Your Business Inputs</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Venue Type</label>
+        <select id="fc-venue" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--body);font-size:0.82rem;" onchange="fcUpdateBenchmarks()">
+          <option value="restaurant">Restaurant / Takeaway</option>
+          <option value="coffee">Coffee Shop / Café</option>
+          <option value="pub">Pub / Bar with Food</option>
+          <option value="retail">Food Retail (Deli / Farm Shop)</option>
+          <option value="catering">Catering / Events</option>
+          <option value="street">Street Food / Market Trader</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Expected Monthly Revenue (£)</label>
+        <input type="number" id="fc-revenue" placeholder="e.g. 28000" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Food &amp; Drink Cost % <span id="fc-food-hint" style="color:var(--gold);font-size:0.55rem;">(sector avg: 38%)</span></label>
+        <input type="number" id="fc-food" placeholder="e.g. 38" min="0" max="100" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Labour Cost % <span id="fc-labour-hint" style="color:var(--gold);font-size:0.55rem;">(sector avg: 33%)</span></label>
+        <input type="number" id="fc-labour" placeholder="e.g. 33" min="0" max="100" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Monthly Rent / Rates (£)</label>
+        <input type="number" id="fc-rent" placeholder="e.g. 3200" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Monthly Energy Bill (£)</label>
+        <input type="number" id="fc-energy" placeholder="e.g. 1800" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+    </div>
+    <div style="margin-top:0.8rem;">
+      <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Other Fixed Overheads (£/month — insurance, software, marketing, etc.)</label>
+      <input type="number" id="fc-other" placeholder="e.g. 600" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+    </div>
+    <button onclick="runForecast()" style="margin-top:1.2rem;background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.88rem;padding:0.8rem 2rem;border:none;border-radius:4px;cursor:pointer;width:100%;letter-spacing:-0.01em;">Calculate My Profit Forecast &rarr;</button>
+  </div>
+
+  <!-- RESULTS PANEL — shown after calculation -->
+  <div id="forecast-results" style="display:none;">
+
+    <!-- P&L Summary -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;" id="fc-summary-cards"></div>
+
+    <!-- Forward P&L Table -->
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="card-title">Your Forward P&amp;L — Next Month</div>
+      <table style="width:100%;border-collapse:collapse;margin-top:0.8rem;" id="fc-pl-table">
+        <thead>
+          <tr>
+            <th style="text-align:left;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);padding:0.5rem 0;border-bottom:1px solid var(--border);">Line Item</th>
+            <th style="text-align:right;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);padding:0.5rem 0;border-bottom:1px solid var(--border);">Your Number</th>
+            <th style="text-align:right;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);padding:0.5rem 0;border-bottom:1px solid var(--border);">% Revenue</th>
+            <th style="text-align:right;font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);padding:0.5rem 0;border-bottom:1px solid var(--border);">Sector Best</th>
+          </tr>
+        </thead>
+        <tbody id="fc-pl-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Gap Analysis -->
+    <div class="card" style="margin-bottom:1.5rem;" id="fc-gap-card">
+      <div class="card-title">Your Profit Gap — What You Could Recover</div>
+      <div id="fc-gap-body" style="margin-top:0.8rem;"></div>
+    </div>
+
+    <!-- Verdict -->
+    <div id="fc-verdict" style="border-radius:var(--radius);padding:1.4rem 1.5rem;margin-bottom:1.5rem;"></div>
+
+    <!-- CTA -->
+    <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.4rem 1.5rem;text-align:center;">
+      <div style="font-family:var(--head);font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:0.4rem;">Want the full forensic breakdown?</div>
+      <p style="color:var(--ink2);font-size:0.82rem;margin-bottom:0.3rem;">The forecast shows the gap. The Full Diagnostic Report shows you exactly <em>where</em> each pound is leaking and the precise steps to recover it — 180 cost lines, sector benchmarks, and a written action plan.</p>
+      <p style="color:var(--ink3);font-size:0.75rem;margin-bottom:1rem;">Delivered within 48 hours &nbsp;&middot;&nbsp; Kept by you regardless of what you decide next</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <button onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))" style="background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.85rem;padding:0.75rem 1.8rem;border:none;border-radius:4px;cursor:pointer;">Get Full Diagnostic Report — £79 &rarr;</button>
+        <button onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))" style="background:transparent;color:var(--gold);font-family:var(--head);font-weight:700;font-size:0.82rem;padding:0.75rem 1.8rem;border:1px solid var(--gold-border);border-radius:4px;cursor:pointer;">Book a Coaching Session — £197</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Benchmark reference note -->
+  <div style="margin-top:1.5rem;padding:1rem 1.2rem;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);">
+    <div style="font-family:var(--mono);font-size:0.58rem;color:var(--ink4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">About This Forecast</div>
+    <div style="font-size:0.74rem;color:var(--ink3);line-height:1.7;">This tool uses actual UK sector benchmarks from the Food &amp; Drink Federation, CGA Strategy, and The Grocer data (2025–2026). Figures are forward estimates based on your inputs compared against best-in-class performers in your sector. This is financial intelligence for planning — not accounting advice. Produced by Godfred Frimpong MSc (Food Economics &amp; Marketing), FCCA.</div>
   </div>
 </div>
 
@@ -3827,6 +3944,12 @@ var heroContent = {
     title: "113 Ways Your Shop Is Losing Money — <em>Find Them All</em>",
     sub: "The complete forensic framework for independent food retail. 113 diagnostic items across 11 categories covering stock buying, wastage, pricing, labour, premises, energy, cash flow, compliance, marketing, logistics, and diversification. Every item has a financial impact estimate and an actionable fix.",
     stats: [["113","Retail diagnostic items"],["11","Profit categories"],["7","Shop types"],["Instant","Actionable fixes"]]
+  },
+  "forecast": {
+    eyebrow: "Forward Profit Intelligence · The Food Economist",
+    title: "Know Your Profit <em>Before the Month Starts</em>",
+    sub: "Enter your expected revenue and costs. See your forward P&L, benchmark against sector best performers, and identify exactly how much profit you could recover — before you spend a single pound.",
+    stats: [["Forward","Not backward-looking"],["Benchmarked","Against sector leaders"],["Free","No signup required"],["48hr","To full written report"]]
   }
 };
 
@@ -5929,6 +6052,153 @@ function renderTracker() {
 }
 
 // ════════════════════════════════════════
+// PROFIT FORECAST ENGINE
+// ════════════════════════════════════════
+var fcBenchmarks = {
+  restaurant: { food: 30, labour: 33, energy: 5, rent: 10, net: 10, name: "Restaurant / Takeaway" },
+  coffee:     { food: 28, labour: 35, energy: 4, rent: 12, net: 12, name: "Coffee Shop / Café" },
+  pub:        { food: 25, labour: 34, energy: 6, rent: 11, net: 11, name: "Pub / Bar with Food" },
+  retail:     { food: 35, labour: 22, energy: 4, rent: 10, net: 14, name: "Food Retail" },
+  catering:   { food: 32, labour: 38, energy: 3, rent: 5,  net: 13, name: "Catering / Events" },
+  street:     { food: 35, labour: 28, energy: 3, rent: 4,  net: 18, name: "Street Food / Market" }
+};
+
+function fcUpdateBenchmarks() {
+  var venue = document.getElementById('fc-venue').value;
+  var b = fcBenchmarks[venue] || fcBenchmarks.restaurant;
+  var fh = document.getElementById('fc-food-hint');
+  var lh = document.getElementById('fc-labour-hint');
+  if (fh) fh.textContent = '(sector avg: ' + b.food + '%)';
+  if (lh) lh.textContent = '(sector avg: ' + b.labour + '%)';
+  fcClearResults();
+}
+
+function fcClearResults() {
+  var r = document.getElementById('forecast-results');
+  if (r) r.style.display = 'none';
+}
+
+function fcFmt(n) { return '£' + Math.round(n).toLocaleString(); }
+function fcPct(v, rev) { return rev > 0 ? (v / rev * 100).toFixed(1) + '%' : '—'; }
+
+function runForecast() {
+  var rev = parseFloat(document.getElementById('fc-revenue').value) || 0;
+  var foodPct = parseFloat(document.getElementById('fc-food').value);
+  var labourPct = parseFloat(document.getElementById('fc-labour').value);
+  var rent = parseFloat(document.getElementById('fc-rent').value) || 0;
+  var energy = parseFloat(document.getElementById('fc-energy').value) || 0;
+  var other = parseFloat(document.getElementById('fc-other').value) || 0;
+  var venue = document.getElementById('fc-venue').value;
+
+  if (!rev || rev < 100) {
+    alert('Please enter your expected monthly revenue to run the forecast.');
+    return;
+  }
+  if (isNaN(foodPct) || foodPct < 1) foodPct = fcBenchmarks[venue].food;
+  if (isNaN(labourPct) || labourPct < 1) labourPct = fcBenchmarks[venue].labour;
+
+  var b = fcBenchmarks[venue] || fcBenchmarks.restaurant;
+  var food = rev * foodPct / 100;
+  var labour = rev * labourPct / 100;
+  var totalCosts = food + labour + rent + energy + other;
+  var netProfit = rev - totalCosts;
+  var netPct = rev > 0 ? netProfit / rev * 100 : 0;
+
+  // Benchmark figures (best-in-class)
+  var bFood = rev * b.food / 100;
+  var bLabour = rev * b.labour / 100;
+  var bEnergy = rev * b.energy / 100;
+  var bRent = rev * b.rent / 100;
+  var bNet = rev * b.net / 100;
+
+  // Gap: difference between your profit and benchmark profit
+  var profitGap = bNet - netProfit;
+  var foodGap = food - bFood;
+  var labourGap = labour - bLabour;
+  var energyGap = energy - bEnergy;
+
+  // ── Summary cards
+  var summaryCards = document.getElementById('fc-summary-cards');
+  var netColor = netProfit > 0 ? 'var(--green)' : 'var(--red)';
+  var gapColor = profitGap > 0 ? 'var(--red)' : 'var(--green)';
+  summaryCards.innerHTML =
+    '<div class="result-card"><div class="result-card-label">Forecast Net Profit</div><div class="result-card-num" style="color:' + netColor + ';">' + fcFmt(netProfit) + '</div><div class="result-card-desc">Based on your inputs for next month</div></div>' +
+    '<div class="result-card"><div class="result-card-label">Sector Best-Practice Profit</div><div class="result-card-num" style="color:var(--gold);">' + fcFmt(bNet) + '</div><div class="result-card-desc">What top performers at your revenue achieve</div></div>' +
+    '<div class="result-card"><div class="result-card-label">Your Profit Gap</div><div class="result-card-num" style="color:' + gapColor + ';">' + (profitGap > 0 ? fcFmt(profitGap) + ' below' : fcFmt(Math.abs(profitGap)) + ' above') + '</div><div class="result-card-desc">Monthly difference vs best-in-class</div></div>';
+
+  // ── Forward P&L table
+  function plRow(label, yours, bmark, isRevenue, isTotal) {
+    var yPct = fcPct(yours, rev);
+    var bPct = bmark !== null ? bmark.toFixed(0) + '%' : '—';
+    var pctNum = parseFloat(fcPct(yours, rev));
+    var bmarkNum = bmark;
+    var flag = '';
+    if (!isRevenue && !isTotal && bmark !== null) {
+      if (pctNum > bmarkNum + 2) flag = '<span style="color:var(--red);font-size:0.65rem;margin-left:0.3rem;">&#9650; above target</span>';
+      else if (pctNum < bmarkNum - 1) flag = '<span style="color:var(--green);font-size:0.65rem;margin-left:0.3rem;">&#9660; well managed</span>';
+    }
+    var totalStyle = isTotal ? 'font-family:var(--head);font-weight:800;font-size:0.9rem;border-top:2px solid var(--border);' : 'font-size:0.82rem;';
+    var yColor = isRevenue ? 'color:var(--ink);' : (isTotal ? 'color:' + netColor + ';' : 'color:var(--ink2);');
+    return '<tr style="border-bottom:1px solid var(--border2);">' +
+      '<td style="padding:0.55rem 0;' + totalStyle + yColor + '">' + label + flag + '</td>' +
+      '<td style="text-align:right;padding:0.55rem 0;font-family:var(--mono);' + totalStyle + yColor + '">' + fcFmt(yours) + '</td>' +
+      '<td style="text-align:right;padding:0.55rem 0;font-family:var(--mono);font-size:0.78rem;color:var(--ink3);">' + yPct + '</td>' +
+      '<td style="text-align:right;padding:0.55rem 0;font-family:var(--mono);font-size:0.78rem;color:var(--gold);">' + (bmark !== null ? bPct : '—') + '</td>' +
+      '</tr>';
+  }
+
+  var tbody = document.getElementById('fc-pl-body');
+  tbody.innerHTML =
+    plRow('Revenue', rev, null, true, false) +
+    plRow('Food &amp; Drink Cost', food, b.food, false, false) +
+    plRow('Labour Cost', labour, b.labour, false, false) +
+    plRow('Energy', energy, b.energy, false, false) +
+    plRow('Rent &amp; Rates', rent, b.rent, false, false) +
+    plRow('Other Overheads', other, null, false, false) +
+    plRow('Total Costs', totalCosts, null, false, false) +
+    plRow('Net Profit', netProfit, null, false, true);
+
+  // ── Gap analysis
+  var gapBody = document.getElementById('fc-gap-body');
+  var gaps = [];
+  if (foodGap > 50) gaps.push({ label: 'Food &amp; Drink Cost', gap: foodGap, desc: 'Your food cost is ' + foodPct.toFixed(0) + '% vs the ' + b.food + '% sector benchmark. Recovering this alone adds ' + fcFmt(foodGap) + ' to your monthly profit.' });
+  if (labourGap > 50) gaps.push({ label: 'Labour Cost', gap: labourGap, desc: 'Your labour is ' + labourPct.toFixed(0) + '% vs ' + b.labour + '% best-practice. Rescheduling and efficiency gains could recover ' + fcFmt(labourGap) + '/month.' });
+  if (energyGap > 50) gaps.push({ label: 'Energy', gap: energyGap, desc: 'Your energy spend is above the ' + b.energy + '% benchmark for your sector. Equipment and tariff optimisation typically recovers ' + fcFmt(energyGap) + '/month.' });
+  if (gaps.length === 0) {
+    gapBody.innerHTML = '<div style="color:var(--green);font-size:0.84rem;line-height:1.7;">Your cost ratios are broadly in line with sector benchmarks — well managed. The Full Diagnostic will identify the smaller leaks across 180 cost lines that add up to meaningful profit recovery.</div>';
+  } else {
+    var html = '';
+    gaps.forEach(function(g) {
+      html += '<div style="display:flex;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border2);align-items:flex-start;">' +
+        '<div style="min-width:80px;font-family:var(--mono);font-size:1rem;font-weight:500;color:var(--red);">' + fcFmt(g.gap) + '</div>' +
+        '<div><div style="font-family:var(--head);font-size:0.8rem;font-weight:700;color:var(--ink);margin-bottom:0.25rem;">' + g.label + '</div><div style="font-size:0.76rem;color:var(--ink3);line-height:1.65;">' + g.desc + '</div></div></div>';
+    });
+    var totalGap = gaps.reduce(function(s, g) { return s + g.gap; }, 0);
+    html += '<div style="padding-top:0.8rem;font-family:var(--head);font-size:0.92rem;font-weight:800;color:var(--gold);">Total identifiable gap: ' + fcFmt(totalGap) + ' / month &nbsp;·&nbsp; ' + fcFmt(totalGap * 12) + ' / year</div>';
+    gapBody.innerHTML = html;
+  }
+
+  // ── Verdict banner
+  var verdict = document.getElementById('fc-verdict');
+  if (netProfit < 0) {
+    verdict.style.background = 'var(--red-dim)';
+    verdict.style.border = '1px solid var(--red-border)';
+    verdict.innerHTML = '<div style="font-family:var(--head);font-weight:800;font-size:0.95rem;color:var(--red);margin-bottom:0.4rem;">&#9888; Your forecast shows a loss of ' + fcFmt(Math.abs(netProfit)) + ' next month</div><div style="font-size:0.8rem;color:var(--ink2);line-height:1.7;">This is recoverable. The full diagnostic will show you the precise interventions to move from loss to profit — most clients see positive margin within 4–6 weeks of implementing the findings.</div>';
+  } else if (netPct < 5) {
+    verdict.style.background = 'rgba(201,168,76,0.06)';
+    verdict.style.border = '1px solid var(--gold-border)';
+    verdict.innerHTML = '<div style="font-family:var(--head);font-weight:800;font-size:0.95rem;color:var(--gold);margin-bottom:0.4rem;">&#9888; Your margin of ' + netPct.toFixed(1) + '% is below the safe threshold</div><div style="font-size:0.8rem;color:var(--ink2);line-height:1.7;">A margin below 5% means one bad month can erase the entire year\'s profit. The diagnostic identifies which cost lines to address first for the fastest margin improvement.</div>';
+  } else {
+    verdict.style.background = 'var(--green-dim)';
+    verdict.style.border = '1px solid var(--green-border)';
+    verdict.innerHTML = '<div style="font-family:var(--head);font-weight:800;font-size:0.95rem;color:var(--green);margin-bottom:0.4rem;">&#10003; Solid forecast — ' + netPct.toFixed(1) + '% net margin projected</div><div style="font-size:0.8rem;color:var(--ink2);line-height:1.7;">You are ahead of the UK average for your sector. The full diagnostic will find the remaining optimisations — even healthy businesses typically recover an additional £1,000–£3,000/month through the 180-item analysis.</div>';
+  }
+
+  document.getElementById('forecast-results').style.display = 'block';
+  document.getElementById('forecast-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ════════════════════════════════════════
 // COPY TEXT HELPER
 // ════════════════════════════════════════
 function copyText(text) {
@@ -5977,9 +6247,9 @@ renderTracker();
 
 <!-- ══ STICKY BOTTOM CTA BAR ══ -->
 <div class="sticky-cta-bar" id="sticky-cta-bar">
-  <span class="sticky-cta-label">Ready to find your hidden profit?</span>
-  <button class="sticky-btn-wa" onclick="openWA('Hi, I\u0027d like a free 48-hour profit snapshot for my business')">&#x1F4AC; WhatsApp Us</button>
-  <button class="sticky-btn-book" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Book Free Snapshot &rarr;</button>
+  <span class="sticky-cta-label">Know your profit before the month starts — free</span>
+  <button class="sticky-btn-wa" onclick="showTab('forecast',document.querySelector('.nav-tab[onclick*=forecast]'))">&#9654; Run Profit Forecast</button>
+  <button class="sticky-btn-book" onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))">Get Full Report — £79 &rarr;</button>
   <button class="sticky-cta-close" onclick="this.parentNode.style.display='none';this.parentNode.dataset.dismissed='true';" title="Close">&times;</button>
 </div>
 
