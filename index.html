@@ -6184,12 +6184,6 @@ var fcBenchmarks = {
 };
 
 function fcUpdateBenchmarks() {
-  var venue = document.getElementById('fc-venue').value;
-  var b = fcBenchmarks[venue] || fcBenchmarks.restaurant;
-  var fh = document.getElementById('fc-food-hint');
-  var lh = document.getElementById('fc-labour-hint');
-  if (fh) fh.textContent = '(sector avg: ' + b.food + '%)';
-  if (lh) lh.textContent = '(sector avg: ' + b.labour + '%)';
   fcClearResults();
 }
 
