@@ -6197,87 +6197,186 @@ function fcPct(v, rev) { return rev > 0 ? (v / rev * 100).toFixed(1) + '%' : '�
 
 function runForecast() {
   var rev = parseFloat(document.getElementById('fc-revenue').value) || 0;
-  var foodPct = parseFloat(document.getElementById('fc-food').value);
-  var labourPct = parseFloat(document.getElementById('fc-labour').value);
-  var rent = parseFloat(document.getElementById('fc-rent').value) || 0;
-  var energy = parseFloat(document.getElementById('fc-energy').value) || 0;
-  var other = parseFloat(document.getElementById('fc-other').value) || 0;
   var venue = document.getElementById('fc-venue').value;
 
   if (!rev || rev < 100) {
     alert('Please enter your expected monthly revenue to run the forecast.');
     return;
   }
-  if (isNaN(foodPct) || foodPct < 1) foodPct = fcBenchmarks[venue].food;
-  if (isNaN(labourPct) || labourPct < 1) labourPct = fcBenchmarks[venue].labour;
 
   var b = fcBenchmarks[venue] || fcBenchmarks.restaurant;
-  var food = rev * foodPct / 100;
-  var labour = rev * labourPct / 100;
-  var totalCosts = food + labour + rent + energy + other;
+
+  // Revenue & delivery commissions
+  var deliveryPct = parseFloat(document.getElementById('fc-delivery-pct').value) || 0;
+  var commissionRate = parseFloat(document.getElementById('fc-commission-rate').value) || 0;
+  var deliveryRevenue = rev * deliveryPct / 100;
+  var commissionCost = deliveryRevenue * commissionRate / 100;
+
+  // Food & Drink
+  var fMeat = parseFloat(document.getElementById('fc-meat').value) || 0;
+  var fProduce = parseFloat(document.getElementById('fc-produce').value) || 0;
+  var fDry = parseFloat(document.getElementById('fc-dry').value) || 0;
+  var fBev = parseFloat(document.getElementById('fc-beverages').value) || 0;
+  var fStaff = parseFloat(document.getElementById('fc-staff-meals').value) || 0;
+  var totalFood = fMeat + fProduce + fDry + fBev + fStaff;
+
+  // Labour
+  var lKitchen = parseFloat(document.getElementById('fc-kitchen').value) || 0;
+  var lFoh = parseFloat(document.getElementById('fc-foh').value) || 0;
+  var lMgmt = parseFloat(document.getElementById('fc-mgmt').value) || 0;
+  var lNi = parseFloat(document.getElementById('fc-ni').value) || 0;
+  var lAgency = parseFloat(document.getElementById('fc-agency').value) || 0;
+  var totalLabour = lKitchen + lFoh + lMgmt + lNi + lAgency;
+
+  // Premises
+  var pRent = parseFloat(document.getElementById('fc-rent').value) || 0;
+  var pRates = parseFloat(document.getElementById('fc-rates').value) || 0;
+  var pSvc = parseFloat(document.getElementById('fc-svc-charge').value) || 0;
+  var totalPremises = pRent + pRates + pSvc;
+
+  // Energy
+  var eGas = parseFloat(document.getElementById('fc-gas').value) || 0;
+  var eElec = parseFloat(document.getElementById('fc-electric').value) || 0;
+  var totalEnergy = eGas + eElec;
+
+  // Packaging
+  var fPackaging = parseFloat(document.getElementById('fc-packaging').value) || 0;
+
+  // Fixed overheads
+  var oInsurance = parseFloat(document.getElementById('fc-insurance').value) || 0;
+  var oRepairs = parseFloat(document.getElementById('fc-repairs').value) || 0;
+  var oMarketing = parseFloat(document.getElementById('fc-marketing').value) || 0;
+  var oSoftware = parseFloat(document.getElementById('fc-software').value) || 0;
+  var oFinance = parseFloat(document.getElementById('fc-finance').value) || 0;
+  var oOther = parseFloat(document.getElementById('fc-other').value) || 0;
+  var totalFixed = oInsurance + oRepairs + oMarketing + oSoftware + oFinance + oOther;
+
+  // Grand totals
+  var totalCosts = totalFood + totalLabour + totalPremises + totalEnergy + fPackaging + commissionCost + totalFixed;
   var netProfit = rev - totalCosts;
   var netPct = rev > 0 ? netProfit / rev * 100 : 0;
 
-  // Benchmark figures (best-in-class)
+  // Sector benchmark figures
   var bFood = rev * b.food / 100;
   var bLabour = rev * b.labour / 100;
   var bEnergy = rev * b.energy / 100;
   var bRent = rev * b.rent / 100;
   var bNet = rev * b.net / 100;
 
-  // Gap: difference between your profit and benchmark profit
-  var profitGap = bNet - netProfit;
-  var foodGap = food - bFood;
-  var labourGap = labour - bLabour;
-  var energyGap = energy - bEnergy;
-
   // ── Summary cards
+  var netColor = netProfit >= 0 ? 'var(--green)' : 'var(--red)';
+  var gapVal = bNet - netProfit;
+  var gapColor = gapVal > 0 ? 'var(--red)' : 'var(--green)';
   var summaryCards = document.getElementById('fc-summary-cards');
-  var netColor = netProfit > 0 ? 'var(--green)' : 'var(--red)';
-  var gapColor = profitGap > 0 ? 'var(--red)' : 'var(--green)';
   summaryCards.innerHTML =
     '<div class="result-card"><div class="result-card-label">Forecast Net Profit</div><div class="result-card-num" style="color:' + netColor + ';">' + fcFmt(netProfit) + '</div><div class="result-card-desc">Based on your inputs for next month</div></div>' +
     '<div class="result-card"><div class="result-card-label">Sector Best-Practice Profit</div><div class="result-card-num" style="color:var(--gold);">' + fcFmt(bNet) + '</div><div class="result-card-desc">What top performers at your revenue achieve</div></div>' +
-    '<div class="result-card"><div class="result-card-label">Your Profit Gap</div><div class="result-card-num" style="color:' + gapColor + ';">' + (profitGap > 0 ? fcFmt(profitGap) + ' below' : fcFmt(Math.abs(profitGap)) + ' above') + '</div><div class="result-card-desc">Monthly difference vs best-in-class</div></div>';
+    '<div class="result-card"><div class="result-card-label">Monthly Profit Gap</div><div class="result-card-num" style="color:' + gapColor + ';">' + (gapVal > 0 ? fcFmt(gapVal) + ' below' : fcFmt(Math.abs(gapVal)) + ' above') + '</div><div class="result-card-desc">Vs best-in-class for your sector</div></div>';
 
-  // ── Forward P&L table
-  function plRow(label, yours, bmark, isRevenue, isTotal) {
+  // ── P&L row builder
+  function plRow(label, yours, bmarkPct, rowType) {
+    var isSection = rowType === 'section';
+    var isSubItem = rowType === 'sub';
+    var isSubtotal = rowType === 'subtotal';
+    var isTotal = rowType === 'total';
+    var isRevenue = rowType === 'revenue';
     var yPct = fcPct(yours, rev);
-    var bPct = bmark !== null ? bmark.toFixed(0) + '%' : '—';
-    var pctNum = parseFloat(fcPct(yours, rev));
-    var bmarkNum = bmark;
+    var bPct = bmarkPct !== null ? bmarkPct.toFixed(0) + '%' : '';
+    var pctNum = rev > 0 ? yours / rev * 100 : 0;
     var flag = '';
-    if (!isRevenue && !isTotal && bmark !== null) {
-      if (pctNum > bmarkNum + 2) flag = '<span style="color:var(--red);font-size:0.65rem;margin-left:0.3rem;">&#9650; above target</span>';
-      else if (pctNum < bmarkNum - 1) flag = '<span style="color:var(--green);font-size:0.65rem;margin-left:0.3rem;">&#9660; well managed</span>';
+    if (!isSection && !isRevenue && !isTotal && !isSubtotal && bmarkPct !== null && yours > 0) {
+      if (pctNum > bmarkPct + 2) flag = ' <span style="color:var(--red);font-size:0.6rem;">&#9650;</span>';
+      else if (pctNum < bmarkPct - 1) flag = ' <span style="color:var(--green);font-size:0.6rem;">&#9660;</span>';
     }
-    var totalStyle = isTotal ? 'font-family:var(--head);font-weight:800;font-size:0.9rem;border-top:2px solid var(--border);' : 'font-size:0.82rem;';
-    var yColor = isRevenue ? 'color:var(--ink);' : (isTotal ? 'color:' + netColor + ';' : 'color:var(--ink2);');
-    return '<tr style="border-bottom:1px solid var(--border2);">' +
-      '<td style="padding:0.55rem 0;' + totalStyle + yColor + '">' + label + flag + '</td>' +
-      '<td style="text-align:right;padding:0.55rem 0;font-family:var(--mono);' + totalStyle + yColor + '">' + fcFmt(yours) + '</td>' +
-      '<td style="text-align:right;padding:0.55rem 0;font-family:var(--mono);font-size:0.78rem;color:var(--ink3);">' + yPct + '</td>' +
-      '<td style="text-align:right;padding:0.55rem 0;font-family:var(--mono);font-size:0.78rem;color:var(--gold);">' + (bmark !== null ? bPct : '—') + '</td>' +
+    var rowBg = isSection ? 'background:var(--bg3);' : '';
+    var lStyle, nStyle;
+    if (isSection) {
+      lStyle = 'font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);padding:0.55rem 0;';
+      nStyle = '';
+    } else if (isRevenue) {
+      lStyle = 'font-family:var(--head);font-weight:700;font-size:0.88rem;padding:0.6rem 0;color:var(--ink);';
+      nStyle = 'font-family:var(--mono);font-weight:700;font-size:0.88rem;color:var(--ink);';
+    } else if (isTotal) {
+      lStyle = 'font-family:var(--head);font-weight:800;font-size:0.9rem;border-top:2px solid var(--border);padding:0.7rem 0;color:' + netColor + ';';
+      nStyle = 'font-family:var(--mono);font-weight:800;font-size:0.9rem;color:' + netColor + ';';
+    } else if (isSubtotal) {
+      lStyle = 'font-family:var(--head);font-weight:700;font-size:0.8rem;border-top:1px solid var(--border2);padding:0.55rem 0;color:var(--ink);';
+      nStyle = 'font-family:var(--mono);font-weight:700;font-size:0.8rem;color:var(--ink);';
+    } else if (isSubItem) {
+      lStyle = 'font-size:0.76rem;padding:0.42rem 0;padding-left:1rem;color:var(--ink3);';
+      nStyle = 'font-family:var(--mono);font-size:0.76rem;color:var(--ink3);';
+    } else {
+      lStyle = 'font-size:0.82rem;padding:0.55rem 0;color:var(--ink2);';
+      nStyle = 'font-family:var(--mono);font-size:0.82rem;color:var(--ink2);';
+    }
+    var yourDisplay = isSection ? '' : fcFmt(yours);
+    var yourPctDisplay = isSection ? '' : yPct;
+    return '<tr style="' + rowBg + 'border-bottom:1px solid var(--border2);">' +
+      '<td style="' + lStyle + '">' + label + flag + '</td>' +
+      '<td style="text-align:right;padding:0.5rem 0;' + nStyle + '">' + yourDisplay + '</td>' +
+      '<td style="text-align:right;padding:0.5rem 0;font-family:var(--mono);font-size:0.72rem;color:var(--ink4);">' + yourPctDisplay + '</td>' +
+      '<td style="text-align:right;padding:0.5rem 0;font-family:var(--mono);font-size:0.72rem;color:var(--gold);">' + bPct + '</td>' +
       '</tr>';
   }
 
-  var tbody = document.getElementById('fc-pl-body');
-  tbody.innerHTML =
-    plRow('Revenue', rev, null, true, false) +
-    plRow('Food &amp; Drink Cost', food, b.food, false, false) +
-    plRow('Labour Cost', labour, b.labour, false, false) +
-    plRow('Energy', energy, b.energy, false, false) +
-    plRow('Rent &amp; Rates', rent, b.rent, false, false) +
-    plRow('Other Overheads', other, null, false, false) +
-    plRow('Total Costs', totalCosts, null, false, false) +
-    plRow('Net Profit', netProfit, null, false, true);
+  // Build full P&L
+  var rows = '';
+  rows += plRow('Revenue', rev, null, 'revenue');
+  rows += plRow('FOOD & DRINK COSTS', 0, null, 'section');
+  rows += plRow('Meat, Fish & Poultry', fMeat, null, 'sub');
+  rows += plRow('Produce, Veg & Dairy', fProduce, null, 'sub');
+  rows += plRow('Dry Goods & Grocery', fDry, null, 'sub');
+  rows += plRow('Beverages', fBev, null, 'sub');
+  rows += plRow('Staff Meals', fStaff, null, 'sub');
+  rows += plRow('Total Food & Drink Cost', totalFood, b.food, 'subtotal');
+  rows += plRow('LABOUR & STAFFING', 0, null, 'section');
+  rows += plRow('Kitchen Staff Wages', lKitchen, null, 'sub');
+  rows += plRow('Front of House Wages', lFoh, null, 'sub');
+  rows += plRow('Management / Owner Salary', lMgmt, null, 'sub');
+  rows += plRow('Employer NI & Pension', lNi, null, 'sub');
+  rows += plRow('Agency / Temp Staff', lAgency, null, 'sub');
+  rows += plRow('Total Labour Cost', totalLabour, b.labour, 'subtotal');
+  rows += plRow('PREMISES & OCCUPANCY', 0, null, 'section');
+  rows += plRow('Rent', pRent, null, 'sub');
+  rows += plRow('Business Rates', pRates, null, 'sub');
+  rows += plRow('Service Charge / Maintenance', pSvc, null, 'sub');
+  rows += plRow('Total Premises Cost', totalPremises, b.rent, 'subtotal');
+  rows += plRow('ENERGY', 0, null, 'section');
+  rows += plRow('Gas', eGas, null, 'sub');
+  rows += plRow('Electricity', eElec, null, 'sub');
+  rows += plRow('Total Energy', totalEnergy, b.energy, 'subtotal');
+  if (commissionCost > 0 || fPackaging > 0) {
+    rows += plRow('DELIVERY & PACKAGING', 0, null, 'section');
+    if (commissionCost > 0) {
+      rows += plRow('Platform Commission (' + commissionRate.toFixed(0) + '% on ' + deliveryPct.toFixed(0) + '% of revenue)', commissionCost, null, 'sub');
+    }
+    if (fPackaging > 0) {
+      rows += plRow('Packaging Materials', fPackaging, null, 'sub');
+    }
+  }
+  rows += plRow('FIXED OVERHEADS', 0, null, 'section');
+  rows += plRow('Insurance', oInsurance, null, 'sub');
+  rows += plRow('Repairs & Maintenance', oRepairs, null, 'sub');
+  rows += plRow('Marketing & Advertising', oMarketing, null, 'sub');
+  rows += plRow('Software & Subscriptions', oSoftware, null, 'sub');
+  rows += plRow('Loan / Finance Repayments', oFinance, null, 'sub');
+  rows += plRow('Other Overheads', oOther, null, 'sub');
+  rows += plRow('Total Fixed Overheads', totalFixed, null, 'subtotal');
+  rows += plRow('TOTAL COSTS', totalCosts, null, 'normal');
+  rows += plRow('NET PROFIT', netProfit, b.net, 'total');
+  document.getElementById('fc-pl-body').innerHTML = rows;
 
   // ── Gap analysis
   var gapBody = document.getElementById('fc-gap-body');
   var gaps = [];
-  if (foodGap > 50) gaps.push({ label: 'Food &amp; Drink Cost', gap: foodGap, desc: 'Your food cost is ' + foodPct.toFixed(0) + '% vs the ' + b.food + '% sector benchmark. Recovering this alone adds ' + fcFmt(foodGap) + ' to your monthly profit.' });
-  if (labourGap > 50) gaps.push({ label: 'Labour Cost', gap: labourGap, desc: 'Your labour is ' + labourPct.toFixed(0) + '% vs ' + b.labour + '% best-practice. Rescheduling and efficiency gains could recover ' + fcFmt(labourGap) + '/month.' });
-  if (energyGap > 50) gaps.push({ label: 'Energy', gap: energyGap, desc: 'Your energy spend is above the ' + b.energy + '% benchmark for your sector. Equipment and tariff optimisation typically recovers ' + fcFmt(energyGap) + '/month.' });
+  var foodGap = totalFood - bFood;
+  var labourGap = totalLabour - bLabour;
+  var energyGap = totalEnergy - bEnergy;
+  var premisesGap = totalPremises - bRent;
+  if (totalFood > 0 && foodGap > 100) gaps.push({ label: 'Food & Drink Cost', gap: foodGap, desc: 'Your food cost is ' + (totalFood / rev * 100).toFixed(1) + '% of revenue vs the ' + b.food + '% sector benchmark. Closing this gap adds ' + fcFmt(foodGap) + ' to your monthly profit.' });
+  if (totalLabour > 0 && labourGap > 100) gaps.push({ label: 'Labour Cost', gap: labourGap, desc: 'Your total labour is ' + (totalLabour / rev * 100).toFixed(1) + '% of revenue vs ' + b.labour + '% best-practice. Scheduling optimisation and productivity improvements could recover ' + fcFmt(labourGap) + '/month.' });
+  if (totalEnergy > 0 && energyGap > 50) gaps.push({ label: 'Energy', gap: energyGap, desc: 'Your energy spend is above the ' + b.energy + '% revenue benchmark for your sector. Equipment efficiency and tariff optimisation typically recovers ' + fcFmt(energyGap) + '/month.' });
+  if (totalPremises > 0 && premisesGap > 100) gaps.push({ label: 'Premises & Rates', gap: premisesGap, desc: 'Your occupancy cost is ' + (totalPremises / rev * 100).toFixed(1) + '% vs the ' + b.rent + '% benchmark. Rates relief applications, lease renegotiation, or subletting may reduce this cost.' });
   if (gaps.length === 0) {
     gapBody.innerHTML = '<div style="color:var(--green);font-size:0.84rem;line-height:1.7;">Your cost ratios are broadly in line with sector benchmarks — well managed. The Full Diagnostic will identify the smaller leaks across 180 cost lines that add up to meaningful profit recovery.</div>';
   } else {
