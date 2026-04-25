@@ -1756,16 +1756,17 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
 ══════════════════════════════════════════════ -->
 <div id="forecast" class="section">
   <div class="section-title">Your Profit Forecast — <em style="color:var(--gold);">Next Month</em></div>
-  <div class="section-sub">Enter your expected numbers. See your estimated profit before the month begins — and the gap between where you are and where you should be.</div>
+  <div class="section-sub">Enter your expected costs line by line. Get a full forward P&amp;L — every cost category broken out and benchmarked against best-in-class operators in your sector — before the month starts.</div>
 
-  <div class="card" style="margin-bottom:1.5rem;">
-    <div class="card-title">Step 1 — Your Business Inputs</div>
+  <!-- REVENUE -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">Revenue</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
       <div>
         <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Venue Type</label>
         <select id="fc-venue" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--body);font-size:0.82rem;" onchange="fcUpdateBenchmarks()">
           <option value="restaurant">Restaurant / Takeaway</option>
-          <option value="coffee">Coffee Shop / Café</option>
+          <option value="coffee">Coffee Shop / Caf&eacute;</option>
           <option value="pub">Pub / Bar with Food</option>
           <option value="retail">Food Retail (Deli / Farm Shop)</option>
           <option value="catering">Catering / Events</option>
@@ -1777,27 +1778,146 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
         <input type="number" id="fc-revenue" placeholder="e.g. 28000" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
       </div>
       <div>
-        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Food &amp; Drink Cost % <span id="fc-food-hint" style="color:var(--gold);font-size:0.55rem;">(sector avg: 38%)</span></label>
-        <input type="number" id="fc-food" placeholder="e.g. 38" min="0" max="100" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Revenue from Delivery Platforms (%)</label>
+        <input type="number" id="fc-delivery-pct" placeholder="e.g. 25 — enter 0 if none" min="0" max="100" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
       </div>
       <div>
-        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Labour Cost % <span id="fc-labour-hint" style="color:var(--gold);font-size:0.55rem;">(sector avg: 33%)</span></label>
-        <input type="number" id="fc-labour" placeholder="e.g. 33" min="0" max="100" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
-      </div>
-      <div>
-        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Monthly Rent / Rates (£)</label>
-        <input type="number" id="fc-rent" placeholder="e.g. 3200" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
-      </div>
-      <div>
-        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Monthly Energy Bill (£)</label>
-        <input type="number" id="fc-energy" placeholder="e.g. 1800" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Platform Commission Rate (%) <span style="color:var(--gold);font-size:0.55rem;">(Uber Eats/Deliveroo: 30%, Just Eat: 25%)</span></label>
+        <input type="number" id="fc-commission-rate" placeholder="e.g. 30" min="0" max="50" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
       </div>
     </div>
-    <div style="margin-top:0.8rem;">
-      <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Other Fixed Overheads (£/month — insurance, software, marketing, etc.)</label>
-      <input type="number" id="fc-other" placeholder="e.g. 600" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+  </div>
+
+  <!-- FOOD & DRINK COSTS -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">Food &amp; Drink Costs</div>
+    <div style="font-size:0.74rem;color:var(--ink3);margin-top:0.5rem;margin-bottom:0.2rem;">Enter actual monthly spend per category. Leave blank to exclude that line from your P&amp;L.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:0.8rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Meat, Fish &amp; Poultry (£)</label>
+        <input type="number" id="fc-meat" placeholder="e.g. 3200" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Produce, Veg &amp; Dairy (£)</label>
+        <input type="number" id="fc-produce" placeholder="e.g. 1800" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Dry Goods &amp; Grocery (£)</label>
+        <input type="number" id="fc-dry" placeholder="e.g. 800" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Beverages (coffee, alcohol, soft drinks) (£)</label>
+        <input type="number" id="fc-beverages" placeholder="e.g. 1400" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Staff Meals (£)</label>
+        <input type="number" id="fc-staff-meals" placeholder="e.g. 300" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
     </div>
-    <button onclick="runForecast()" style="margin-top:1.2rem;background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.88rem;padding:0.8rem 2rem;border:none;border-radius:4px;cursor:pointer;width:100%;letter-spacing:-0.01em;">Calculate My Profit Forecast &rarr;</button>
+  </div>
+
+  <!-- LABOUR -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">Labour &amp; Staffing <span style="font-family:var(--body);font-size:0.72rem;color:var(--ink3);font-weight:400;">— gross wages plus employer costs</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Kitchen Staff Wages (£)</label>
+        <input type="number" id="fc-kitchen" placeholder="e.g. 4200" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Front of House Wages (£)</label>
+        <input type="number" id="fc-foh" placeholder="e.g. 2800" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Management / Owner Salary (£)</label>
+        <input type="number" id="fc-mgmt" placeholder="e.g. 2500" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Employer NI &amp; Pension (£)</label>
+        <input type="number" id="fc-ni" placeholder="e.g. 900" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Agency / Temp Staff (£)</label>
+        <input type="number" id="fc-agency" placeholder="e.g. 0" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+    </div>
+  </div>
+
+  <!-- PREMISES -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">Premises &amp; Occupancy</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Rent (£/month)</label>
+        <input type="number" id="fc-rent" placeholder="e.g. 2800" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Business Rates (£/month)</label>
+        <input type="number" id="fc-rates" placeholder="e.g. 600" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Service Charge / Building Maintenance (£)</label>
+        <input type="number" id="fc-svc-charge" placeholder="e.g. 250" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ENERGY -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">Energy</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Gas (£)</label>
+        <input type="number" id="fc-gas" placeholder="e.g. 900" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Electricity (£)</label>
+        <input type="number" id="fc-electric" placeholder="e.g. 700" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGING -->
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="card-title">Packaging</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Packaging Materials (boxes, bags, containers) (£)</label>
+        <input type="number" id="fc-packaging" placeholder="e.g. 450" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+    </div>
+  </div>
+
+  <!-- FIXED OVERHEADS -->
+  <div class="card" style="margin-bottom:1.5rem;">
+    <div class="card-title">Fixed Overheads</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;">
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Insurance (£)</label>
+        <input type="number" id="fc-insurance" placeholder="e.g. 180" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Repairs &amp; Maintenance (£)</label>
+        <input type="number" id="fc-repairs" placeholder="e.g. 150" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Marketing &amp; Advertising (£)</label>
+        <input type="number" id="fc-marketing" placeholder="e.g. 200" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Software &amp; Subscriptions (£)</label>
+        <input type="number" id="fc-software" placeholder="e.g. 120" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Loan / Finance Repayments (£)</label>
+        <input type="number" id="fc-finance" placeholder="e.g. 500" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+      <div>
+        <label style="font-family:var(--mono);font-size:0.6rem;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:0.4rem;">Other Overheads (£)</label>
+        <input type="number" id="fc-other" placeholder="e.g. 200" min="0" oninput="fcClearResults()" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--ink);padding:0.6rem 0.8rem;border-radius:var(--radius2);font-family:var(--mono);font-size:0.9rem;">
+      </div>
+    </div>
+    <button onclick="runForecast()" style="margin-top:1.2rem;background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.88rem;padding:0.8rem 2rem;border:none;border-radius:4px;cursor:pointer;width:100%;letter-spacing:-0.01em;">Calculate My Forward P&amp;L &rarr;</button>
   </div>
 
   <!-- RESULTS PANEL — shown after calculation -->
@@ -1834,11 +1954,11 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
     <!-- CTA -->
     <div style="background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--radius);padding:1.4rem 1.5rem;text-align:center;">
       <div style="font-family:var(--head);font-weight:800;font-size:1rem;color:var(--gold);margin-bottom:0.4rem;">Want the full forensic breakdown?</div>
-      <p style="color:var(--ink2);font-size:0.82rem;margin-bottom:0.3rem;">The forecast shows the gap. The Full Diagnostic Report shows you exactly <em>where</em> each pound is leaking and the precise steps to recover it — 180 cost lines, sector benchmarks, and a written action plan.</p>
+      <p style="color:var(--ink2);font-size:0.82rem;margin-bottom:0.3rem;">The forecast shows the gap. The Full Diagnostic Report shows you exactly <em>where</em> each pound is leaking and the precise steps to recover it &mdash; 180 cost lines, sector benchmarks, and a written action plan.</p>
       <p style="color:var(--ink3);font-size:0.75rem;margin-bottom:1rem;">Delivered within 48 hours &nbsp;&middot;&nbsp; Kept by you regardless of what you decide next</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <button onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))" style="background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.85rem;padding:0.75rem 1.8rem;border:none;border-radius:4px;cursor:pointer;">Get Full Diagnostic Report — £79 &rarr;</button>
-        <button onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))" style="background:transparent;color:var(--gold);font-family:var(--head);font-weight:700;font-size:0.82rem;padding:0.75rem 1.8rem;border:1px solid var(--gold-border);border-radius:4px;cursor:pointer;">Book a Coaching Session — £197</button>
+        <button onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))" style="background:var(--gold);color:var(--bg);font-family:var(--head);font-weight:800;font-size:0.85rem;padding:0.75rem 1.8rem;border:none;border-radius:4px;cursor:pointer;">Get Full Diagnostic Report &mdash; £79 &rarr;</button>
+        <button onclick="showTab('contact',document.querySelector('.nav-tab[onclick*=contact]'))" style="background:transparent;color:var(--gold);font-family:var(--head);font-weight:700;font-size:0.82rem;padding:0.75rem 1.8rem;border:1px solid var(--gold-border);border-radius:4px;cursor:pointer;">Book a Coaching Session &mdash; £197</button>
       </div>
     </div>
 
@@ -1847,7 +1967,7 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 2rem 0; 
   <!-- Benchmark reference note -->
   <div style="margin-top:1.5rem;padding:1rem 1.2rem;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius2);">
     <div style="font-family:var(--mono);font-size:0.58rem;color:var(--ink4);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.4rem;">About This Forecast</div>
-    <div style="font-size:0.74rem;color:var(--ink3);line-height:1.7;">This tool uses actual UK sector benchmarks from the Food &amp; Drink Federation, CGA Strategy, and The Grocer data (2025–2026). Figures are forward estimates based on your inputs compared against best-in-class performers in your sector. This is financial intelligence for planning — not accounting advice. Produced by Godfred Frimpong MSc (Food Economics &amp; Marketing), FCCA.</div>
+    <div style="font-size:0.74rem;color:var(--ink3);line-height:1.7;">This tool uses actual UK sector benchmarks from the Food &amp; Drink Federation, CGA Strategy, and The Grocer data (2025&ndash;2026). Figures are forward estimates based on your inputs compared against best-in-class performers in your sector. This is financial intelligence for planning &mdash; not accounting advice. Produced by Godfred Frimpong MSc (Food Economics &amp; Marketing), FCCA.</div>
   </div>
 </div>
 
